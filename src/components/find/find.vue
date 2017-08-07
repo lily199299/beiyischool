@@ -21,13 +21,22 @@
       <div class="industry-item"><i class="icon icon-find"></i>会计从业</div>
       <div class="industry-item"><i class="icon icon-find"></i>注册会计师</div>
     </div>
+    <div class="divide"></div>
+    <lasted></lasted>
+    <employ></employ>
+    <Compass></Compass>
+    <div class="space"></div>
 
   </div>
 
 </template>
 
 <script type="text/ecmascript-6">
+  import Lasted from '../../components/lasted_course/lasted'
+  import Employ from '../../components/employ/employ'
+  import Compass from '../../components/compass/compass'
   export default {
+    components: {Lasted, Employ, Compass},
     data () {
       return {
         swiperOption: {
@@ -63,6 +72,9 @@
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
+  @import "../../common/stylus/base"
+  .space
+    height: 70px
   .slide-box
     width: 200px
     height: 200px
@@ -72,12 +84,14 @@
   .industry
     display: flex
     width: 100%
-    padding-top: 5px
     .industry-item
       flex: 1
       text-align center
       font-size: 13px
+      padding: 13px 0
       .icon
         display block
-        padding-bottom: 5px
+        padding-bottom: 10px
+
+
 </style>
