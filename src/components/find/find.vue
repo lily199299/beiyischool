@@ -26,7 +26,6 @@
     <employ></employ>
     <Compass></Compass>
     <div class="space"></div>
-
   </div>
 
 </template>

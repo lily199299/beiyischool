@@ -1,27 +1,49 @@
 <template>
   <div>
     <div class="panel-title">
-      <p class="panel-nav">基金从业 (私募股权投资基金)</p>
-    </div>
-    <div class="panel-body">
-      <ul class="first-level">
-        <li @click="showMenu" v-show="detailShow">
-          <p>基金从业</p>
-          <ol class="second-level">
-            <li>基金基础知识</li>
-            <li>基金金融基础知识</li>
-            <li>私募股权投资基金</li>
-          </ol>
-        </li>
-        <li>
-          <p>银行从业</p>
-        </li>
-        <li><p>证券从业</p></li>
-        <li><p>会计从业</p></li>
-        <li><p>注册会计师</p></li>
-      </ul>
-    </div>
+      <div class="jijin">
+        <p class="panel-nav border-1px"  @click="showJijin">基金从业</p>
+        <div class="panel-body" v-show="jijinShow">
+          <ul class="first-level">
+            <li v-for="item in jijin" @click="getText(this)">{{ item.name }}</li>
+          </ul>
+          <div class="yinhang">
+            <p class="panel-nav border-1px"  @click="showYinhang">银行从业</p>
+            <div class="panel-body"  v-show="yinhangShow">
+              <ul class="first-level">
+                <li v-for="item in yinhang">{{ item.name }}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="zhengquan">
+            <p class="panel-nav border-1px"  @click="showZhengquan">证券从业</p>
+            <div class="panel-body"  v-show="zhengquanShow">
+              <ul class="first-level">
+                <li v-for="item in zhengquan">{{ item.name }}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="kuaiji">
+            <p class="panel-nav border-1px"  @click="showKuaiji">会计从业</p>
+            <div class="panel-body"  v-show="kuaijiShow">
+              <ul class="first-level">
+                <li v-for="item in kuaiji">{{ item.name }}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="zhucekuaijishi">
+            <p class="panel-nav border-1px"  @click="showZhucekuaijishi">注册会计师</p>
+            <div class="panel-body"  v-show="zhucekuaijishiShow">
+              <ul class="first-level">
+                <li v-for="item in zhucekuaijishi">{{ item.name }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
+
+    </div>
     <ul class="course-tip">
       <li class="tip"><img src="../../resource/image/zhangjie.png" alt=""><span>章节练习</span></li>
       <li class="tip"><img src="../../resource/image/moni.png" alt=""><span>考前模拟</span></li>
@@ -35,37 +57,98 @@
 
 <script type="text/ecmascript-6">
   export default {
-    props: {
-      jijin: {
-        type: Object
+    data () {
+      return {
+        jijin: {},
+        yinhang: {},
+        zhengquan: {},
+        kuaiji: {},
+        zhucekuaijishi: {},
+        jijinShow: false,
+        yinhangShow: false,
+        zhengquanShow: false,
+        kuaijiShow: false,
+        zhucekuaijishiShow: false
+      }
+    },
+    created () {
+      // 必须携带userid
+      this.$http.get('http://bay-api.by-edu.com/course/list?userId=104ebf7e3d304d3a8d79e76f9c6f8d65').then((response) => {
+        console.log(response)
+        response = response.body.data
+        this.jijin = response.jijin
+        this.yinhang = response.yinhang
+        this.zhengquan = response.zhengquan
+        this.kuaiji = response.kuaiji
+        this.zhucekuaijishi = response.zhucekuaijishi
+        console.log(this.jijin)
+        console.log(this.yinhang)
+      })
+    },
+    methods: {
+      getText () {
+        this.msg = {}
       },
-      data () {
-        return {
-          detailShow: false
+      showJijin () {
+        if (this.jijinShow === false) {
+          this.jijinShow = true
+        } else {
+          this.jijinShow = false
         }
       },
-      methods: {
-        showMenu () {
-          this.detailShow = true
+      showYinhang () {
+        if (this.yinhangShow === false) {
+          this.yinhangShow = true
+        } else {
+          this.yinhangShow = false
+        }
+      },
+      showZhengquan () {
+        if (this.zhengquanShow === false) {
+          this.zhengquanShow = true
+        } else {
+          this.zhengquanShow = false
+        }
+      },
+      showKuaiji () {
+        if (this.kuaijiShow === false) {
+          this.kuaijiShow = true
+        } else {
+          this.kuaijiShow = false
+        }
+      },
+      showZhucekuaijishi () {
+        if (this.zhucekuaijishiShow === false) {
+          this.zhucekuaijishiShow = true
+        } else {
+          this.zhucekuaijishiShow = false
         }
       }
+    },
+    mounted () {
     }
   }
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
+  @import "../../common/stylus/common.styl"
   .panel-title
     width: 100%
-    height: 46px
-    line-height: 46px
     background-color: rgb(240, 240, 240)
     .panel-nav
-      font-size 15px
+      height: 50px
+      line-height: 50px
+      background-color #fff
+      font-size: 17px
       font-weight: 500
       text-align: center
+      border-1px(rgb(229,223,223))
 
   .panel-body
-    text-align: center;
+    background-color: #f0f0f0
+    text-align: center
+    .first-level
+      line-height 46px
 
   .course-tip
     width: 100%

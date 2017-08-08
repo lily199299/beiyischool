@@ -16,35 +16,26 @@
 </template>
 
 <script type="text/ecmascript-6">
-  var appData = {}
-  var jijin = {}
-  var yinhang = {}
-  var zhengquan = {}
-  var kuaiji = {}
-  var zhucekuaijishi = {}
-
   export default {
-    data () {
+/*    data () {
       return {
-        jijin: {},
-        yinhang: {},
-        zhengquan: {},
-        kuaiji: {},
-        zhucekuaijishi: {}
+        jijin: {}
       }
     },
     created () {
       // 必须携带userid
-      this.$http.get('http://bay-api.by-edu.com/course/list?userId=104ebf7e3d304d3a8d79e76f9c6f8d65').then((res) => {
-        console.log(res)
-        appData = res.body.data
-        jijin = appData.jijin
-        yinhang = appData.yinhang
-        zhengquan = appData.zhengquan
-        kuaiji = appData.kuaiji
-        zhucekuaijishi = appData.zhucekuaijishi
+      this.$http.get('http://bay-api.by-edu.com/course/list?userId=104ebf7e3d304d3a8d79e76f9c6f8d65').then((response) => {
+        console.log(response)
+        response = response.body.data
+        this.jijin = response.jijin
+        this.yinhang = response.yinhang
+        this.zhengquan = response.zhengquan
+        this.kuaiji = response.kuaiji
+        this.zhucekuaijishi = response.zhucekuaijishi
+        console.log(this.jijin)
+        console.log(this.yinhang)
       })
-    }
+    } */
   }
 </script>
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
