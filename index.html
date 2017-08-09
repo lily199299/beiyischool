@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
-    <title>贝易网校</title>
-    <link rel="stylesheet" type="text/css" href="static/css/reset.css">
-  </head>
-  <body>
-    <div id="myapp">
-      <app></app>
-    </div>
-    <!-- built files will be auto injected -->
-    <script>
-
-    </script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+  <title>贝易网校</title>
+  <link rel="stylesheet" type="text/css" href="static/css/reset.css">
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="myapp">
+  <app></app>
+</div>
+<!-- built files will be auto injected -->
+<script>
+  $(function () {
+    $.ajax({
+      type: 'GET',
+      url: 'http://bay-api.by-edu.com/course/list?userId=104ebf7e3d304d3a8d79e76f9c6f8d65',
+      async: false,
+      success: function (res) {
+        console.log(res)
+      }
+    })
+  })
+</script>
+</body>
 </html>

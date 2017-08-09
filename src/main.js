@@ -8,6 +8,7 @@ import App from './App.vue'
 import find from './components/find/find.vue'
 import study from './components/study/study.vue'
 import mine from './components/mine/mine.vue'
+import chapter from './components/chapter/chapter.vue'
 import './common/stylus/index.styl'
 
 Vue.config.productionTip = false
@@ -17,7 +18,8 @@ Vue.use(Vueresource)
 const routes = [
   {path: '/find', component: find},
   {path: '/study', component: study},
-  {path: '/mine', component: mine}
+  {path: '/mine', component: mine},
+  {path: '/chapter', component: chapter}
 ]
 const router = new VueRouter({
   linkActiveClass: 'active',
