@@ -11,12 +11,40 @@
         <router-link to="/mine"><i class="icon-mine"></i>我的</router-link>
       </div>
     </div>
-    <router-view></router-view>
+    <router-view :datas="datas"></router-view>
+    {{url}}
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  export default {}
+  import Store from './store.js'
+  import Beiyi from './common.js'
+  console.log(Beiyi)
+  export default {
+    data () {
+      return {
+        datas: {}, // 请求的所有数据
+        url: Beiyi.getiUrl() // url
+      }
+    },
+    watch: {
+      datas: {
+        handler: function (items) {
+          console.log(items)
+          Store.save(items)   // 观察／存入缓存
+        },
+        deep: true
+      }
+    },
+    created () {
+      this.$http.get(this.url + '/course/list?userId=104ebf7e3d304d3a8d79e76f9c6f8d65').then((response) => {
+        console.log(response)
+        response = response.body.data
+        this.datas = response
+        this.jijin = this.datas.jijin
+      })
+    }
+  }
 </script>
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   .tab
@@ -24,7 +52,7 @@
     bottom: 0
     display: flex
     width: 100%
-    background-color rgb(240,240,240)
+    background-color rgb(240, 240, 240)
     z-index: 1
     .tab-item
       flex: 1

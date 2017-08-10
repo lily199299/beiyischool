@@ -13,10 +13,11 @@
 </div>
 <!-- built files will be auto injected -->
 <script>
-  $(function () {
+  var dataUrl = 'http://bay-api.by-edu.com'
+  $( function () {
     $.ajax({
       type: 'GET',
-      url: 'http://bay-api.by-edu.com/course/list?userId=104ebf7e3d304d3a8d79e76f9c6f8d65',
+      url: dataUrl + '/course/list?userId=104ebf7e3d304d3a8d79e76f9c6f8d65',
       async: false,
       success: function (res) {
         console.log(res)

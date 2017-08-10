@@ -10,11 +10,16 @@ import study from './components/study/study.vue'
 import mine from './components/mine/mine.vue'
 import chapter from './components/chapter/chapter.vue'
 import './common/stylus/index.styl'
+import './common'
 
 Vue.config.productionTip = false
+// 轮播图
 Vue.use(VueAwesomeSwiper)
+// 路由
 Vue.use(VueRouter)
+// 数据请求
 Vue.use(Vueresource)
+// 路由配置
 const routes = [
   {path: '/find', component: find},
   {path: '/study', component: study},
@@ -25,7 +30,6 @@ const router = new VueRouter({
   linkActiveClass: 'active',
   routes: routes
 })
-
 /* eslint-disable no-new */
 new Vue({
   el: '#myapp',

@@ -65,14 +65,19 @@
       <li class="tip"><img src="../../resource/image/fangzhen.png" alt=""><span>仿真测试</span></li>
       <li class="tip"><img src="../../resource/image/zhongdian.png" alt=""><span>重难点突破</span></li>
       <li class="tip"><img src="../../resource/image/cuoti.png" alt=""><span>错题集</span></li>
-      <li class="tip"><img src="../../resource/image/pingce.png" alt=""><span>专家评测</span></li>
+      <li class="tip" @click="check"><img src="../../resource/image/pingce.png" alt=""><span>专家评测</span></li>
     </ul>
     <div class="space"></div>
   </div>
 </template>
 <script type="text/ecmascript-6">
+  import Chapter from '../../components/chapter/chapter.vue'
   const msg = {}
   export default {
+    props: {
+      datas: {}
+    },
+    components: {Chapter},
     data () {
       return {
         jijin: {},
@@ -81,6 +86,7 @@
         kuaiji: {},
         zhucekuaijishi: {},
         patterns: {},
+        libraries: {},
         msg: {},
         jijinShow: false,
         yinhangShow: false,
@@ -96,14 +102,18 @@
         response = response.body.data
         this.jijin = response.jijin
         this.patterns = this.jijin[0].patterns
+        this.libraries = this.patterns[0].libraries
         this.yinhang = response.yinhang
         this.zhengquan = response.zhengquan
         this.kuaiji = response.kuaiji
         this.zhucekuaijishi = response.zhucekuaijishi
-        console.log(this.patterns)
+        console.log(this.libraries)
       })
     },
     methods: {
+      check () {
+        console.log(this.datas)
+      },
       getText (id, item) {
         // 课程id 课程名
         console.log(item.name)
