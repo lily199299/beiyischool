@@ -16,7 +16,7 @@
   var libName = []
   export default {
     data () {
-      return { libName }
+      return {libName}
     },
     props: {
       datas: {}
@@ -38,11 +38,6 @@
         }
       }
       console.log(libName)
-    },
-    methods: {
-      dsd () {
-        console.log(this.datas.jijin)
-      }
     }
   }
 </script>
