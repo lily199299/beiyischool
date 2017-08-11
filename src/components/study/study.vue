@@ -72,6 +72,7 @@
 </template>
 <script type="text/ecmascript-6">
   import Chapter from '../../components/chapter/chapter.vue'
+  import Store from '../../store.js'
   const msg = {}
   export default {
     props: {
@@ -109,6 +110,15 @@
         this.zhucekuaijishi = response.zhucekuaijishi
         console.log(this.libraries)
       })
+    },
+    watch: {
+      msg: {
+        handler: function (items) {
+          console.log(items)
+          Store.save(items)   // 观察／存入缓存
+        },
+        deep: true
+      }
     },
     methods: {
       check () {

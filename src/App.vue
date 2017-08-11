@@ -12,7 +12,6 @@
       </div>
     </div>
     <router-view :datas="datas"></router-view>
-    {{url}}
   </div>
 </template>
 
