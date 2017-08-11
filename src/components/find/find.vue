@@ -15,11 +15,11 @@
 
     <!-- 导航 -->
     <div class="industry">
-      <div class="industry-item"><i class="icon icon-find"></i>基金从业</div>
-      <div class="industry-item"><i class="icon icon-find"></i>银行从业</div>
-      <div class="industry-item"><i class="icon icon-find"></i>证券从业</div>
-      <div class="industry-item"><i class="icon icon-find"></i>会计从业</div>
-      <div class="industry-item"><i class="icon icon-find"></i>注册会计师</div>
+      <div class="industry-item"><router-link to="/study"><img class="icon" src="./jijin.png" alt="">基金从业</router-link></div>
+      <div class="industry-item"><router-link to="/study"><img class="icon" src="./yinhang.png" alt="">银行从业</router-link></div>
+      <div class="industry-item"><router-link to="/study"><img class="icon" src="./zhengquan.png" alt="">证券从业</router-link></div>
+      <div class="industry-item"><router-link to="/study"><img class="icon" src="./kuaiji.png" alt="">会计从业</router-link></div>
+      <div class="industry-item"><router-link to="/study"><img class="icon" src="./zhucekuaijishi.png" alt="">注册会计师</router-link></div>
     </div>
     <div class="divide"></div>
     <lasted></lasted>
@@ -107,6 +107,8 @@
       .icon
         display block
         padding-bottom: 10px
+        margin: auto
+        width: 35%
 
 
 </style>

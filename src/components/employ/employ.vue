@@ -36,6 +36,7 @@
     border-1px(rgb(216, 216, 216))
   .more
     float: right
+    font-size 13px
   .employ-lists
     padding-bottom: 18px
     .employ-title

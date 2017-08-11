@@ -13,6 +13,21 @@
 </div>
 <!-- built files will be auto injected -->
 <script>
+  function getQueryString (name) {
+    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+    var r = window.location.search.substr(1).match(reg)
+    if (r != null) {
+      return unescape(r[2])
+    }
+    return null
+  }
+
+  // 这样调用：
+  alert(getQueryString('参数名1'))
+  alert(getQueryString('参数名2'))
+  alert(getQueryString('参数名3'))
+  var url = location.hash
+  console.log(url)
   var dataUrl = 'http://bay-api.by-edu.com'
   $(function () {
     $.ajax({
