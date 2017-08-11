@@ -34,7 +34,12 @@
   import Lasted from '../../components/lasted_course/lasted'
   import Employ from '../../components/employ/employ'
   import Compass from '../../components/compass/compass'
+  import Beiyi from '../../common.js'
+
   export default {
+    props: {
+      datas: {}
+    },
     components: {Lasted, Employ, Compass},
     data () {
       return {
@@ -48,15 +53,17 @@
           autoHeight: true,
           pagination: '.swiper-pagination',
           paginationClickable: true,
-         /* prevButton: '.swiper-button-prev',
-          nextButton: '.swiper-button-next', */
+          /* prevButton: '.swiper-button-prev',
+           nextButton: '.swiper-button-next', */
           /* scrollbar: '.swiper-scrollbar', */
           mousewheelControl: true,
           observeParents: true,
           onSlideChangeStart (swiper) {
             // console.log(swiper)
           }
-        }
+        },
+        url: Beiyi.getUrl(),
+        advs: {}
       }
     },
     computed: {
@@ -66,6 +73,14 @@
     },
     mounted () {
       this.swiper.slideTo(4, 2000, true)
+    },
+    // 获取广告列表
+    created () {
+      console.log(this.datas)
+     /* this.$http.get(this.url + '/find/getcanuseads?userId=d7b1fbbb2b5a4eaea0b2c62be47867dd').then((response) => {
+        response = response.body.data
+        this.advs = response
+      }) */
     }
   }
 </script>
@@ -74,6 +89,7 @@
   @import "../../common/stylus/base"
   .space
     height: 70px
+
   .slide-box
     width: 200px
     height: 200px

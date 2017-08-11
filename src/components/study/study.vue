@@ -1,46 +1,51 @@
 <template>
   <div>
     <div class="panel-title">
-      <div class="jijin">
-        <p class="panel-nav border-1px"  @click="showJijin" v-text="msg"></p>
-        <div class="panel-body" v-show="jijinShow">
-          <ul class="first-level">
-            <li v-for="item in jijin" :id="item.id" @click="getText(item.id,item)" ref="course">{{ item.name }}</li>
-          </ul>
-          <div class="yinhang">
-            <p class="panel-nav border-1px"  @click="showYinhang">银行从业</p>
-            <div class="panel-body"  v-show="yinhangShow">
-              <ul class="first-level">
-                <li v-for="item in yinhang" :id="item.id" @click="getText(item.id,item)">{{ item.name }}</li>
-              </ul>
-            </div>
+      <p class="panel-nav border-1px" @click="showAll" v-show="hideSelect">请选择课程</p>
+      <p class="panel-nav border-1px" @click="showAll" v-text="msg" v-show="showSelect"></p>
+      <div v-show="allShow">
+        <div class="jijin">
+          <p class="panel-nav border-1px" @click="showJijin">基金从业</p>
+          <div class="panel-body" v-show="jijinShow">
+            <ul class="first-level">
+              <li v-for="item in jijin" :id="item.id" @click="getText(item.id,item)" ref="course">{{ item.name }}</li>
+            </ul>
           </div>
-          <div class="zhengquan">
-            <p class="panel-nav border-1px"  @click="showZhengquan">证券从业</p>
-            <div class="panel-body"  v-show="zhengquanShow">
-              <ul class="first-level">
-                <li v-for="item in zhengquan" :id="item.id" @click="getText(item.id,item)">{{ item.name }}</li>
-              </ul>
-            </div>
+        </div>
+        <div class="yinhang">
+          <p class="panel-nav border-1px" @click="showYinhang">银行从业</p>
+          <div class="panel-body" v-show="yinhangShow">
+            <ul class="first-level">
+              <li v-for="item in yinhang" :id="item.id" @click="getText(item.id,item)">{{ item.name }}</li>
+            </ul>
           </div>
-          <div class="kuaiji">
-            <p class="panel-nav border-1px"  @click="showKuaiji">会计从业</p>
-            <div class="panel-body"  v-show="kuaijiShow">
-              <ul class="first-level">
-                <li v-for="item in kuaiji" :id="item.id" @click="getText(item.id,item)">{{ item.name }}</li>
-              </ul>
-            </div>
+        </div>
+        <div class="zhengquan">
+          <p class="panel-nav border-1px" @click="showZhengquan">证券从业</p>
+          <div class="panel-body" v-show="zhengquanShow">
+            <ul class="first-level">
+              <li v-for="item in zhengquan" :id="item.id" @click="getText(item.id,item)">{{ item.name }}</li>
+            </ul>
           </div>
-          <div class="zhucekuaijishi">
-            <p class="panel-nav border-1px"  @click="showZhucekuaijishi">注册会计师</p>
-            <div class="panel-body"  v-show="zhucekuaijishiShow">
-              <ul class="first-level">
-                <li v-for="item in zhucekuaijishi" :id="item.id" @click="getText(item.id,item)">{{ item.name }}</li>
-              </ul>
-            </div>
+        </div>
+        <div class="kuaiji">
+          <p class="panel-nav border-1px" @click="showKuaiji">会计从业</p>
+          <div class="panel-body" v-show="kuaijiShow">
+            <ul class="first-level">
+              <li v-for="item in kuaiji" :id="item.id" @click="getText(item.id,item)">{{ item.name }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="zhucekuaijishi">
+          <p class="panel-nav border-1px" @click="showZhucekuaijishi">注册会计师</p>
+          <div class="panel-body" v-show="zhucekuaijishiShow">
+            <ul class="first-level">
+              <li v-for="item in zhucekuaijishi" :id="item.id" @click="getText(item.id,item)">{{ item.name }}</li>
+            </ul>
           </div>
         </div>
       </div>
+
     </div>
     <div class="divide"></div>
     <div class="progress">
@@ -73,6 +78,7 @@
 <script type="text/ecmascript-6">
   import Chapter from '../../components/chapter/chapter.vue'
   import Store from '../../store.js'
+
   const msg = {}
   export default {
     props: {
@@ -88,12 +94,15 @@
         zhucekuaijishi: {},
         patterns: {},
         libraries: {},
-        msg: {},
+        allShow: false,
         jijinShow: false,
         yinhangShow: false,
         zhengquanShow: false,
         kuaijiShow: false,
-        zhucekuaijishiShow: false
+        zhucekuaijishiShow: false,
+        hideSelect: true,
+        showSelect: false,
+        msg: {}
       }
     },
     created () {
@@ -129,7 +138,16 @@
         console.log(item.name)
         console.log(item.id)
         this.msg = item.name
-        this.jijinShow = false
+        this.allShow = false
+        this.hideSelect = false
+        this.showSelect = true
+      },
+      showAll () {
+        if (this.allShow === false) {
+          this.allShow = true
+        } else {
+          this.allShow = false
+        }
       },
       showJijin () {
         if (this.jijinShow === false) {
@@ -184,13 +202,14 @@
       font-size: 17px
       font-weight: 500
       text-align: center
-      border-1px(rgb(229,223,223))
+      border-1px(rgb(229, 223, 223))
 
   .panel-body
     background-color: #f0f0f0
     text-align: center
     .first-level
       line-height 46px
+
   .progress
     padding: 20px 16px
     .progress-score
@@ -226,6 +245,7 @@
             display: block
             padding: 5px 0
             font-size 13px
+
   .course-tip
     width: 100%
     overflow: hidden

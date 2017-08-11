@@ -23,7 +23,7 @@
     data () {
       return {
         datas: {}, // 请求的所有数据
-        url: Beiyi.getiUrl() // url
+        url: Beiyi.getUrl() // url
       }
     },
     watch: {
