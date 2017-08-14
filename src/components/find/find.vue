@@ -2,10 +2,10 @@
   <div class="slide-container">
     <swiper :options="swiperOption" ref="mySwiperA">
       <!-- 幻灯内容 -->
-      <swiper-slide class="slide-box"><img src="../../resource/image/banner-1.jpg" alt=""></swiper-slide>
-      <swiper-slide class="slide-box"><img src="../../resource/image/banner-2.jpg" alt=""></swiper-slide>
-      <swiper-slide class="slide-box"><img src="../../resource/image/banner-3.jpg" alt=""></swiper-slide>
-      <swiper-slide class="slide-box"><img src="../../resource/image/banner-4.png" alt=""></swiper-slide>
+      <swiper-slide class="slide-box"><img src="../../common/img/banner-1.jpg" alt=""></swiper-slide>
+      <swiper-slide class="slide-box"><img src="../../common/img/banner-2.jpg" alt=""></swiper-slide>
+      <swiper-slide class="slide-box"><img src="../../common/img/banner-3.jpg" alt=""></swiper-slide>
+      <swiper-slide class="slide-box"><img src="../../common/img/banner-4.png" alt=""></swiper-slide>
       <!-- 以下控件元素均为可选 -->
       <div class="swiper-pagination" slot="pagination"></div>
       <!--<div class="swiper-button-prev" slot="button-prev"></div>
@@ -15,11 +15,11 @@
 
     <!-- 导航 -->
     <div class="industry">
-      <div class="industry-item"><router-link to="/study"><img class="icon" src="./jijin.png" alt="">基金从业</router-link></div>
-      <div class="industry-item"><router-link to="/study"><img class="icon" src="./yinhang.png" alt="">银行从业</router-link></div>
-      <div class="industry-item"><router-link to="/study"><img class="icon" src="./zhengquan.png" alt="">证券从业</router-link></div>
-      <div class="industry-item"><router-link to="/study"><img class="icon" src="./kuaiji.png" alt="">会计从业</router-link></div>
-      <div class="industry-item"><router-link to="/study"><img class="icon" src="./zhucekuaijishi.png" alt="">注册会计师</router-link></div>
+      <div class="industry-item" :industry-id="1"><router-link to="/study?industry_id=1"><img class="icon" src="./jijin.png" alt="">基金从业</router-link></div>
+      <div class="industry-item" :industry-id="2"><router-link to="/study?industry_id=2"><img class="icon" src="./yinhang.png" alt="">银行从业</router-link></div>
+      <div class="industry-item" :industry-id="3"><router-link to="/study?industry_id=3"><img class="icon" src="./zhengquan.png" alt="">证券从业</router-link></div>
+      <div class="industry-item" :industry-id="4"><router-link to="/study?industry_id=4"><img class="icon" src="./kuaiji.png" alt="">会计从业</router-link></div>
+      <div class="industry-item" :industry-id="5"><router-link to="/study?industry_id=5"><img class="icon" src="./zhucekuaijishi.png" alt="">注册会计师</router-link></div>
     </div>
     <div class="divide"></div>
     <lasted></lasted>
@@ -27,7 +27,6 @@
     <Compass></Compass>
     <div class="space"></div>
   </div>
-
 </template>
 
 <script type="text/ecmascript-6">
@@ -35,7 +34,6 @@
   import Employ from '../../components/employ/employ'
   import Compass from '../../components/compass/compass'
   import Beiyi from '../../common.js'
-
   export default {
     props: {
       datas: {}
@@ -76,6 +74,7 @@
     },
     // 获取广告列表
     created () {
+      console.log(this.$route.path)
       console.log(this.datas)
      /* this.$http.get(this.url + '/find/getcanuseads?userId=d7b1fbbb2b5a4eaea0b2c62be47867dd').then((response) => {
         response = response.body.data

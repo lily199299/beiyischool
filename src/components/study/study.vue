@@ -59,34 +59,36 @@
           <p>
             <span class="colorSty">已解锁该课程</span>
           </p>
+          <!-- <p>
+             <span class="lock">未解锁该课程</span>
+           </p>-->
         </div>
       </div>
     </div>
     <ul class="course-tip">
       <li class="tip">
-        <router-link to="./chapter"><img src="../../resource/image/zhangjie.png" alt=""><span>章节练习</span></router-link>
+        <router-link :datas='datas' to="./study/chapter"><img src="../../common/img/zhangjie.png"
+                                                              alt=""><span>章节练习</span></router-link>
       </li>
-      <li class="tip"><img src="../../resource/image/moni.png" alt=""><span>考前模拟</span></li>
-      <li class="tip"><img src="../../resource/image/fangzhen.png" alt=""><span>仿真测试</span></li>
-      <li class="tip"><img src="../../resource/image/zhongdian.png" alt=""><span>重难点突破</span></li>
-      <li class="tip"><img src="../../resource/image/cuoti.png" alt=""><span>错题集</span></li>
-      <li class="tip" @click="check"><img src="../../resource/image/pingce.png" alt=""><span>专家评测</span></li>
+      <li class="tip"><img src="../../common/img/moni.png" alt=""><span>考前模拟</span></li>
+      <li class="tip"><img src="../../common/img/fangzhen.png" alt=""><span>仿真测试</span></li>
+      <li class="tip"><img src="../../common/img/zhongdian.png" alt=""><span>重难点突破</span></li>
+      <li class="tip"><img src="../../common/img/cuoti.png" alt=""><span>错题集</span></li>
+      <li class="tip" @click="check"><img src="../../common/img/pingce.png" alt=""><span>专家评测</span></li>
     </ul>
     <div class="space"></div>
   </div>
 </template>
 <script type="text/ecmascript-6">
-  import Chapter from '../../components/chapter/chapter.vue'
   import Store from '../../store.js'
-
   const msg = {}
   export default {
     props: {
       datas: {}
     },
-    components: {Chapter},
     data () {
       return {
+        response: {},
         jijin: {},
         yinhang: {},
         zhengquan: {},
@@ -106,19 +108,16 @@
       }
     },
     created () {
-      // 必须携带userid
-      this.$http.get('http://bay-api.by-edu.com/course/list?userId=104ebf7e3d304d3a8d79e76f9c6f8d65').then((response) => {
-        console.log(response)
-        response = response.body.data
-        this.jijin = response.jijin
-        this.patterns = this.jijin[0].patterns
-        this.libraries = this.patterns[0].libraries
-        this.yinhang = response.yinhang
-        this.zhengquan = response.zhengquan
-        this.kuaiji = response.kuaiji
-        this.zhucekuaijishi = response.zhucekuaijishi
-        console.log(this.libraries)
-      })
+      console.log(this.datas)
+      this.jijin = this.datas.jijin
+      this.patterns = this.jijin[0].patterns
+      this.libraries = this.patterns[0].libraries
+      this.yinhang = this.datas.yinhang
+      this.zhengquan = this.datas.zhengquan
+      this.kuaiji = this.datas.kuaiji
+      this.zhucekuaijishi = this.datas.zhucekuaijishi
+      console.log(this.libraries)
+      this.pay = this.jijin[0].pay
     },
     watch: {
       msg: {
@@ -184,8 +183,6 @@
           this.zhucekuaijishiShow = false
         }
       }
-    },
-    mounted () {
     }
   }
 </script>
@@ -235,16 +232,27 @@
         display inline-block
         flex: 1
         padding-left: 10px
-        p
+        p:nth-child(1)
           width: 65%
           line-height: 20px
           border: 1px solid #f05a29
           text-align: center
           border-radius: 25px
-          span
+          .colorSty
             display: block
             padding: 5px 0
             font-size 13px
+        p:nth-child(2)
+          width: 65%
+          line-height: 20px
+          border: 1px solid rgb(216, 216, 216)
+          text-align: center
+          border-radius: 25px
+          .lock
+            display: block
+            padding: 5px 0
+            font-size 13px
+            color: rgb(43, 38, 37)
 
   .course-tip
     width: 100%

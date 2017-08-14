@@ -2,9 +2,11 @@
   <div>
     <ul class="courselist">
       <li class="subject" v-for="item in libName">
-        <h1 class="name">{{item.name}}</h1>
-        <p class="jindu"><span class="num">2313人做过</span> <span class="pro">0/{{ item.questionNum }}</span></p>
-        <div class="divide"></div>
+        <router-link to="/study/chapter/question">
+          <h1 class="name">{{item.name}}</h1>
+          <p class="jindu"><span class="num">2313人做过</span> <span class="pro">0/{{ item.questionNum }}</span></p>
+          <div class="divide"></div>
+        </router-link>
       </li>
     </ul>
     <div class="space"></div>
@@ -25,12 +27,9 @@
       console.log(this.datas)
       for (var i in this.datas) {
         var course = this.datas[i]
-        // console.log(course)
         for (let j in course) {
-          // console.log(course[j].patterns)
           var lib = course[j].patterns
           for (var k in lib) {
-            // console.log(lib[k].libraries)
             for (var l in lib[k].libraries) {
               libName.push(lib[k].libraries[l])
             }

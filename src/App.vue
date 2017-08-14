@@ -19,11 +19,13 @@
   import Store from './store.js'
   import Beiyi from './common.js'
   console.log(Beiyi)
+  var userId = '2'
   export default {
     data () {
       return {
         datas: {}, // 请求的所有数据
-        url: Beiyi.getUrl() // url
+        url: Beiyi.getUrl(), // url
+        userId
       }
     },
     watch: {
@@ -37,10 +39,14 @@
     },
     created () {
       this.$http.get(this.url + '/course/list?userId=104ebf7e3d304d3a8d79e76f9c6f8d65').then((response) => {
-        console.log(response)
+       // console.log(response)
         response = response.body.data
         this.datas = response
         this.jijin = this.datas.jijin
+        this.yinhang = this.datas.yinhang
+        this.zhengquan = this.datas.zhengquan
+        this.kuaiji = this.datas.kuaiji
+        this.zhucekuaijishi = this.datas.zhucekuaijishi
       })
     }
   }

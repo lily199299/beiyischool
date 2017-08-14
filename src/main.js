@@ -9,6 +9,7 @@ import find from './components/find/find.vue'
 import study from './components/study/study.vue'
 import mine from './components/mine/mine.vue'
 import chapter from './components/chapter/chapter.vue'
+import question from './components/question/question.vue'
 import './common/stylus/index.styl'
 import './common'
 
@@ -19,12 +20,15 @@ Vue.use(VueAwesomeSwiper)
 Vue.use(VueRouter)
 // 数据请求
 Vue.use(Vueresource)
+// 空root组件
+let Event = new Vue()
 // 路由配置
 const routes = [
   {path: '/find', component: find},
   {path: '/study', component: study},
   {path: '/mine', component: mine},
-  {path: '/chapter', component: chapter}
+  {path: '/study/chapter', component: chapter},
+  {path: '/study/chapter/question', component: question}
 ]
 const router = new VueRouter({
   linkActiveClass: 'active',
