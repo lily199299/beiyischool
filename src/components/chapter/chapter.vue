@@ -2,7 +2,9 @@
   <div>
     <ul class="courselist">
       <li class="subject" v-for="item in libName">
-        <router-link to="/study/chapter/question">
+        <!-- 带查询参数，下面的结果为 /register?plan=private -->
+        <!--  <router-link :to="{ path: '/study/chapter', params: { libraryId: 'private' }}">Register</router-link>-->
+        <router-link :to="{ path: '/study/chapter/question', query: { libraryId: item.id}}">
           <h1 class="name">{{item.name}}</h1>
           <p class="jindu"><span class="num">2313人做过</span> <span class="pro">0/{{ item.questionNum }}</span></p>
           <div class="divide"></div>
@@ -36,7 +38,7 @@
           }
         }
       }
-      console.log(libName)
+      libName = []
     }
   }
 </script>
@@ -45,6 +47,8 @@
   .courselist
     .subject
       padding-top: 15px
+      a
+        display block
       .name
         padding: 0 16px 15px 16px
       .jindu

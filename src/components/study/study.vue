@@ -45,7 +45,6 @@
           </div>
         </div>
       </div>
-
     </div>
     <div class="divide"></div>
     <div class="progress">
@@ -94,8 +93,6 @@
         zhengquan: {},
         kuaiji: {},
         zhucekuaijishi: {},
-        patterns: {},
-        libraries: {},
         allShow: false,
         jijinShow: false,
         yinhangShow: false,
@@ -111,7 +108,6 @@
       console.log(this.datas)
       this.jijin = this.datas.jijin
       this.patterns = this.jijin[0].patterns
-      this.libraries = this.patterns[0].libraries
       this.yinhang = this.datas.yinhang
       this.zhengquan = this.datas.zhengquan
       this.kuaiji = this.datas.kuaiji

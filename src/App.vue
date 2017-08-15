@@ -19,13 +19,11 @@
   import Store from './store.js'
   import Beiyi from './common.js'
   console.log(Beiyi)
-  var userId = '2'
   export default {
     data () {
       return {
         datas: {}, // 请求的所有数据
-        url: Beiyi.getUrl(), // url
-        userId
+        url: Beiyi.getUrl() // url
       }
     },
     watch: {
