@@ -1,9 +1,8 @@
-const STORAGE_KEY = 'beiyi'
 export default {
-  fetch () {
-    return JSON.parse(window.localStorage.getItem(STORAGE_KEY || '[]'))
+  fetch (key) {
+    return JSON.parse(window.localStorage.getItem(key || '[]'))
   },
-  save (items) {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
+  save (key, items) {
+    window.localStorage.setItem(key, JSON.stringify(items))
   }
 }

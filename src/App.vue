@@ -18,26 +18,37 @@
 <script type="text/ecmascript-6">
   import Store from './store.js'
   import Beiyi from './common.js'
-  console.log(Beiyi)
+
+  // console.log(Beiyi)
+  var courses = []
   export default {
     data () {
       return {
         datas: {}, // 请求的所有数据
-        url: Beiyi.getUrl() // url
+        url: Beiyi.getUrl(), // url
+        courses: [],
+        course: {}
       }
     },
     watch: {
-      datas: {
+      courses: {
         handler: function (items) {
-          console.log(items)
-          Store.save(items)   // 观察／存入缓存
+          // console.log(items)
+          Store.save('courses', items)   // 观察／存入缓存
+        },
+        deep: true
+      },
+      course: {
+        handler: function (items) {
+          Store.save('course', items)   // 观察／存入缓存
+          // console.log(Store.fetch('course'))
         },
         deep: true
       }
     },
     created () {
       this.$http.get(this.url + '/course/list?userId=104ebf7e3d304d3a8d79e76f9c6f8d65').then((response) => {
-       // console.log(response)
+        // console.log(response)
         response = response.body.data
         this.datas = response
         this.jijin = this.datas.jijin
@@ -45,6 +56,12 @@
         this.zhengquan = this.datas.zhengquan
         this.kuaiji = this.datas.kuaiji
         this.zhucekuaijishi = this.datas.zhucekuaijishi
+        for (var i in this.datas) {
+          for (var j in this.datas[i]) {
+            this.courses.push(this.datas[i][j])
+          }
+        }
+        this.course = this.courses[0]
       })
     }
   }

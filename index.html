@@ -27,15 +27,15 @@
   alert(getQueryString('参数名2'))
   alert(getQueryString('参数名3')) */
   var url = location.hash
-  console.log(url)
+ // console.log(url)
   var dataUrl = 'http://bay-api.by-edu.com'
   $(function () {
     $.ajax({
       type: 'GET',
-      url: dataUrl + '/course/list?userId=104ebf7e3d304d3a8d79e76f9c6f8d65',
+     // url: dataUrl + '/course/list?userId=104ebf7e3d304d3a8d79e76f9c6f8d65',
       async: false,
       success: function (res) {
-        console.log(res)
+       // console.log(res)
       }
     })
   })

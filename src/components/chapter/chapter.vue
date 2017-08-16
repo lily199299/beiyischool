@@ -1,12 +1,11 @@
 <template>
   <div>
+    {{$route.query.coureId}}
     <ul class="courselist">
       <li class="subject" v-for="item in libName">
-        <!-- 带查询参数，下面的结果为 /register?plan=private -->
-        <!--  <router-link :to="{ path: '/study/chapter', params: { libraryId: 'private' }}">Register</router-link>-->
         <router-link :to="{ path: '/study/chapter/question', query: { libraryId: item.id}}">
           <h1 class="name">{{item.name}}</h1>
-          <p class="jindu"><span class="num">2313人做过</span> <span class="pro">0/{{ item.questionNum }}</span></p>
+          <p class="jindu"><span class="num"><span>231</span>人做过</span> <span class="pro">0/{{ item.questionNum }}</span></p>
           <div class="divide"></div>
         </router-link>
       </li>
@@ -16,19 +15,19 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import Store from '../../store.js'
   // 获取所有的试题题目
   var libName = []
   export default {
     data () {
-      return {libName}
-    },
-    props: {
-      datas: {}
+      return { libName }
     },
     created () {
-      console.log(this.datas)
-      for (var i in this.datas) {
-        var course = this.datas[i]
+      this.courses = Store.fetch('courses')
+     // console.log(this.courses)
+      for (var i in this.courses) {
+        var course = this.courses[i]
+        console.log(course)
         for (let j in course) {
           var lib = course[j].patterns
           for (var k in lib) {

@@ -1,14 +1,23 @@
 <template>
   <div>
+    <div>{{course}}</div>
     <div class="panel-title">
-      <p class="panel-nav border-1px" @click="showAll" v-show="hideSelect">请选择课程</p>
-      <p class="panel-nav border-1px" @click="showAll" v-text="msg" v-show="showSelect"></p>
+      <p class="panel-nav border-1px" @click="showAll" v-show="hideSelect" :id="course.id">切换课程（{{course.name}}）</p>
+      <p class="panel-nav border-1px" @click="showAll" v-text="msg" v-show="showSelect" :id="this.coureId"></p>
       <div v-show="allShow">
+        <div class="zhengquan">
+          <p class="panel-nav border-1px" @click="showZhengquan">证券从业</p>
+          <div class="panel-body" v-show="zhengquanShow">
+            <ul class="first-level">
+              <li v-for="item in zhengquan" @click="getText(item.id,item)">{{ item.name }}</li>
+            </ul>
+          </div>
+        </div>
         <div class="jijin">
           <p class="panel-nav border-1px" @click="showJijin">基金从业</p>
           <div class="panel-body" v-show="jijinShow">
             <ul class="first-level">
-              <li v-for="item in jijin" :id="item.id" @click="getText(item.id,item)" ref="course">{{ item.name }}</li>
+              <li v-for="item in jijin" @click="getText(item.id,item)">{{ item.name }}</li>
             </ul>
           </div>
         </div>
@@ -16,23 +25,7 @@
           <p class="panel-nav border-1px" @click="showYinhang">银行从业</p>
           <div class="panel-body" v-show="yinhangShow">
             <ul class="first-level">
-              <li v-for="item in yinhang" :id="item.id" @click="getText(item.id,item)">{{ item.name }}</li>
-            </ul>
-          </div>
-        </div>
-        <div class="zhengquan">
-          <p class="panel-nav border-1px" @click="showZhengquan">证券从业</p>
-          <div class="panel-body" v-show="zhengquanShow">
-            <ul class="first-level">
-              <li v-for="item in zhengquan" :id="item.id" @click="getText(item.id,item)">{{ item.name }}</li>
-            </ul>
-          </div>
-        </div>
-        <div class="kuaiji">
-          <p class="panel-nav border-1px" @click="showKuaiji">会计从业</p>
-          <div class="panel-body" v-show="kuaijiShow">
-            <ul class="first-level">
-              <li v-for="item in kuaiji" :id="item.id" @click="getText(item.id,item)">{{ item.name }}</li>
+              <li v-for="item in yinhang" @click="getText(item.id,item)">{{ item.name }}</li>
             </ul>
           </div>
         </div>
@@ -40,7 +33,15 @@
           <p class="panel-nav border-1px" @click="showZhucekuaijishi">注册会计师</p>
           <div class="panel-body" v-show="zhucekuaijishiShow">
             <ul class="first-level">
-              <li v-for="item in zhucekuaijishi" :id="item.id" @click="getText(item.id,item)">{{ item.name }}</li>
+              <li v-for="item in zhucekuaijishi" @click="getText(item.id,item)">{{ item.name }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="kuaiji">
+          <p class="panel-nav border-1px" @click="showKuaiji">会计从业</p>
+          <div class="panel-body" v-show="kuaijiShow">
+            <ul class="first-level">
+              <li v-for="item in kuaiji" @click="getText(item.id,item)">{{ item.name }}</li>
             </ul>
           </div>
         </div>
@@ -55,39 +56,42 @@
           <p>我的排名<span class="colorSty">12</span></p>
         </div>
         <div class="ratings">
-          <p>
+          <p v-if="coursePay">
             <span class="colorSty">已解锁该课程</span>
           </p>
-          <!-- <p>
+           <p v-if="!coursePay" style="border: 1px solid #ddd;">
              <span class="lock">未解锁该课程</span>
-           </p>-->
+           </p>
         </div>
       </div>
     </div>
     <ul class="course-tip">
       <li class="tip">
-        <router-link :datas='datas' to="./study/chapter"><img src="../../common/img/zhangjie.png"
-                                                              alt=""><span>章节练习</span></router-link>
-      </li>
+      <router-link :to="{ path: '/study/chapter' , query: {coureId: this.coureId}}">
+        <img src="../../common/img/zhangjie.png" alt=""><span>章节练习</span>
+      </router-link>
+    </li>
       <li class="tip"><img src="../../common/img/moni.png" alt=""><span>考前模拟</span></li>
       <li class="tip"><img src="../../common/img/fangzhen.png" alt=""><span>仿真测试</span></li>
       <li class="tip"><img src="../../common/img/zhongdian.png" alt=""><span>重难点突破</span></li>
       <li class="tip"><img src="../../common/img/cuoti.png" alt=""><span>错题集</span></li>
-      <li class="tip" @click="check"><img src="../../common/img/pingce.png" alt=""><span>专家评测</span></li>
+      <li class="tip"><img src="../../common/img/pingce.png" alt=""><span>专家评测</span></li>
     </ul>
     <div class="space"></div>
   </div>
 </template>
 <script type="text/ecmascript-6">
   import Store from '../../store.js'
-  const msg = {}
+  const msg = ''
+  const coureId = ''
+  var libraries = []
+  var coursePay = false
   export default {
     props: {
       datas: {}
     },
     data () {
       return {
-        response: {},
         jijin: {},
         yinhang: {},
         zhengquan: {},
@@ -101,38 +105,62 @@
         zhucekuaijishiShow: false,
         hideSelect: true,
         showSelect: false,
-        msg: {}
+        msg,
+        coureId,
+        libraries: [],
+        coursePay
       }
     },
     created () {
-      console.log(this.datas)
+     // console.log(this.datas)
       this.jijin = this.datas.jijin
-      this.patterns = this.jijin[0].patterns
       this.yinhang = this.datas.yinhang
       this.zhengquan = this.datas.zhengquan
       this.kuaiji = this.datas.kuaiji
       this.zhucekuaijishi = this.datas.zhucekuaijishi
-      console.log(this.libraries)
-      this.pay = this.jijin[0].pay
+      // 从缓存读取课程
+      this.courses = Store.fetch('courses')
+      // 初始化默认值
+      this.course = this.courses[0]
+      // 获取libraries
+      for (var i in this.courses) {
+        libraries.push(this.courses[i])
+      }
+      console.log(libraries)
+      libraries = []
     },
     watch: {
-      msg: {
+      patterns: {
         handler: function (items) {
-          console.log(items)
-          Store.save(items)   // 观察／存入缓存
+          // console.log(items)
+          Store.save('patterns', items)   // 观察／存入缓存
+        },
+        deep: true
+      },
+      libraries: {
+        handler: function (items) {
+          Store.save('libraries', items)   // 观察／存入缓存
+          // console.log(Store.fetch('course'))
         },
         deep: true
       }
     },
     methods: {
-      check () {
-        console.log(this.datas)
-      },
       getText (id, item) {
         // 课程id 课程名
         console.log(item.name)
         console.log(item.id)
         this.msg = item.name
+        this.coureId = item.id
+        // 获取id对应的课程
+        for (var i in this.courses) {
+          if (this.coureId === this.courses[i].id) {
+            this.course = this.courses[i]
+            console.log(this.course)
+            this.coursePay = this.course.pay
+            // console.log(this.coursePay)
+          }
+        }
         this.allShow = false
         this.hideSelect = false
         this.showSelect = true

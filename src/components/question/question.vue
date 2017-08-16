@@ -39,7 +39,7 @@
         res = res.body.data
         this.question = res
         // 把数据存入map，对应的有 题号 题目 答案选项 并缓存，点击下一题，再清缓存，加载下一题
-        console.log(this.question)
+       // console.log(this.question)
         for (var answer in this.question) {
           // console.log(this.question[answer].answers)
           this.answers.push(this.question[answer].answers)
