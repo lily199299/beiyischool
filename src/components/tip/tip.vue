@@ -1,9 +1,9 @@
 <template>
   <div>
-    {{$route.query.coureId}}
+ <!--   {{$route.query.course}}-->
     <ul class="courselist">
       <li class="subject" v-for="item in libName">
-        <router-link :to="{ path: '/study/chapter/question', query: { libraryId: item.id}}">
+        <router-link :to="{ path: '/study/tip/question', query: { libraryId: item.id}}">
           <h1 class="name">{{item.name}}</h1>
           <p class="jindu"><span class="num"><span>231</span>人做过</span> <span class="pro">0/{{ item.questionNum }}</span></p>
           <div class="divide"></div>
@@ -18,26 +18,26 @@
   import Store from '../../store.js'
   // 获取所有的试题题目
   var libName = []
+  // var course = this.$route.query.course
   export default {
     data () {
-      return { libName }
+      return {
+        libName
+      }
     },
     created () {
-      this.courses = Store.fetch('courses')
-     // console.log(this.courses)
-      for (var i in this.courses) {
-        var course = this.courses[i]
-        console.log(course)
-        for (let j in course) {
-          var lib = course[j].patterns
-          for (var k in lib) {
-            for (var l in lib[k].libraries) {
-              libName.push(lib[k].libraries[l])
-            }
+      this.course = this.$route.query.course.patterns
+     // console.log(this.course)
+      for (var i in this.course) {
+       // console.log(this.course[i].libraries)
+        if (this.course[i].pattern === 'tip') {
+          for (var j in this.course[i].libraries) {
+            libName.push(this.course[i].libraries[j])
           }
         }
+      //  console.log(libName)
+        libName = []
       }
-      libName = []
     }
   }
 </script>

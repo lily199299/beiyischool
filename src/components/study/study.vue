@@ -67,15 +67,35 @@
     </div>
     <ul class="course-tip">
       <li class="tip">
-      <router-link :to="{ path: '/study/chapter' , query: {coureId: this.coureId}}">
+      <router-link :to="{ path: '/study/tip' , query: {course: this.course}}">
         <img src="../../common/img/zhangjie.png" alt=""><span>章节练习</span>
       </router-link>
     </li>
-      <li class="tip"><img src="../../common/img/moni.png" alt=""><span>考前模拟</span></li>
-      <li class="tip"><img src="../../common/img/fangzhen.png" alt=""><span>仿真测试</span></li>
-      <li class="tip"><img src="../../common/img/zhongdian.png" alt=""><span>重难点突破</span></li>
-      <li class="tip"><img src="../../common/img/cuoti.png" alt=""><span>错题集</span></li>
-      <li class="tip"><img src="../../common/img/pingce.png" alt=""><span>专家评测</span></li>
+      <li class="tip">
+        <router-link :to="{ path: '/study/kaoqian', query: {course: this.course}}">
+          <img src="../../common/img/moni.png" alt=""><span>考前模拟</span>
+        </router-link>
+      </li>
+      <li class="tip">
+        <router-link :to="{ path: '/study/fangzhen', query: {course: this.course}}">
+          <img src="../../common/img/fangzhen.png" alt=""><span>仿真测试</span>
+        </router-link>
+      </li>
+      <li class="tip">
+        <router-link :to="{ path: '/study/tupo', query: {course: this.course}}">
+          <img src="../../common/img/zhongdian.png" alt=""><span>重难点突破</span>
+        </router-link>
+      </li>
+      <li class="tip">
+        <router-link :to="{ path: '/study/cuoti', query: {course: this.course}}">
+          <img src="../../common/img/cuoti.png" alt=""><span>错题集</span>
+        </router-link>
+      </li>
+      <li class="tip">
+        <router-link :to="{ path: '/study/zhuanjia', query: {course: this.course}}">
+          <img src="../../common/img/pingce.png" alt=""><span>专家评测</span>
+        </router-link>
+      </li>
     </ul>
     <div class="space"></div>
   </div>
@@ -286,6 +306,8 @@
       padding: 20px 0
       text-align: center
       float: left
+      a
+        display block
       img
         width: 50%
         display: block
