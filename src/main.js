@@ -4,6 +4,8 @@ import Vue from 'vue'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import VueRouter from 'vue-router'
 import Vueresource from 'vue-resource'
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
 import App from './App.vue'
 import find from './components/find/find.vue'
 import study from './components/study/study.vue'
@@ -23,6 +25,7 @@ Vue.config.productionTip = false
 Vue.use(VueAwesomeSwiper)
 // 路由
 Vue.use(VueRouter)
+Vue.use(iView)
 // 数据请求
 Vue.use(Vueresource)
 // 空root组件

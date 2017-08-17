@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div>{{course}}</div>
+    <!--<div>{{course}}</div>-->
     <div class="panel-title">
-      <p class="panel-nav border-1px" @click="showAll" v-show="hideSelect" :id="course.id">切换课程（{{course.name}}）</p>
+      <p class="panel-nav border-1px" @click="showAll" v-show="hideSelect" :id="course.id">{{course.name}}</p>
       <p class="panel-nav border-1px" @click="showAll" v-text="msg" v-show="showSelect" :id="this.coureId"></p>
       <div v-show="allShow">
         <div class="zhengquan">
@@ -67,32 +67,32 @@
     </div>
     <ul class="course-tip">
       <li class="tip">
-      <router-link :to="{ path: '/study/tip' , query: {course: this.course}}">
+      <router-link :to="{ path: '/study/tip' , query: {coureId: this.coureId, course: this.course}}">
         <img src="../../common/img/zhangjie.png" alt=""><span>章节练习</span>
       </router-link>
     </li>
       <li class="tip">
-        <router-link :to="{ path: '/study/kaoqian', query: {course: this.course}}">
+        <router-link :to="{ path: '/study/kaoqian', query: {coureId: this.coureId, course: this.course}}">
           <img src="../../common/img/moni.png" alt=""><span>考前模拟</span>
         </router-link>
       </li>
       <li class="tip">
-        <router-link :to="{ path: '/study/fangzhen', query: {course: this.course}}">
+        <router-link :to="{ path: '/study/fangzhen', query: {coureId: this.coureId, course: this.course}}">
           <img src="../../common/img/fangzhen.png" alt=""><span>仿真测试</span>
         </router-link>
       </li>
       <li class="tip">
-        <router-link :to="{ path: '/study/tupo', query: {course: this.course}}">
+        <router-link :to="{ path: '/study/tupo', query: {coureId: this.coureId, course: this.course}}">
           <img src="../../common/img/zhongdian.png" alt=""><span>重难点突破</span>
         </router-link>
       </li>
       <li class="tip">
-        <router-link :to="{ path: '/study/cuoti', query: {course: this.course}}">
+        <router-link :to="{ path: '/study/cuoti', query: {coureId: this.coureId, course: this.course}}">
           <img src="../../common/img/cuoti.png" alt=""><span>错题集</span>
         </router-link>
       </li>
       <li class="tip">
-        <router-link :to="{ path: '/study/zhuanjia', query: {course: this.course}}">
+        <router-link :to="{ path: '/study/zhuanjia', query: {coureId: this.coureId, course: this.course}}">
           <img src="../../common/img/pingce.png" alt=""><span>专家评测</span>
         </router-link>
       </li>
@@ -160,6 +160,14 @@
       libraries: {
         handler: function (items) {
           Store.save('libraries', items)   // 观察／存入缓存
+          // console.log(Store.fetch('course'))
+        },
+        deep: true
+      },
+      // 缓存课程id:coureId
+      coureId: {
+        handler: function (items) {
+          Store.save('coureId', items)   // 观察／存入缓存
           // console.log(Store.fetch('course'))
         },
         deep: true
