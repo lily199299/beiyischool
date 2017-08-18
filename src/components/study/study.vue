@@ -176,8 +176,8 @@
     methods: {
       getText (id, item) {
         // 课程id 课程名
-        console.log(item.name)
-        console.log(item.id)
+       // console.log(item.name)
+       // console.log(item.id)
         this.msg = item.name
         this.coureId = item.id
         // 获取id对应的课程
@@ -258,6 +258,8 @@
     text-align: center
     .first-level
       line-height 46px
+      li
+        font-size 15px
 
   .progress
     padding: 20px 16px
@@ -324,4 +326,5 @@
         display block
         padding-top 9px
         font-size 13px
+        color: rgb(43,38,37)
 </style>

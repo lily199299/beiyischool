@@ -8,9 +8,9 @@
         <p class="question-title">({{questionList.no}}){{questionList.content}}</p>
         <div class="question-list">
           <ul>
-            <li v-for="index in questionList.answers">
-              <p class="option">
-                <span class="suboption">{{index.subOption}}</span><span class="content">{{index.content}}</span>
+            <li v-for="(item, index) in questionList.answers" @click="answerQuestion(index)">
+              <p class="option" :class="{ optionActive: index==isActive }">
+                <span class="suboption">{{item.subOption}}</span><span class="content">{{item.content}}</span>
               </p>
             </li>
           </ul>
@@ -24,9 +24,18 @@
       <span class="submitPapers">交卷</span>
       <span class="next" @click="next">下一题</span>
     </div>
-    <Modal v-model="visible" class-name="vertical-center-modal" title="同学，试学结束啦～">
-      <button @click="buyCourse">去购买</button>
-      <button @click="backToHome">查看其他</button>
+    <Modal v-model="visible" class-name="vertical-center-modal" title="购买课程" :closable="false">
+      <div style="font-size: 15px">
+         亲爱的童鞋，试学结束了，可以购买课程，也可以试学其他课程哦～
+      </div>
+      <div slot="footer">
+          <button @click="buyCourse">
+            <router-link to="/study"  style="color: red;">去购买</router-link>
+          </button>
+          <button @click="studyOther">
+            <router-link to="/find">试学其他课程</router-link>
+          </button>
+      </div>
     </Modal>
 
   </div>
@@ -45,7 +54,8 @@
         index,
         length,
         questionList: {},
-        visible: false
+        visible: false,
+        isActive: -1
       }
     },
     created () {
@@ -67,12 +77,19 @@
       })
     },
     methods: {
+      // 选项答题
+      answerQuestion (index) {
+        // 判断当前题目的id
+        console.log(index)
+        this.isActive = index
+      },
       next () {
         this.index = ++index
-        if (this.index === this.length) {
+        if (this.index === this.length - 1) {
           this.visible = true
         } else {
           this.questionList = this.question[this.index]
+          console.log(this.questionList)
         }
         // console.log(this.questionList)
       },
@@ -86,10 +103,10 @@
         // console.log(this.questionList)
       },
       buyCourse () {
-        alert(1)
+        this.$router.push({path: '/study/buyCourse'})
       },
-      backToHome () {
-        alert(1)
+      studyOther () {
+        this.$router.push({path: '/mine'})
       }
     }
   }
@@ -113,6 +130,8 @@
       font-size: 18px
       .pro
         float right
+        a
+          color: rgb(43,38,37)
     .question-title, .question-list
       padding: 15px 16px
       font-size: 15px
@@ -120,19 +139,24 @@
         padding: 15px 0
         .suboption
           margin-right 10px
+      .optionActive
+        color: red
 
   .functionZone
     position: fixed
-    bottom: 70px
+    bottom 0
+    z-index 100
     display: flex
     width: 100%
+    height: 60px
+    line-height 60px
     padding: 0 5%;
     background-color: aliceblue
     .previous, .answerSheet, .submitPapers, .next
       display block
       flex: 1
       text-align: center
-      height: 40px
-      line-height: 40px
+      height: 60px
+      line-height: 60px
 
 </style>

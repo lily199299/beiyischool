@@ -103,6 +103,8 @@
       text-align center
       font-size: 13px
       padding: 13px 0
+      a
+        color: rgb(43,38,37)
       .icon
         display block
         padding-bottom: 10px

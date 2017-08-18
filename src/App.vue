@@ -81,6 +81,7 @@
         display: block
         font-size 14px
         padding-bottom: 5px
+        color: rgb(43,38,37)
         &.active
           color: rgb(240, 90, 41)
       i

@@ -49,7 +49,8 @@
         display block
       .name
         padding: 0 16px 15px 16px
-        font-size: 14px
+        font-size: 16px
+        color: rgb(43,38,37)
       .jindu
         color: #7e7c7d
         font-size: 13px

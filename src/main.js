@@ -17,6 +17,7 @@ import tupo from './components/tupo/tupo.vue'
 import cuoti from './components/cuoti/cuoti.vue'
 import zhuanjia from './components/zhuanjia/zhuanjia.vue'
 import question from './components/question/question.vue'
+import buyCourse from './components/buyCourse/buyCourse.vue'
 import './common/stylus/index.styl'
 import './common'
 
@@ -46,7 +47,8 @@ const routes = [
   {path: '/study/fangzhen/question', component: question},
   {path: '/study/tupo/question', component: question},
   {path: '/study/cuoti/question', component: question},
-  {path: '/study/zhuanjia/question', component: question}
+  {path: '/study/zhuanjia/question', component: question},
+  {path: '/study/buyCourse', component: buyCourse}
 ]
 const router = new VueRouter({
   linkActiveClass: 'active',

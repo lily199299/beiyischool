@@ -27,17 +27,15 @@
     },
     created () {
       this.course = this.$route.query.course.patterns
-     // console.log(this.course)
       for (var i in this.course) {
-       // console.log(this.course[i].libraries)
         if (this.course[i].pattern === 'tip') {
           for (var j in this.course[i].libraries) {
             libName.push(this.course[i].libraries[j])
           }
         }
       //  console.log(libName)
-        libName = []
       }
+      libName = []
     }
   }
 </script>
@@ -50,7 +48,9 @@
         display block
       .name
         padding: 0 16px 15px 16px
-        font-size: 14px
+        font-size: 16px
+        color: rgb(43,38,37)
+
       .jindu
         color: #7e7c7d
         font-size: 13px
