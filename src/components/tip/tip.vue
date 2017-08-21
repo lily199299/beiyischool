@@ -3,7 +3,7 @@
  <!--   {{$route.query.course}}-->
     <ul class="courselist">
       <li class="subject" v-for="item in libName">
-        <router-link :to="{ path: '/study/tip/question', query: { libraryId: item.id}}">
+        <router-link :to="{ path: '/study/tip/question', query: { courseName: this.course ,libraryId: item.id}}">
           <p class="name">{{item.name}}</p>
           <p class="jindu"><span class="num"><span>231</span>人做过</span> <span class="pro">0/{{ item.questionNum }}</span></p>
           <div class="divide"></div>
@@ -27,6 +27,7 @@
     },
     created () {
       this.course = this.$route.query.course.patterns
+      console.log(this.course)
       for (var i in this.course) {
         if (this.course[i].pattern === 'tip') {
           for (var j in this.course[i].libraries) {

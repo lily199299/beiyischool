@@ -18,6 +18,7 @@ import cuoti from './components/cuoti/cuoti.vue'
 import zhuanjia from './components/zhuanjia/zhuanjia.vue'
 import question from './components/question/question.vue'
 import buyCourse from './components/buyCourse/buyCourse.vue'
+import answerSheet from './components/answerSheet/answerSheet.vue'
 import './common/stylus/index.styl'
 import './common'
 
@@ -48,7 +49,8 @@ const routes = [
   {path: '/study/tupo/question', component: question},
   {path: '/study/cuoti/question', component: question},
   {path: '/study/zhuanjia/question', component: question},
-  {path: '/study/buyCourse', component: buyCourse}
+  {path: '/study/buyCourse', component: buyCourse},
+  {path: '/study/tip/question/answerSheet', component: answerSheet}
 ]
 const router = new VueRouter({
   linkActiveClass: 'active',

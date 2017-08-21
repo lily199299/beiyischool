@@ -141,7 +141,7 @@
       // 从缓存读取课程
       this.courses = Store.fetch('courses')
       // 初始化默认值
-      this.course = this.courses[0]
+      this.course = this.courses[4]
       // 获取libraries
       for (var i in this.courses) {
         libraries.push(this.courses[i])

@@ -61,7 +61,7 @@
             this.courses.push(this.datas[i][j])
           }
         }
-        this.course = this.courses[0]
+        this.course = this.courses[4]
       })
     }
   }
