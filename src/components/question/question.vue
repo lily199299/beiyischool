@@ -26,13 +26,10 @@
         </div>
       </div>
     </div>
-    <Modal v-model="popup">
-      <answersheet></answersheet>
-    </Modal>
     <!--上一题 题卡 交卷 下一题 -->
     <div class="functionZone">
       <span class="previous" @click="previous">上一题</span>
-      <span class="answerSheet" @click="answerSheet">
+      <span class="answerSheet">
         <router-link :to="{path: './question/answerSheet', query: {length: this.length}}">题卡</router-link>
       </span>
       <span class="submitPapers">交卷</span>
@@ -71,8 +68,7 @@
         index: 0,
         questionType: false,
         checkRadio: [],
-        checkedBox: [],
-        popup: false
+        checkedBox: []
       }
     },
     components: {answersheet},
@@ -132,9 +128,6 @@
           console.log(this.questionList.answers[0].checked)
         }
         // console.log(this.questionList)
-      },
-      answerSheet () {
-        this.popup = true
       },
       buyCourse () {
         this.$router.push({path: '/study/buyCourse'})
