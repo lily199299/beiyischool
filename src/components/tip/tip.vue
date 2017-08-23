@@ -1,9 +1,9 @@
 <template>
   <div>
- <!--   {{$route.query.course}}-->
+  <!--{{$route.query.course}}-->
     <ul class="courselist">
       <li class="subject" v-for="item in libName">
-        <router-link :to="{ path: '/study/tip/question', query: { courseName: this.course ,libraryId: item.id}}">
+        <router-link :to="{ path: '/study/tip/question', query: { libraryName: item.name, libraryId: item.id} }">
           <p class="name">{{item.name}}</p>
           <p class="jindu"><span class="num"><span>231</span>人做过</span> <span class="pro">0/{{ item.questionNum }}</span></p>
           <div class="divide"></div>
@@ -51,7 +51,6 @@
         padding: 0 16px 15px 16px
         font-size: 16px
         color: rgb(43,38,37)
-
       .jindu
         color: #7e7c7d
         font-size: 13px

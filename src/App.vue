@@ -69,7 +69,7 @@
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   .tab
     position: fixed
-    bottom: 0
+    bottom: -3px
     display: flex
     width: 100%
     background-color rgb(240, 240, 240)

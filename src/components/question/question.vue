@@ -2,26 +2,35 @@
   <div>
     <!--题目类型-->
     <div class="question">
-      <h1 class="question-type">{{questionList.ctype}} <span class="pro"><a v-text="index+1"></a>/<a v-text="length"></a></span></h1>
+      {{$route.query.libraryName}}
+      <h1 class="question-type">{{questionList.ctype}} <span class="pro"><a>{{questionList.no}}</a>/<a v-text="length"></a></span></h1>
       <div class="divide"></div>
       <div>
         <p class="question-title">({{questionList.no}}){{questionList.content}}</p>
         <div class="question-list">
           <ul>
             <li v-for="(item, index) in questionList.answers" @click="answerQuestion(index)">
-             <!--单选、判断-->
-              <label  v-if="questionType" class="option" :class="{ optionActive: index==isActive }">
-                <input type="radio" v-model="checkRadio" name="answer" :value="item.subOption" :id="item.id" :no="item.no">
-                <span class="suboption">{{item.subOption}}</span><span class="content">{{item.content}}</span>
-              </label>
-             <!-- <span>{{checkRadio}}</span>-->
+              <!--单选、判断-->
+              <p class="option" v-if="questionType" :class="{ optionActive: index==isActive }">
+                <span class="suboption" ref="subOption">{{item.subOption}}</span><span
+                class="content">{{item.content}}</span>
+              </p>
+              <!--<label :for="'name'+item.id"  v-if="questionType" class="option" :class="{ optionActive: index==isActive }">
+                <input type="radio" v-model="checkRadio" name="answer" :value="item.subOption" :id="'name'+item.id">
+                <span class="suboption" ref="subOption">{{item.subOption}}</span><span class="content">{{item.content}}</span>
+              </label>-->
+              <!-- <span>{{checkRadio}}</span>-->
               <!--多选-->
-              <label v-if="!questionType" class="option" :class="{ optionActive: index==isActive }">
-                <input type="checkbox"  v-model="checkedBox" name="answer" :value="item.subOption" :id="item.id" :no="item.no">
-                <span class="suboption">{{item.subOption}}</span><span class="content">{{item.content}}</span>
-              </label>
-              <span>{{questionList.id}}:{{checkedBox}}</span>
+              <!-- <label v-if="!questionType" class="option" :class="{ optionActive: index==isActive }">
+                 <input type="checkbox"  v-model="checkedBox" name="answer" :value="item.subOption" :id="item.id" :no="item.no">
+                 <span class="suboption">{{item.subOption}}</span><span class="content">{{item.content}}</span>
+               </label>-->
+              <p class="option" v-if="!questionType" :class="{ optionActive: index==isActive }">
+                <span class="suboption" ref="subOption">{{item.subOption}}</span><span
+                class="content">{{item.content}}</span>
+              </p>
             </li>
+            <!--<span>{{questionList.id}}:{{checkedBox}}</span>-->
           </ul>
         </div>
       </div>
@@ -30,23 +39,23 @@
     <div class="functionZone">
       <span class="previous" @click="previous">上一题</span>
       <span class="answerSheet">
-        <router-link :to="{path: './question/answerSheet', query: {length: this.length}}">题卡</router-link>
+        <router-link :to="{path: './question/answerSheet', query: {length: this.length, questionList: this.questionList, answer:  this.answer, tipname: this.tipName}}">题卡</router-link>
       </span>
-      <span class="submitPapers">交卷</span>
+      <span class="submitPapers" @click="submitPapers">交卷</span>
       <span class="next" @click="next">下一题</span>
     </div>
     <!--弹窗提示-->
     <Modal v-model="visible" class-name="vertical-center-modal" title="购买课程" :closable="false">
       <div style="font-size: 15px">
-         亲爱的童鞋，试学结束了，可以购买课程，也可以试学其他课程哦～
+        亲爱的童鞋，试学结束了，可以购买课程，也可以试学其他课程哦～
       </div>
       <div slot="footer">
-          <button @click="buyCourse">
-            <router-link to="/study"  style="color: red;">去购买</router-link>
-          </button>
-          <button @click="studyOther">
-            <router-link to="/find">试学其他课程</router-link>
-          </button>
+        <button @click="buyCourse">
+          <router-link to="/study" style="color: red;">去购买</router-link>
+        </button>
+        <button @click="studyOther">
+          <router-link to="/find">试学其他课程</router-link>
+        </button>
       </div>
     </Modal>
   </div>
@@ -55,40 +64,37 @@
 <script type="text/ecmascript-6">
   import Store from '../../store.js'
   import Beiyi from '../../common.js'
-  import answersheet from '../../components/answerSheet/answerSheet.vue'
+
   export default {
     data () {
       return {
         url: Beiyi.getUrl(),
-        answers: [],
+        answer: [],
         length,
         questionList: {},
         visible: false,
         isActive: -1,
         index: 0,
         questionType: false,
-        checkRadio: [],
-        checkedBox: []
+        checkRadio: '',  // 单选 判断
+        checkedBox: ''   // 多选
       }
     },
-    components: {answersheet},
     created () {
+      this.tipName = this.$route.query.libraryName
       // 请求地址：http://bay-api.by-edu.com/question/list/{userId}/{libraryId}
       // http://bay-api.by-edu.com/question/list/104ebf7e3d304d3a8d79e76f9c6f8d65/1
       this.$http.get(this.url + '/question/list/104ebf7e3d304d3a8d79e76f9c6f8d65/' + this.$route.query.libraryId).then((res) => {
-        // console.log(res)
         res = res.body.data
         this.question = res
-        // 把数据存入map，对应的有 题号 题目 答案选项 并缓存，点击下一题，再清缓存，加载下一题
-        for (var answer in this.question) {
-          this.answers.push(this.question[answer])
-        }
-        // 本套试题的题数
-        this.length = this.answers.length
-        this.answers = []
+        // 本套试题的总题数
+        this.length = this.question.length
+        console.log(this.length)
+        // 默认值当前index为0，也就是第一题
         this.questionList = this.question[this.index]
-        console.log(this.questionList.ctype)
-        console.log(this.questionList.answers)
+        // console.log(this.questionList)
+        // console.log(this.questionList.answers)
+        // 判断单选 多选
         if (this.questionList.ctype === '单选' || this.questionList.ctype === '判断') {
           this.questionType = true
         }
@@ -100,34 +106,99 @@
     methods: {
       // 选项答题
       answerQuestion (index) {
-        console.log(index)
         this.isActive = index
+        // 选项
+        if (this.questionList.ctype === '单选' || this.questionList.ctype === '判断') {
+          this.checkRadio = this.$refs.subOption[index].innerText
+          // console.log(this.checkRadio)
+          var singleAnswer = {}
+          singleAnswer.id = this.question[this.index].id
+          singleAnswer.A = this.checkRadio                  // 用户答案
+          singleAnswer.R = this.question[this.index].right  // 正确答案
+          console.log(this.answer)
+          var singleFlag = false
+          for (var i in this.answer) {
+            if (this.answer[i].id === singleAnswer.id) {
+              singleFlag = true
+              this.answer[i] = singleAnswer
+            }
+          }
+          if (!singleFlag) {
+            this.answer.push(singleAnswer)
+          }
+          // 去掉重复项（key和value完全一样的）
+         /* var unique = []
+          this.answer.forEach(function (gpa) {
+            console.log(gpa)
+            unique[ JSON.stringify(gpa) ] = gpa
+          })
+          this.answer = Object.keys(unique).map(function (u) { return JSON.parse(u) })
+          console.log(unique) */
+        }
+        if (this.questionList.ctype === '多选') {
+          // 多选题拼接答案字符 并去除重复选项
+          this.checkedBox += this.$refs.subOption[index].innerText
+          var newStr = ''
+          for (let i = 0; i < this.checkedBox.length; i++) {
+            if (newStr.indexOf(this.checkedBox[i]) < 0) {
+              newStr += this.checkedBox[i]
+            }
+          }
+          // console.log(newStr)
+          var multipleAnswer = {}
+          multipleAnswer.id = this.question[this.index].id
+          multipleAnswer.A = newStr                           // 用户答案
+          multipleAnswer.R = this.question[this.index].right  // 正确答案
+          console.log(this.answer)
+          var multipleFlag = false
+          for (var j in this.answer) {
+            if (this.answer[j].id === multipleAnswer.id) {
+              multipleFlag = true
+              this.answer[j] = multipleAnswer
+            }
+          }
+          if (!multipleFlag) {
+            this.answer.push(multipleAnswer)
+          }
+        }
       },
+      // 下一题
       next () {
         this.index = ++this.index
-        if (this.index === this.length - 1) {
+        // 答到最后一个题的时候，提示购买课程
+        if (this.index === this.length) {
           this.visible = true
         } else {
+          // 第2题、第3题。。。
           this.questionList = this.question[this.index]
           this.isActive = -1
           console.log(this.questionList)
-          console.log(this.index)
-         /* if (this.questionList.answers.length > 4) {
-            this.questionList.answers[this.index].checked = false
-          } */
         }
-        // console.log(this.questionList)
       },
+      // 上一题
       previous () {
         this.index = --this.index
         if (this.index === -1) {
-          alert('已经是第一题了')
+          this.index = 0
         } else {
           this.questionList = this.question[this.index]
           this.isActive = -1
-          console.log(this.questionList.answers[0].checked)
         }
-        // console.log(this.questionList)
+      },
+      submitPapers () {
+        var mywa = JSON.stringify(this.answer)
+        // http://bay-api.by-edu.com/question/postquestions?userId=d7b1fbbb2b5a4eaea0b2c62be47867dd&answer=’[1:{A:B,R:B},2:{A:C,R:C},3:{A:C,R:D},4:{A:BD,R:D},5:{A:ABCDE,R:D}]’&libraryId=12&time=1276
+        this.$http.post(this.url + '/question/postquestions', {
+          userId: 'd7b1fbbb2b5a4eaea0b2c62be47867dd',
+          time: 1276,
+          answer: mywa,
+          libraryId: this.$route.query.libraryId
+        }
+        ).then((res) => {
+          console.log(res)
+        }).catch((res) => {
+          console.error(res.body.data)
+        })
       },
       buyCourse () {
         this.$router.push({path: '/study/buyCourse'})
@@ -145,12 +216,13 @@
     align-items: center
     justify-content: center
     .ivu-modal
-      top:0
+      top: 0
     .ivu-modal-body
-        display flex
-        button
-          font-size 16px
-          flex:1
+      display flex
+      button
+        font-size 16px
+        flex: 1
+
   .question
     .question-type
       padding: 15px 16px
@@ -158,7 +230,7 @@
       .pro
         float right
         a
-          color: rgb(43,38,37)
+          color: rgb(43, 38, 37)
     .question-title, .question-list
       padding: 15px 16px
       font-size: 15px
@@ -168,7 +240,7 @@
         .suboption
           margin-right 10px
       .optionActive
-        color: rgb(242,90,41)
+        color: rgb(242, 90, 41)
 
   .functionZone
     position: fixed
