@@ -2,8 +2,9 @@
   <div>
     <!--题目类型-->
     <div class="question">
-      {{$route.query.libraryName}}
-      <h1 class="question-type">{{questionList.ctype}} <span class="pro"><a>{{questionList.no}}</a>/<a v-text="length"></a></span></h1>
+      <!-- {{$route.query.libraryName}}-->
+      <h1 class="question-type">{{questionList.ctype}} <span class="pro"><a>{{questionList.no}}</a>/<a
+        v-text="length"></a></span></h1>
       <div class="divide"></div>
       <div>
         <p class="question-title">({{questionList.no}}){{questionList.content}}</p>
@@ -39,12 +40,13 @@
     <div class="functionZone">
       <span class="previous" @click="previous">上一题</span>
       <span class="answerSheet">
-        <router-link :to="{path: './question/answerSheet', query: {length: this.length, questionList: this.questionList, answer:  this.answer, tipname: this.tipName}}">题卡</router-link>
+        <router-link
+          :to="{path: './question/answerSheet', query: { questionList: this.questionList, tipname: this.tipName}}">题卡</router-link>
       </span>
       <span class="submitPapers" @click="submitPapers">交卷</span>
       <span class="next" @click="next">下一题</span>
     </div>
-    <!--弹窗提示-->
+    <!--购买弹窗提示-->
     <Modal v-model="visible" class-name="vertical-center-modal" title="购买课程" :closable="false">
       <div style="font-size: 15px">
         亲爱的童鞋，试学结束了，可以购买课程，也可以试学其他课程哦～
@@ -55,6 +57,18 @@
         </button>
         <button @click="studyOther">
           <router-link to="/find">试学其他课程</router-link>
+        </button>
+      </div>
+    </Modal>
+    <!--交卷弹窗提示-->
+    <Modal v-model="visible" class-name="vertical-center-modal" title="交卷" :closable="false">
+      <div style="font-size: 15px">
+        亲爱的童鞋，试学结束了，可以购买课程，也可以试学其他课程哦～
+      </div>
+      <div slot="footer">
+        <router-link to="#" style="color: red;">继续答题</router-link>
+        <button @click="studyOther">
+          <router-link to="/find">交卷</router-link>
         </button>
       </div>
     </Modal>
@@ -71,6 +85,8 @@
         url: Beiyi.getUrl(),
         answer: [],
         length,
+        responseAnswer: {},
+        question: {},
         questionList: {},
         visible: false,
         isActive: -1,
@@ -82,12 +98,30 @@
     },
     created () {
       this.tipName = this.$route.query.libraryName
-      // 请求地址：http://bay-api.by-edu.com/question/list/{userId}/{libraryId}
-      // http://bay-api.by-edu.com/question/list/104ebf7e3d304d3a8d79e76f9c6f8d65/1
-      this.$http.get(this.url + '/question/list/104ebf7e3d304d3a8d79e76f9c6f8d65/' + this.$route.query.libraryId).then((res) => {
-        res = res.body.data
-        this.question = res
-        // 本套试题的总题数
+      this.question = Store.fetch('question')
+      this.index = Store.fetch('questionno')
+      if (this.question === null) {
+        // 请求地址：http://bay-api.by-edu.com/question/list/{userId}/{libraryId}
+        // http://bay-api.by-edu.com/question/list/104ebf7e3d304d3a8d79e76f9c6f8d65/1
+        this.$http.get(this.url + '/question/list/104ebf7e3d304d3a8d79e76f9c6f8d65/' + this.$route.query.libraryId).then((res) => {
+          this.question = res.body.data
+          Store.save('question', this.question)   // 观察／存入缓存
+          this.length = this.question.length
+          Store.save('libraryId', this.$route.query.libraryId)
+          console.log(this.length)
+          // 默认值当前index为0，也就是第一题
+          this.questionList = this.question[this.index]
+          // console.log(this.questionList)
+          // console.log(this.questionList.answers)
+          // 判断单选 多选
+          if (this.questionList.ctype === '单选' || this.questionList.ctype === '判断') {
+            this.questionType = true
+          }
+          if (this.questionList.ctype === '多选') {
+            this.questionType = false
+          }
+        })
+      } else {
         this.length = this.question.length
         console.log(this.length)
         // 默认值当前index为0，也就是第一题
@@ -101,20 +135,37 @@
         if (this.questionList.ctype === '多选') {
           this.questionType = false
         }
-      })
+      }
+    },
+    watch: {
+      answer: {
+        handler: function (items) {
+          Store.save('answer', items)   // 观察／存入缓存
+        },
+        deep: true
+      },
+      responseAnswer: {
+        handler: function (items) {
+          Store.save('responseAnswer', items)   // 观察／存入缓存
+        },
+        deep: true
+      }
     },
     methods: {
       // 选项答题
       answerQuestion (index) {
         this.isActive = index
+        this.question[this.index].status = true
+        Store.save('question', this.question)
         // 选项
         if (this.questionList.ctype === '单选' || this.questionList.ctype === '判断') {
           this.checkRadio = this.$refs.subOption[index].innerText
           // console.log(this.checkRadio)
           var singleAnswer = {}
+          singleAnswer.no = this.question[this.index].no
           singleAnswer.id = this.question[this.index].id
-          singleAnswer.A = this.checkRadio                  // 用户答案
-          singleAnswer.R = this.question[this.index].right  // 正确答案
+          singleAnswer.a = this.checkRadio                  // 用户答案
+          singleAnswer.r = this.question[this.index].right  // 正确答案
           console.log(this.answer)
           var singleFlag = false
           for (var i in this.answer) {
@@ -127,13 +178,13 @@
             this.answer.push(singleAnswer)
           }
           // 去掉重复项（key和value完全一样的）
-         /* var unique = []
-          this.answer.forEach(function (gpa) {
-            console.log(gpa)
-            unique[ JSON.stringify(gpa) ] = gpa
-          })
-          this.answer = Object.keys(unique).map(function (u) { return JSON.parse(u) })
-          console.log(unique) */
+          /* var unique = []
+           this.answer.forEach(function (gpa) {
+             console.log(gpa)
+             unique[ JSON.stringify(gpa) ] = gpa
+           })
+           this.answer = Object.keys(unique).map(function (u) { return JSON.parse(u) })
+           console.log(unique) */
         }
         if (this.questionList.ctype === '多选') {
           // 多选题拼接答案字符 并去除重复选项
@@ -146,9 +197,11 @@
           }
           // console.log(newStr)
           var multipleAnswer = {}
+          multipleAnswer.no = this.question[this.index].no
+          multipleAnswer.status = 1
           multipleAnswer.id = this.question[this.index].id
-          multipleAnswer.A = newStr                           // 用户答案
-          multipleAnswer.R = this.question[this.index].right  // 正确答案
+          multipleAnswer.a = newStr                           // 用户答案
+          multipleAnswer.r = this.question[this.index].right  // 正确答案
           console.log(this.answer)
           var multipleFlag = false
           for (var j in this.answer) {
@@ -192,12 +245,17 @@
           userId: 'd7b1fbbb2b5a4eaea0b2c62be47867dd',
           time: 1276,
           answer: mywa,
-          libraryId: this.$route.query.libraryId
-        }
+          libraryId: this.$route.query.libraryId}
         ).then((res) => {
-          console.log(res)
+          // 接收后台返回数据并缓存
+          console.log(res.body.data)
+          this.responseAnswer = res.body.data
+
+          if (this.questionList.no < this.length) {
+            this.visible = true
+          }
         }).catch((res) => {
-          console.error(res.body.data)
+          // console.error(res.body.data)
         })
       },
       buyCourse () {

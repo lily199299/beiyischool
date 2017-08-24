@@ -25,7 +25,17 @@
         libName
       }
     },
+    watch: {
+      libName: {
+        handler: function (items) {
+          Store.save('libName', items)   // 观察／存入缓存
+        },
+        deep: true
+      }
+    },
     created () {
+      Store.save('question', null)
+      Store.save('questionno', 0)
       this.course = this.$route.query.course.patterns
       console.log(this.course)
       for (var i in this.course) {
@@ -34,7 +44,7 @@
             libName.push(this.course[i].libraries[j])
           }
         }
-      //  console.log(libName)
+        console.log(libName)
       }
       libName = []
     }
