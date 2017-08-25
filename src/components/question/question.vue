@@ -2,7 +2,7 @@
   <div>
     <!--题目类型-->
     <div class="question">
-       <!--{{$route.query.libraryName}}-->
+     <!--  {{$route.query.libraryName}}-->
       <h1 class="question-type">{{questionList.ctype}} <span class="pro"><a>{{questionList.no}}</a>/<a
         v-text="length"></a></span></h1>
       <div class="divide"></div>
@@ -30,13 +30,13 @@
       <span class="previous" @click="previous">上一题</span>
       <span class="answerSheet">
         <router-link
-          :to="{path: './question/answerSheet', query: { questionList: this.questionList, tipname: this.tipName}}">题卡</router-link>
+          :to="{path: './question/answerSheet', query: { questionList: this.questionList}}">题卡</router-link>
       </span>
-      <span class="submitPapers" @click="submitPapers">交卷</span>
+      <span class="submitPapers" @click="submitPapers()">交卷</span>
       <span class="next" @click="next">下一题</span>
     </div>
     <!--购买弹窗提示-->
-    <Modal v-model="visible" class-name="vertical-center-modal" title="购买课程" :closable="false">
+    <Modal v-model="buy" class-name="vertical-center-modal" title="购买课程" :closable="false">
       <div style="font-size: 15px">
         亲爱的童鞋，试学结束了，可以购买课程，也可以试学其他课程哦～
       </div>
@@ -50,7 +50,7 @@
       </div>
     </Modal>
     <!--交卷弹窗提示-->
-    <Modal v-model="visible" class-name="vertical-center-modal" title="交卷" :closable="false">
+    <Modal v-model="submitPaper" class-name="vertical-center-modal" title="交卷" :closable="false">
       <div style="font-size: 15px">
         这套题目还没有答完哦~
       </div>
@@ -78,6 +78,8 @@
         question: {},
         questionList: {},
         visible: false,
+        buy: false,
+        submitPaper: false,
         index: 0,
         questionType: false,
         checkRadio: '',  // 单选 判断
@@ -85,8 +87,13 @@
       }
     },
     created () {
-      this.tipName = this.$route.query.libraryName
+      // this.tipName = this.$route.query.libraryName
+      if (Store.fetch('tipName') === null) {
+        Store.save('tipName', this.$route.query.libraryName)
+      }
+     // Store.save('tipName', this.$route.query.libraryName)
       this.question = Store.fetch('question')
+      console.log(this.question)
       this.index = Store.fetch('questionno')
       if (this.question === null) {
         // 请求地址：http://bay-api.by-edu.com/question/list/{userId}/{libraryId}
@@ -94,6 +101,7 @@
         this.$http.get(this.url + '/question/list/104ebf7e3d304d3a8d79e76f9c6f8d65/' + this.$route.query.libraryId).then((res) => {
           this.question = res.body.data
           Store.save('question', this.question)   // 观察／存入缓存
+          console.log(this.question)
           this.length = this.question.length
           Store.save('libraryId', this.$route.query.libraryId)
           console.log(this.length)
@@ -129,12 +137,6 @@
       answer: {
         handler: function (items) {
           Store.save('answer', items)   // 观察／存入缓存
-        },
-        deep: true
-      },
-      responseAnswer: {
-        handler: function (items) {
-          Store.save('responseAnswer', items)   // 观察／存入缓存
         },
         deep: true
       }
@@ -228,7 +230,7 @@
         this.index = ++this.index
         // 答到最后一个题的时候，提示购买课程
         if (this.index === this.length) {
-          this.visible = true
+          this.buy = true
         } else {
           // 第2题、第3题。。。
           this.questionList = this.question[this.index]
@@ -258,10 +260,12 @@
           // 接收后台返回数据并缓存
           console.log(res.body.data)
           this.responseAnswer = res.body.data
-
+          Store.save('responseAnswer', this.responseAnswer)
           if (this.questionList.no < this.length) {
-            this.visible = true
+            this.submitPaper = true
           }
+          // 交卷的时候，跳转到答题报告页面
+          this.$router.push({path: '/study/tip/question/answerReport'})
         }).catch((res) => {
           // console.error(res.body.data)
         })

@@ -11,7 +11,7 @@
         <router-link to="/mine"><i class="icon-mine"></i>我的</router-link>
       </div>
     </div>
-    <router-view :datas="datas"></router-view>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -31,6 +31,13 @@
       }
     },
     watch: {
+      datas: {
+        handler: function (items) {
+          Store.save('datas', items)   // 观察／存入缓存
+          // console.log(Store.fetch('course'))
+        },
+        deep: true
+      },
       courses: {
         handler: function (items) {
           // console.log(items)

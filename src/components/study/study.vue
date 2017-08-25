@@ -107,9 +107,6 @@
   var libraries = []
   var coursePay = false
   export default {
-    props: {
-      datas: {}
-    },
     data () {
       return {
         jijin: {},
@@ -132,6 +129,7 @@
       }
     },
     created () {
+      this.datas = Store.fetch('datas')
      // console.log(this.datas)
       this.jijin = this.datas.jijin
       this.yinhang = this.datas.yinhang

@@ -35,6 +35,7 @@
     },
     created () {
       Store.save('question', null)
+      Store.save('tipName', null)
       Store.save('questionno', 0)
       this.course = this.$route.query.course.patterns
       console.log(this.course)

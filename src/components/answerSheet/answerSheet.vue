@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="subjectName">{{$route.query.tipname}}</h1>
+    <h1 class="subjectName">{{titleName}}</h1>
     <div class="divide"></div>
     <div class="numList">
       <span class="questionNo" @click="locationQuestionNo(index)" v-for="(questionitem, index) in this.question">
@@ -17,7 +17,6 @@
   export default {
     data () {
       return {
-        isActive: true
       }
     },
     created () {
@@ -25,6 +24,8 @@
       this.question = Store.fetch('question')
       // 从缓存读取用户答案
       this.answer = Store.fetch('answer')
+      // 从缓存读取试题名称
+      this.titleName = Store.fetch('tipName')
     },
     methods: {
       locationQuestionNo (index) {
