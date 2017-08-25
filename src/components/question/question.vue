@@ -2,7 +2,7 @@
   <div>
     <!--题目类型-->
     <div class="question">
-      <!-- {{$route.query.libraryName}}-->
+       <!--{{$route.query.libraryName}}-->
       <h1 class="question-type">{{questionList.ctype}} <span class="pro"><a>{{questionList.no}}</a>/<a
         v-text="length"></a></span></h1>
       <div class="divide"></div>
@@ -12,26 +12,15 @@
           <ul>
             <li v-for="(item, index) in questionList.answers" @click="answerQuestion(index)">
               <!--单选、判断-->
-              <p class="option" v-if="questionType" :class="{ optionActive: index==isActive }">
+              <p class="option" v-if="questionType"  :checked="item.checked" :class="{ optionActive: item.checked }">
                 <span class="suboption" ref="subOption">{{item.subOption}}</span><span
                 class="content">{{item.content}}</span>
               </p>
-              <!--<label :for="'name'+item.id"  v-if="questionType" class="option" :class="{ optionActive: index==isActive }">
-                <input type="radio" v-model="checkRadio" name="answer" :value="item.subOption" :id="'name'+item.id">
-                <span class="suboption" ref="subOption">{{item.subOption}}</span><span class="content">{{item.content}}</span>
-              </label>-->
-              <!-- <span>{{checkRadio}}</span>-->
-              <!--多选-->
-              <!-- <label v-if="!questionType" class="option" :class="{ optionActive: index==isActive }">
-                 <input type="checkbox"  v-model="checkedBox" name="answer" :value="item.subOption" :id="item.id" :no="item.no">
-                 <span class="suboption">{{item.subOption}}</span><span class="content">{{item.content}}</span>
-               </label>-->
-              <p class="option" v-if="!questionType" :class="{ optionActive: index==isActive }">
+              <p class="option" v-if="!questionType" :class="{ optionActive: item.checked }">
                 <span class="suboption" ref="subOption">{{item.subOption}}</span><span
                 class="content">{{item.content}}</span>
               </p>
             </li>
-            <!--<span>{{questionList.id}}:{{checkedBox}}</span>-->
           </ul>
         </div>
       </div>
@@ -63,12 +52,12 @@
     <!--交卷弹窗提示-->
     <Modal v-model="visible" class-name="vertical-center-modal" title="交卷" :closable="false">
       <div style="font-size: 15px">
-        亲爱的童鞋，试学结束了，可以购买课程，也可以试学其他课程哦～
+        这套题目还没有答完哦~
       </div>
       <div slot="footer">
         <router-link to="#" style="color: red;">继续答题</router-link>
         <button @click="studyOther">
-          <router-link to="/find">交卷</router-link>
+          <router-link to="/find">确定交卷</router-link>
         </button>
       </div>
     </Modal>
@@ -89,7 +78,6 @@
         question: {},
         questionList: {},
         visible: false,
-        isActive: -1,
         index: 0,
         questionType: false,
         checkRadio: '',  // 单选 判断
@@ -153,13 +141,26 @@
     },
     methods: {
       // 选项答题
-      answerQuestion (index) {
-        this.isActive = index
-        this.question[this.index].status = true
-        Store.save('question', this.question)
+      answerQuestion (answerindex) {
+        for (let l in this.questionList.answers) {
+          if (this.questionList.ctype === '单选' || this.questionList.ctype === '判断') {
+            this.question[this.index].answers[l].checked = false
+          }
+          if (parseInt(answerindex) === parseInt(l)) {
+            if (this.question[this.index].answers[l].checked) {
+              if (this.questionList.ctype === '多选') {
+                this.question[this.index].answers[l].checked = false
+              }
+            } else {
+              this.question[this.index].answers[l].checked = true
+            }
+          }
+          // 判断该选项是否点击过了
+        }
         // 选项
         if (this.questionList.ctype === '单选' || this.questionList.ctype === '判断') {
-          this.checkRadio = this.$refs.subOption[index].innerText
+          this.question[this.index].a = this.$refs.subOption[answerindex].innerText
+          this.checkRadio = this.question[this.index].a
           // console.log(this.checkRadio)
           var singleAnswer = {}
           singleAnswer.no = this.question[this.index].no
@@ -177,30 +178,29 @@
           if (!singleFlag) {
             this.answer.push(singleAnswer)
           }
-          // 去掉重复项（key和value完全一样的）
-          /* var unique = []
-           this.answer.forEach(function (gpa) {
-             console.log(gpa)
-             unique[ JSON.stringify(gpa) ] = gpa
-           })
-           this.answer = Object.keys(unique).map(function (u) { return JSON.parse(u) })
-           console.log(unique) */
         }
+        var checkBoxStr = this.question[this.index].a.toString()
+        console.log(typeof checkBoxStr)
+        console.log(typeof this.question[this.index].a)
         if (this.questionList.ctype === '多选') {
-          // 多选题拼接答案字符 并去除重复选项
-          this.checkedBox += this.$refs.subOption[index].innerText
-          var newStr = ''
-          for (let i = 0; i < this.checkedBox.length; i++) {
-            if (newStr.indexOf(this.checkedBox[i]) < 0) {
-              newStr += this.checkedBox[i]
+          for (let i = 0; i < this.question[this.index].answers.length; i++) {
+            if (parseInt(answerindex) === parseInt(i)) {
+              if (this.question[this.index].answers[i].checked === true) {
+                checkBoxStr += this.$refs.subOption[answerindex].innerText
+               // console.log('add' + checkBoxStr)
+              } else {
+              //  console.log('delbefole' + checkBoxStr)
+                checkBoxStr = checkBoxStr.replace(this.$refs.subOption[answerindex].innerText, '')
+              //  console.log('deleend' + checkBoxStr)
+              //  console.log('aaaa' + this.$refs.subOption[answerindex].innerText)
+              }
             }
           }
-          // console.log(newStr)
+          this.question[this.index].a = checkBoxStr
           var multipleAnswer = {}
           multipleAnswer.no = this.question[this.index].no
-          multipleAnswer.status = 1
           multipleAnswer.id = this.question[this.index].id
-          multipleAnswer.a = newStr                           // 用户答案
+          multipleAnswer.a = this.question[this.index].a                           // 用户答案
           multipleAnswer.r = this.question[this.index].right  // 正确答案
           console.log(this.answer)
           var multipleFlag = false
@@ -214,6 +214,14 @@
             this.answer.push(multipleAnswer)
           }
         }
+        console.log(this.questionList.answers)
+        console.log('single' + this.question[this.index].a.length)
+        if (this.question[this.index].a.length === 0) {
+          this.question[this.index].status = false
+        } else {
+          this.question[this.index].status = true
+        }
+        Store.save('question', this.question)
       },
       // 下一题
       next () {
