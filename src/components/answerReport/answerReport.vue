@@ -9,7 +9,7 @@
     <div class="divide"></div>
     <div class="numList">
       <span class="questionNo" @click="locationQuestionNo(index)" v-for="(questionitem, index) in this.question">
-        <span class="questionNum" :class="{ 'bgWrong': !questionitem.ar, 'bgRight': questionitem.ar}">{{questionitem.no}}</span>
+        <span class="questionNum" :class="{'bgWrong': !questionitem.ar, 'bgRight': questionitem.ar}">{{questionitem.no}}</span>
       </span>
     </div>
     <div class="redo-analysis">

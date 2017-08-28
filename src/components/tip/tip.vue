@@ -1,11 +1,12 @@
 <template>
   <div>
-  <!--{{$route.query.course}}-->
+    <!--{{$route.query.patternType}}-->
     <ul class="courselist">
       <li class="subject" v-for="item in libName">
-        <router-link :to="{ path: '/study/tip/question', query: { libraryName: item.name, libraryId: item.id} }">
+        <router-link :to="{ path: '/study/tip/question', query: { libName: this.libName, libraryName: item.name, libraryId: item.id} }">
           <p class="name">{{item.name}}</p>
-          <p class="jindu"><span class="num"><span>231</span>人做过</span> <span class="pro">0/{{ item.questionNum }}</span></p>
+          <p class="jindu"><span class="num"><span>231</span>人做过</span> <span
+            class="pro">0/{{ item.questionNum }}</span></p>
           <div class="divide"></div>
         </router-link>
       </li>
@@ -25,24 +26,17 @@
         libName
       }
     },
-    watch: {
-      libName: {
-        handler: function (items) {
-          Store.save('libName', items)   // 观察／存入缓存
-        },
-        deep: true
-      }
-    },
     created () {
       Store.save('question', null)
       Store.save('tipName', null)
       Store.save('questionno', 0)
-      this.course = this.$route.query.course.patterns
-      console.log(this.course)
-      for (var i in this.course) {
-        if (this.course[i].pattern === 'tip') {
-          for (var j in this.course[i].libraries) {
-            libName.push(this.course[i].libraries[j])
+      // 从缓存读取patterns
+      this.patterns = Store.fetch('courseLocal')
+      console.log(this.patterns)
+      for (let i in this.patterns) {
+        if (this.patterns[i].pattern === this.$route.query.patternType) {
+          for (let j in this.patterns[i].libraries) {
+            libName.push(this.patterns[i].libraries[j])
           }
         }
         console.log(libName)
@@ -61,7 +55,7 @@
       .name
         padding: 0 16px 15px 16px
         font-size: 16px
-        color: rgb(43,38,37)
+        color: rgb(43, 38, 37)
       .jindu
         color: #7e7c7d
         font-size: 13px

@@ -20,7 +20,6 @@
   import Beiyi from './common.js'
 
   // console.log(Beiyi)
-  var courses = []
   export default {
     data () {
       return {
@@ -28,29 +27,6 @@
         url: Beiyi.getUrl(), // url
         courses: [],
         course: {}
-      }
-    },
-    watch: {
-      datas: {
-        handler: function (items) {
-          Store.save('datas', items)   // 观察／存入缓存
-          // console.log(Store.fetch('course'))
-        },
-        deep: true
-      },
-      courses: {
-        handler: function (items) {
-          // console.log(items)
-          Store.save('courses', items)   // 观察／存入缓存
-        },
-        deep: true
-      },
-      course: {
-        handler: function (items) {
-          Store.save('course', items)   // 观察／存入缓存
-          // console.log(Store.fetch('course'))
-        },
-        deep: true
       }
     },
     created () {
@@ -68,8 +44,30 @@
             this.courses.push(this.datas[i][j])
           }
         }
+        // 初始化一个默认值并缓存
         this.course = this.courses[4]
       })
+    },
+    watch: {
+      datas: {
+        handler: function (items) {
+          Store.save('datas', items)   // 观察／存入缓存
+          // console.log(Store.fetch('course'))
+        },
+        deep: true
+      },
+      courses: {
+        handler: function (items) {
+          Store.save('courses', items)   // 观察／存入缓存
+        },
+        deep: true
+      },
+      course: {
+        handler: function (items) {
+          Store.save('course', items)   // 观察／存入缓存
+        },
+        deep: true
+      }
     }
   }
 </script>

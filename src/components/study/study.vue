@@ -1,9 +1,9 @@
 <template>
   <div>
-    <!--<div>{{course}}</div>-->
+    <router-link to="/login">登陆</router-link>
     <div class="panel-title">
-      <p class="panel-nav border-1px" @click="showAll" v-show="hideSelect" :id="course.id">{{course.name}}</p>
-      <p class="panel-nav border-1px" @click="showAll" v-text="msg" v-show="showSelect" :id="this.coureId"></p>
+      <p class="panel-nav border-1px" @click="showAll" v-show="hideSelect">选择课程({{message}})</p>
+      <p class="panel-nav border-1px" @click="showAll" v-show="showSelect">{{msg}}</p>
       <div v-show="allShow">
         <div class="zhengquan">
           <p class="panel-nav border-1px" @click="showZhengquan">证券从业</p>
@@ -67,32 +67,32 @@
     </div>
     <ul class="course-tip">
       <li class="tip">
-      <router-link :to="{ path: '/study/tip' , query: {coureId: this.coureId, course: this.course}}">
+      <router-link :to="{ path: '/study/tip' , query: {coureId: this.coureId, patternType: 'tip'}}">
         <img src="../../common/img/zhangjie.png" alt=""><span>章节练习</span>
       </router-link>
     </li>
       <li class="tip">
-        <router-link :to="{ path: '/study/tip', query: {coureId: this.coureId, course: this.course}}">
+        <router-link :to="{ path: '/study/tip', query: {coureId: this.coureId, patternType: 'kaoqian'}}">
           <img src="../../common/img/moni.png" alt=""><span>考前模拟</span>
         </router-link>
       </li>
       <li class="tip">
-        <router-link :to="{ path: '/study/tip', query: {coureId: this.coureId, course: this.course}}">
+        <router-link :to="{ path: '/study/tip', query: {coureId: this.coureId, patternType: 'fangzhen'}}">
           <img src="../../common/img/fangzhen.png" alt=""><span>仿真测试</span>
         </router-link>
       </li>
       <li class="tip">
-        <router-link :to="{ path: '/study/tip', query: {coureId: this.coureId, course: this.course}}">
+        <router-link :to="{ path: '/study/tip', query: {coureId: this.coureId, patternType: 'tupo'}}">
           <img src="../../common/img/zhongdian.png" alt=""><span>重难点突破</span>
         </router-link>
       </li>
       <li class="tip">
-        <router-link :to="{ path: '/study/tip', query: {coureId: this.coureId, course: this.course}}">
+        <router-link :to="{ path: '/study/tip', query: {coureId: this.coureId, patternType: 'cuoti'}}">
           <img src="../../common/img/cuoti.png" alt=""><span>错题集</span>
         </router-link>
       </li>
       <li class="tip">
-        <router-link :to="{ path: '/study/tip', query: {coureId: this.coureId, course: this.course}}">
+        <router-link :to="{ path: '/study/tip', query: {coureId: this.coureId, patternType: 'zhuanjia'}}">
           <img src="../../common/img/pingce.png" alt=""><span>专家评测</span>
         </router-link>
       </li>
@@ -122,15 +122,15 @@
         zhucekuaijishiShow: false,
         hideSelect: true,
         showSelect: false,
-        msg,
+        msg: '',
         coureId,
         libraries: [],
         coursePay
       }
     },
     created () {
+      // 从缓存读取所有数据
       this.datas = Store.fetch('datas')
-     // console.log(this.datas)
       this.jijin = this.datas.jijin
       this.yinhang = this.datas.yinhang
       this.zhengquan = this.datas.zhengquan
@@ -138,6 +138,8 @@
       this.zhucekuaijishi = this.datas.zhucekuaijishi
       // 从缓存读取课程
       this.courses = Store.fetch('courses')
+      // 读取选择的课程名称
+      this.message = Store.fetch('selectedCourseName')
       // 初始化默认值
       this.course = this.courses[4]
       // 获取libraries
@@ -148,43 +150,39 @@
       libraries = []
     },
     watch: {
-      patterns: {
-        handler: function (items) {
-          // console.log(items)
-          Store.save('patterns', items)   // 观察／存入缓存
-        },
-        deep: true
-      },
       libraries: {
         handler: function (items) {
           Store.save('libraries', items)   // 观察／存入缓存
-          // console.log(Store.fetch('course'))
-        },
-        deep: true
-      },
-      // 缓存课程id:coureId
-      coureId: {
-        handler: function (items) {
-          Store.save('coureId', items)   // 观察／存入缓存
-          // console.log(Store.fetch('course'))
         },
         deep: true
       }
+      // 缓存课程id:coureId
+//      coureId: {
+//        handler: function (items) {
+//          Store.save('coureId', items)   // 观察／存入缓存
+//          // console.log(Store.fetch('course'))
+//        },
+//        deep: true
+//      }
     },
     methods: {
       getText (id, item) {
         // 课程id 课程名
        // console.log(item.name)
        // console.log(item.id)
-        this.msg = item.name
-        this.coureId = item.id
+        Store.save('msg', item.name)
+        Store.save('courseId', item.id)
+//        this.msg = this.course.name
+        this.msg = Store.fetch('msg')
+        this.coureId = Store.fetch('courseId')
         // 获取id对应的课程
         for (var i in this.courses) {
           if (this.coureId === this.courses[i].id) {
             this.course = this.courses[i]
-            console.log(this.course)
+            // 缓存patterns tip页面使用
+            Store.save('courseLocal', this.course.patterns)
+            Store.save('selectedCourseName', this.course.name)
             this.coursePay = this.course.pay
-            // console.log(this.coursePay)
           }
         }
         this.allShow = false

@@ -88,6 +88,7 @@
     },
     created () {
       // this.tipName = this.$route.query.libraryName
+      console.log(Store.fetch('libName'))
       if (Store.fetch('tipName') === null) {
         Store.save('tipName', this.$route.query.libraryName)
       }

@@ -21,6 +21,7 @@ import buyCourse from './components/buyCourse/buyCourse.vue'
 import answerSheet from './components/answerSheet/answerSheet.vue'
 import answerReport from './components/answerReport/answerReport.vue'
 import questionAnalysis from './components/questionAnalysis/questionAnalysis.vue'
+import login from './components/login/login.vue'
 import './common/stylus/index.styl'
 import './common'
 
@@ -32,13 +33,12 @@ Vue.use(VueRouter)
 Vue.use(iView)
 // 数据请求
 Vue.use(Vueresource)
-// 空root组件
-let Event = new Vue()
 // 路由配置
 const routes = [
   {path: '/find', component: find},
   {path: '/study', component: study},
   {path: '/mine', component: mine},
+  {path: '/login', component: login},
   {path: '/study/tip', component: tip},
   {path: '/study/kaoqian', component: kaoqian},
   {path: '/study/fangzhen', component: fangzhen},
