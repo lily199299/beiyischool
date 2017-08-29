@@ -18,19 +18,43 @@
 <script type="text/ecmascript-6">
   import Store from './store.js'
   import Beiyi from './common.js'
-
-  // console.log(Beiyi)
   export default {
     data () {
       return {
         datas: {}, // 请求的所有数据
-        url: Beiyi.getUrl(), // url
         courses: [],
         course: {}
       }
     },
     created () {
-      this.$http.get(this.url + '/course/list?userId=104ebf7e3d304d3a8d79e76f9c6f8d65').then((response) => {
+      this.userId = Store.fetch('userId')
+      this.phone = Store.fetch('phone')
+      this.name = Store.fetch('name')
+      this.imgUrl = Store.fetch('imgUrl')
+      if (Beiyi.getQueryString('userId') != null) {
+        this.userId = this.getQueryString('userId')
+        Store.save('userId', this.userId)
+        if (Beiyi.getQueryString('phone') != null) {
+          this.phone = this.getQueryString('phone')
+          Store.save('phone', this.phone)
+        }
+        if (Beiyi.getQueryString('name') != null) {
+          this.name = this.getQueryString('name')
+          Store.save('name', this.name)
+        }
+        if (Beiyi.getQueryString('imgUrl') != null) {
+          this.imgUrl = this.getQueryString('imgUrl')
+          Store.save('imgUrl', this.imgUrl)
+        }
+      }
+      if (this.userId === null) {
+        window.location.href = 'http://cb.by-edu.com/loginServlet'
+      }
+      if (this.phone === null) {
+        this.userId = null
+        Store.save('userId', this.userId)
+      }
+      this.$http.get(Beiyi.getUrl() + '/course/list?userId=' + this.userId).then((response) => {
         // console.log(response)
         response = response.body.data
         this.datas = response

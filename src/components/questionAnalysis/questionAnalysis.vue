@@ -36,10 +36,6 @@
     <!--上一题 题卡 交卷 下一题 -->
     <div class="functionZone">
       <span class="previous" @click="previous">上一题</span>
-      <span class="answerSheet">
-        <router-link
-          :to="{path: './question/answerSheet', query: { questionList: this.questionList}}">题卡</router-link>
-      </span>
       <span class="next" @click="next">下一题</span>
     </div>
   </div>
@@ -52,7 +48,6 @@
   export default {
     data () {
       return {
-        url: Beiyi.getUrl(),
         answer: [],
         length,
         responseAnswer: {},

@@ -71,7 +71,6 @@
   export default {
     data () {
       return {
-        url: Beiyi.getUrl(),
         answer: [],
         length,
         responseAnswer: {},
@@ -87,6 +86,7 @@
       }
     },
     created () {
+      this.userId = Store.fetch('userId')
       // this.tipName = this.$route.query.libraryName
       console.log(Store.fetch('libName'))
       if (Store.fetch('tipName') === null) {
@@ -99,7 +99,7 @@
       if (this.question === null) {
         // 请求地址：http://bay-api.by-edu.com/question/list/{userId}/{libraryId}
         // http://bay-api.by-edu.com/question/list/104ebf7e3d304d3a8d79e76f9c6f8d65/1
-        this.$http.get(this.url + '/question/list/104ebf7e3d304d3a8d79e76f9c6f8d65/' + this.$route.query.libraryId).then((res) => {
+        this.$http.get(Beiyi.getUrl() + '/question/list/' + this.userId + '/' + this.$route.query.libraryId).then((res) => {
           this.question = res.body.data
           Store.save('question', this.question)   // 观察／存入缓存
           console.log(this.question)
@@ -158,7 +158,6 @@
               this.question[this.index].answers[l].checked = true
             }
           }
-          // 判断该选项是否点击过了
         }
         // 选项
         if (this.questionList.ctype === '单选' || this.questionList.ctype === '判断') {
@@ -249,11 +248,12 @@
           this.isActive = -1
         }
       },
+      // 交卷
       submitPapers () {
         var mywa = JSON.stringify(this.answer)
-        // http://bay-api.by-edu.com/question/postquestions?userId=d7b1fbbb2b5a4eaea0b2c62be47867dd&answer=’[1:{A:B,R:B},2:{A:C,R:C},3:{A:C,R:D},4:{A:BD,R:D},5:{A:ABCDE,R:D}]’&libraryId=12&time=1276
-        this.$http.post(this.url + '/question/postquestions', {
-          userId: 'd7b1fbbb2b5a4eaea0b2c62be47867dd',
+        // http://bay-api.by-edu.com/question/postquestions?userId=104ebf7e3d304d3a8d79e76f9c6f8d65&answer=’[1:{A:B,R:B},2:{A:C,R:C},3:{A:C,R:D},4:{A:BD,R:D},5:{A:ABCDE,R:D}]’&libraryId=12&time=1276
+        this.$http.post(Beiyi.getUrl() + '/question/postquestions', {
+          userId: this.userId,
           time: 1276,
           answer: mywa,
           libraryId: this.$route.query.libraryId}

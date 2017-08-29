@@ -1,6 +1,5 @@
 <template>
   <div>
-    <router-link to="/login">登陆</router-link>
     <div class="panel-title">
       <p class="panel-nav border-1px" @click="showAll" v-show="hideSelect">选择课程({{message}})</p>
       <p class="panel-nav border-1px" @click="showAll" v-show="showSelect">{{msg}}</p>
