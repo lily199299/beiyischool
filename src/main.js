@@ -67,3 +67,4 @@ new Vue({
   router
 })
 router.push('/find')
+
