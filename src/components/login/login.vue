@@ -104,6 +104,7 @@
             Store.save('phone', res.body.data.cellPhone)
             Store.save('imgUrl', res.body.data.imgUrl)
             Store.save('name', res.body.data.name)
+            console.log(Store.save('name', res.body.data.name))
             Store.save('openId', res.body.data.openId)
             this.$router.push({path: '/find'})
 //            this.$router.push({path: '/study'})
