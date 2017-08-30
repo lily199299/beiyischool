@@ -29,45 +29,6 @@
     created () {
       // 先从缓存获取
       this.userId = Store.fetch('userId')
-      this.phone = Store.fetch('phone')
-      this.name = Store.fetch('name')
-      this.imgUrl = Store.fetch('imgUrl')
-      // 判断userId是否为空
-//      debugger
-      if (Beiyi.getQueryString('userId') != null) {
-        console.log('login')
-        this.userId = Beiyi.getQueryString('userId')
-        console.log(this.userId)
-        Store.save('userId', this.userId)
-        if (Beiyi.getQueryString('phone') === null && this.phone === null) {
-          console.log('login')
-          this.$router.push('./login')
-          return
-        }
-        if (Beiyi.getQueryString('phone') != null) {
-          this.phone = Beiyi.getQueryString('phone')
-          Store.save('phone', this.phone)
-        }
-        if (Beiyi.getQueryString('name') != null) {
-          this.name = Beiyi.getQueryString('name')
-          Store.save('name', this.name)
-        }
-        if (Beiyi.getQueryString('imgUrl') != null) {
-          this.imgUrl = Beiyi.getQueryString('imgUrl')
-          Store.save('imgUrl', this.imgUrl)
-        }
-      }
-      this.userId = Store.fetch('userId')
-      this.phone = Store.fetch('phone')
-      this.name = Store.fetch('name')
-      this.imgUrl = Store.fetch('imgUrl')
-      if (this.userId === null) {
-//        window.location.href = 'http://cb.by-edu.com/loginServlet'
-      }
-      if (this.phone === null) {
-        this.userId = null
-        Store.save('userId', this.userId)
-      }
       this.$http.get(Beiyi.getUrl() + '/course/list?userId=' + this.userId).then((response) => {
         // console.log(response)
         response = response.body.data

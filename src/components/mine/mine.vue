@@ -3,9 +3,9 @@
     <!--微信头像-->
     <div class="headImg">
       <div class="head">
-        <img src="./head.png" alt="">
+        <img :src="imgUrl" alt="">
       </div>
-      <p class="nickName">A0.珊瑚海～～刘雪玲</p>
+      <p class="nickName">{{name}}</p>
       <div class="learnRecord">
         <div class="record">
           <div class="wrong learn"><i class="icon-find"></i>我的错题</div>
@@ -42,7 +42,20 @@
 </template>
 
 <script type="text/ecmascript-6">
-  export default {}
+  import Beiyi from '../../common.js'
+  import Store from '../../store.js'
+  export default {
+    data () {
+      return {
+        name: '',
+        imgUrl: ''
+      }
+    },
+    created () {
+      this.name = Store.fetch('name')
+      this.imgUrl = Store.fetch('imgUrl')
+    }
+  }
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">

@@ -34,6 +34,7 @@
   import Employ from '../../components/employ/employ'
   import Compass from '../../components/compass/compass'
   import Beiyi from '../../common.js'
+  import Store from '../../store.js'
   export default {
     props: {
       datas: {}
@@ -72,8 +73,50 @@
     mounted () {
       this.swiper.slideTo(4, 2000, true)
     },
-    // 获取广告列表
     created () {
+      // 先从缓存获取
+      this.userId = Store.fetch('userId')
+      this.phone = Store.fetch('phone')
+      this.name = Store.fetch('name')
+      this.imgUrl = Store.fetch('imgUrl')
+      // 判断userId是否为空
+//      debugger
+      if (Beiyi.getQueryString('userId') !== null) {
+        console.log('login')
+        this.userId = Beiyi.getQueryString('userId')
+        console.log(this.userId)
+        Store.save('userId', this.userId)
+        if (Beiyi.getQueryString('phone') === null && this.phone === null) {
+          console.log('login')
+          console.log(this.$route.path)
+          this.$router.push({path: '/login'})
+          return
+        } else {}
+        if (Beiyi.getQueryString('phone') !== null) {
+          this.phone = Beiyi.getQueryString('phone')
+          Store.save('phone', this.phone)
+        }
+        if (Beiyi.getQueryString('name') !== null) {
+          this.name = Beiyi.getQueryString('name')
+          Store.save('name', this.name)
+        }
+        if (Beiyi.getQueryString('imgUrl') !== null) {
+          this.imgUrl = Beiyi.getQueryString('imgUrl')
+          Store.save('imgUrl', this.imgUrl)
+        }
+      }
+      this.userId = Store.fetch('userId')
+      this.phone = Store.fetch('phone')
+      this.name = Store.fetch('name')
+      this.imgUrl = Store.fetch('imgUrl')
+      if (this.userId === null) {
+        window.location.href = 'http://cb.by-edu.com/loginServlet'
+      }
+      if (this.phone === null) {
+        this.userId = null
+        Store.save('userId', this.userId)
+      }
+      // 获取广告列表
     //  console.log(this.$route.path)
     //  console.log(this.datas)
      /* this.$http.get(this.url + '/find/getcanuseads?userId=d7b1fbbb2b5a4eaea0b2c62be47867dd').then((response) => {

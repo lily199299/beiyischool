@@ -3,9 +3,9 @@
     <!--微信头像-->
     <div class="login-headImg">
       <div class="head">
-        <img src="./head.png" alt="">
+        <img src="imgUrl" alt="">
       </div>
-      <p class="nickName">A0.珊瑚海～～刘雪玲</p>
+      <p class="nickName">{{name}}</p>
     </div>
     <div class="userPhone">
       <p style="font-size: 16px">绑定手机，领取新人学习大礼包</p>
@@ -88,9 +88,11 @@
         this.$http.post(Beiyi.getUrl() + '/login/submitphone?userId=' + this.userId + '&code=' + this.code + '&phone=' + this.phone).then((res) => {
           console.log(res.body.data)
           if (res.body.data.flag === true) {
-            alert(res.body.data.message)
-            console.log(res.body.data.flag)
-            this.$router.push({path: '/find'})
+            this.phone = Store.save('phone', res.body.data.cellPhone)
+            this.imgUrl = Store.save('imgUrl', res.body.data.headImgUrl)
+            this.name = Store.save('name', res.body.data.nickname)
+            this.openId = Store.save('openId', res.body.data.openId)
+            this.$router.push({path: '/study'})
           } else {
             alert(res.body.data.message)
           }
