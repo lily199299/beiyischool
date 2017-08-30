@@ -3,8 +3,7 @@
     <!--题目类型-->
     <div class="question">
      <!--  {{$route.query.libraryName}}-->
-      <h1 class="question-type">{{questionList.ctype}} <span class="pro"><a>{{questionList.no}}</a>/<a
-        v-text="length"></a></span></h1>
+      <h1 class="question-type">{{questionList.ctype}} <span class="pro"><a>{{questionList.no}}</a>/<a v-text="length"></a></span></h1>
       <div class="divide"></div>
       <div>
         <p class="question-title">({{questionList.no}}){{questionList.content}}</p>
@@ -74,7 +73,7 @@
         answer: [],
         length,
         responseAnswer: {},
-        question: {},
+        question: [],
         questionList: {},
         visible: false,
         buy: false,
@@ -101,14 +100,23 @@
         // http://bay-api.by-edu.com/question/list/104ebf7e3d304d3a8d79e76f9c6f8d65/1
         this.$http.get(Beiyi.getUrl() + '/question/list/' + this.userId + '/' + this.$route.query.libraryId).then((res) => {
           this.question = res.body.data
+          // 如果试学结束了，不再让用户答题，提示购买
+          if (this.question.length === 0) {
+            this.buy = true
+            return
+          } else {
+            this.buy = false
+          }
           Store.save('question', this.question)   // 观察／存入缓存
+          console.log('aaaaaaaa')
           console.log(this.question)
           this.length = this.question.length
           Store.save('libraryId', this.$route.query.libraryId)
           console.log(this.length)
           // 默认值当前index为0，也就是第一题
           this.questionList = this.question[this.index]
-          // console.log(this.questionList)
+          console.log('lllllll')
+          console.log(this.questionList)
           // console.log(this.questionList.answers)
           // 判断单选 多选
           if (this.questionList.ctype === '单选' || this.questionList.ctype === '判断') {
@@ -123,7 +131,8 @@
         console.log(this.length)
         // 默认值当前index为0，也就是第一题
         this.questionList = this.question[this.index]
-        // console.log(this.questionList)
+        console.log('sssssss')
+        console.log(this.questionList)
         // console.log(this.questionList.answers)
         // 判断单选 多选
         if (this.questionList.ctype === '单选' || this.questionList.ctype === '判断') {
@@ -275,7 +284,7 @@
         this.$router.push({path: '/study/buyCourse'})
       },
       studyOther () {
-        this.$router.push({path: '/mine'})
+        this.$router.push({path: '/study'})
       }
     }
   }
@@ -297,14 +306,16 @@
   .question
     .question-type
       padding: 15px 16px
-      font-size: 18px
+      font-size: 16px
+      color: rgb(240,92,41)
       .pro
         float right
         a
-          color: rgb(43, 38, 37)
+          color: rgb(240,92,41)
     .question-title, .question-list
       padding: 15px 16px
       font-size: 15px
+      line-height: 25px
       .option
         display block
         padding: 15px 0
@@ -329,5 +340,6 @@
       text-align: center
       height: 60px
       line-height: 60px
+      font-size: 16px
 
 </style>

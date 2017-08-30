@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--{{$route.query.patternType}}-->
-    <ul class="courselist">
+    <ul class="courselist" v-if="hasQuestion">
       <li class="subject" v-for="item in libName">
         <router-link :to="{ path: '/study/tip/question', query: { libName: this.libName, libraryName: item.name, libraryId: item.id} }">
           <p class="name">{{item.name}}</p>
@@ -11,6 +11,12 @@
         </router-link>
       </li>
     </ul>
+    <div v-if="!hasQuestion">
+      <div style="margin-top: 100px;">
+        <img src="./nothing.png" alt="" style="display: block;margin: auto">
+        <p style="margin-top: 20px;text-align: center;font-size: 16px;">暂无题目</p>
+      </div>
+    </div>
     <div class="space"></div>
   </div>
 </template>
@@ -23,10 +29,16 @@
   export default {
     data () {
       return {
-        libName
+        libName,
+        hasQuestion: true
       }
     },
     created () {
+      if (libName.length === 0) {
+        this.hasQuestion = false
+      } else {
+        this.hasQuestion = true
+      }
       Store.save('question', null)
       Store.save('tipName', null)
       Store.save('questionno', 0)
@@ -40,6 +52,11 @@
           }
         }
         console.log(libName)
+        if (libName.length === 0) {
+          this.hasQuestion = false
+        } else {
+          this.hasQuestion = true
+        }
       }
       libName = []
     }
