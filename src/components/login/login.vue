@@ -3,7 +3,7 @@
     <!--微信头像-->
     <div class="login-headImg">
       <div class="head">
-        <img src="imgUrl" alt="">
+        <img :src="imgUrl" alt="">
       </div>
       <p class="nickName">{{name}}</p>
     </div>
@@ -44,7 +44,20 @@
       }
     },
     created () {
-      this.userId = Store.fetch('userId')
+      if (Beiyi.getQueryString('userId') !== null) {
+        console.log('login')
+        this.userId = Beiyi.getQueryString('userId')
+        console.log(this.userId)
+        Store.save('userId', this.userId)
+        if (Beiyi.getQueryString('name') !== null) {
+          this.name = Beiyi.getQueryString('name')
+          Store.save('name', this.name)
+        }
+        if (Beiyi.getQueryString('imgUrl') !== null) {
+          this.imgUrl = Beiyi.getQueryString('imgUrl')
+          Store.save('imgUrl', this.imgUrl)
+        }
+      }
     },
     methods: {
       getCode () {
@@ -88,11 +101,12 @@
         this.$http.post(Beiyi.getUrl() + '/login/submitphone?userId=' + this.userId + '&code=' + this.code + '&phone=' + this.phone).then((res) => {
           console.log(res.body.data)
           if (res.body.data.flag === true) {
-            this.phone = Store.save('phone', res.body.data.cellPhone)
-            this.imgUrl = Store.save('imgUrl', res.body.data.headImgUrl)
-            this.name = Store.save('name', res.body.data.nickname)
-            this.openId = Store.save('openId', res.body.data.openId)
-            this.$router.push({path: '/study'})
+            Store.save('phone', res.body.data.cellPhone)
+            Store.save('imgUrl', res.body.data.imgUrl)
+            Store.save('name', res.body.data.name)
+            Store.save('openId', res.body.data.openId)
+            this.$router.push({path: '/find'})
+//            this.$router.push({path: '/study'})
           } else {
             alert(res.body.data.message)
           }
