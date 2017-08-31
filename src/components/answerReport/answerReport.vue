@@ -1,33 +1,40 @@
 <template>
   <div>
-    <h1 class="subjectName"><span style="color: rgb(240,92,41);font-size: 50px">{{responseAnswer.score}}</span>分</h1>
-    <div class="ranking">
-      <span>用时：{{responseAnswer.consumedTime}}</span>
-      <span>正确率：{{responseAnswer.rightSum}}/{{question.length}}</span>
-      <span>排名：{{responseAnswer.rankNo}}</span>
-    </div>
-    <div class="divide"></div>
-    <div class="numList">
+    <!--<loading v-show="showLoading"></loading>-->
+    <div>
+      <h1 class="subjectName"><span style="color: rgb(240,92,41);font-size: 50px">{{responseAnswer.score}}</span>分</h1>
+      <div class="ranking">
+        <span>用时：{{responseAnswer.consumedTime}}</span>
+        <span>正确率：{{responseAnswer.rightSum}}/{{question.length}}</span>
+        <span>排名：{{responseAnswer.rankNo}}</span>
+      </div>
+      <div class="divide"></div>
+      <div class="numList">
       <span class="questionNo" @click="locationQuestionNo(index)" v-for="(questionitem, index) in this.question">
         <span class="questionNum" :class="{'bgWrong': !questionitem.ar, 'bgRight': questionitem.ar}">{{questionitem.no}}</span>
       </span>
+      </div>
+      <div class="redo-analysis">
+        <span class="redo">重新做题</span>
+        <span class="seeanalysis">查看解析</span>
+      </div>
+      <div class="space"></div>
     </div>
-    <div class="redo-analysis">
-      <span class="redo">重新做题</span>
-      <span class="seeanalysis">查看解析</span>
-    </div>
-    <div class="space"></div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import Store from '../../store.js'
-
+//  import loading from '../../components/loading/loading.vue'
   export default {
+//    components: {loading},
     data () {
-      return {}
+      return {
+//        showLoading: false
+      }
     },
     created () {
+//      this.showLoading = true
       // 读取后台返回数据
       this.responseAnswer = Store.fetch('responseAnswer')
      // console.log(this.responseAnswer)

@@ -124,7 +124,8 @@
         msg: '',
         coureId,
         libraries: [],
-        coursePay
+        coursePay,
+        showBg: true
       }
     },
     created () {

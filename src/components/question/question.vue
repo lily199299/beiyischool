@@ -1,73 +1,77 @@
 <template>
   <div>
     <!--题目类型-->
-    <div class="question">
-     <!--  {{$route.query.libraryName}}-->
-      <h1 class="question-type">{{questionList.ctype}} <span class="pro"><a>{{questionList.no}}</a>/<a v-text="length"></a></span></h1>
-      <div class="divide"></div>
-      <div>
-        <p class="question-title">({{questionList.no}}){{questionList.content}}</p>
-        <div class="question-list">
-          <ul>
-            <li v-for="(item, index) in questionList.answers" @click="answerQuestion(index)">
-              <!--单选、判断-->
-              <p class="option" v-if="questionType"  :checked="item.checked" :class="{ optionActive: item.checked }">
-                <span class="suboption" ref="subOption">{{item.subOption}}</span><span
-                class="content">{{item.content}}</span>
-              </p>
-              <p class="option" v-if="!questionType" :class="{ optionActive: item.checked }">
-                <span class="suboption" ref="subOption">{{item.subOption}}</span><span
-                class="content">{{item.content}}</span>
-              </p>
-            </li>
-          </ul>
+    <loading v-show="showLoading"></loading>
+    <div v-show="!showLoading">
+      <div class="question">
+        <!--  {{$route.query.libraryName}}-->
+        <h1 class="question-type">{{questionList.ctype}} <span class="pro"><a>{{questionList.no}}</a>/<a v-text="length"></a></span></h1>
+        <div class="divide"></div>
+        <div>
+          <p class="question-title">({{questionList.no}}){{questionList.content}}</p>
+          <div class="question-list">
+            <ul>
+              <li v-for="(item, index) in questionList.answers" @click="answerQuestion(index)">
+                <!--单选、判断-->
+                <p class="option" v-if="questionType"  :checked="item.checked" :class="{ optionActive: item.checked }">
+                  <span class="suboption" ref="subOption">{{item.subOption}}</span><span
+                  class="content">{{item.content}}</span>
+                </p>
+                <p class="option" v-if="!questionType" :class="{ optionActive: item.checked }">
+                  <span class="suboption" ref="subOption">{{item.subOption}}</span><span
+                  class="content">{{item.content}}</span>
+                </p>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-    <!--上一题 题卡 交卷 下一题 -->
-    <div class="functionZone">
-      <span class="previous" @click="previous">上一题</span>
-      <span class="answerSheet">
+      <!--上一题 题卡 交卷 下一题 -->
+      <div class="functionZone">
+        <span class="previous" @click="previous">上一题</span>
+        <span class="answerSheet">
         <router-link
           :to="{path: './question/answerSheet', query: { questionList: this.questionList}}">题卡</router-link>
       </span>
-      <span class="submitPapers" @click="submitPapers()">交卷</span>
-      <span class="next" @click="next">下一题</span>
+        <span class="submitPapers" @click="submitPapers()">交卷</span>
+        <span class="next" @click="next">下一题</span>
+      </div>
+      <!--购买弹窗提示-->
+      <Modal v-model="buy" class-name="vertical-center-modal" title="购买课程" :closable="false">
+        <div style="font-size: 15px">
+          亲爱的童鞋，试学结束了，可以购买课程，也可以试学其他课程哦～
+        </div>
+        <div slot="footer" style="display: flex;">
+          <button @click="studyOther" style="flex: 1;">
+            <router-link to="/find" style="font-weight:bold;font-size: 15px">试学其他课程</router-link>
+          </button>
+          <button @click="buyCourse" style="flex: 1;">
+            <router-link to="/study" style="color: rgb(242,90,41);font-weight:bold;font-size: 15px">去购买</router-link>
+          </button>
+        </div>
+      </Modal>
+      <!--交卷弹窗提示-->
+      <Modal v-model="submitPaper" class-name="vertical-center-modal" title="交卷" :closable="false">
+        <div style="font-size: 13px">
+          这套题目还没有答完哦~
+        </div>
+        <div slot="footer">
+          <router-link to="#" style="color: red;">继续答题</router-link>
+          <button @click="studyOther">
+            <router-link to="/find">确定交卷</router-link>
+          </button>
+        </div>
+      </Modal>
     </div>
-    <!--购买弹窗提示-->
-    <Modal v-model="buy" class-name="vertical-center-modal" title="购买课程" :closable="false">
-      <div style="font-size: 15px">
-        亲爱的童鞋，试学结束了，可以购买课程，也可以试学其他课程哦～
-      </div>
-      <div slot="footer">
-        <button @click="buyCourse">
-          <router-link to="/study" style="color: red;">去购买</router-link>
-        </button>
-        <button @click="studyOther">
-          <router-link to="/find">试学其他课程</router-link>
-        </button>
-      </div>
-    </Modal>
-    <!--交卷弹窗提示-->
-    <Modal v-model="submitPaper" class-name="vertical-center-modal" title="交卷" :closable="false">
-      <div style="font-size: 15px">
-        这套题目还没有答完哦~
-      </div>
-      <div slot="footer">
-        <router-link to="#" style="color: red;">继续答题</router-link>
-        <button @click="studyOther">
-          <router-link to="/find">确定交卷</router-link>
-        </button>
-      </div>
-    </Modal>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import Store from '../../store.js'
   import Beiyi from '../../common.js'
-
+  import loading from '../../components/loading/loading.vue'
   export default {
+    components: {loading},
     data () {
       return {
         answer: [],
@@ -81,10 +85,15 @@
         index: 0,
         questionType: false,
         checkRadio: '',  // 单选 判断
-        checkedBox: ''   // 多选
+        checkedBox: '',   // 多选
+        showLoading: false
       }
     },
     created () {
+//      debugger
+//      setTimeout(function () {
+//        this.showLoading = true
+//      }, 2000)
       this.userId = Store.fetch('userId')
       // this.tipName = this.$route.query.libraryName
       console.log(Store.fetch('libName'))
@@ -93,13 +102,14 @@
       }
      // Store.save('tipName', this.$route.query.libraryName)
       this.question = Store.fetch('question')
-      console.log(this.question)
       this.index = Store.fetch('questionno')
+      this.showLoading = true
       if (this.question === null) {
         // 请求地址：http://bay-api.by-edu.com/question/list/{userId}/{libraryId}
         // http://bay-api.by-edu.com/question/list/104ebf7e3d304d3a8d79e76f9c6f8d65/1
         this.$http.get(Beiyi.getUrl() + '/question/list/' + this.userId + '/' + this.$route.query.libraryId).then((res) => {
           this.question = res.body.data
+          this.showLoading = false
           // 如果试学结束了，不再让用户答题，提示购买
           if (this.question.length === 0) {
             this.buy = true
@@ -108,15 +118,10 @@
             this.buy = false
           }
           Store.save('question', this.question)   // 观察／存入缓存
-          console.log('aaaaaaaa')
-          console.log(this.question)
           this.length = this.question.length
           Store.save('libraryId', this.$route.query.libraryId)
-          console.log(this.length)
           // 默认值当前index为0，也就是第一题
           this.questionList = this.question[this.index]
-          console.log('lllllll')
-          console.log(this.questionList)
           // console.log(this.questionList.answers)
           // 判断单选 多选
           if (this.questionList.ctype === '单选' || this.questionList.ctype === '判断') {
@@ -127,12 +132,10 @@
           }
         })
       } else {
+        this.showLoading = false
         this.length = this.question.length
-        console.log(this.length)
         // 默认值当前index为0，也就是第一题
         this.questionList = this.question[this.index]
-        console.log('sssssss')
-        console.log(this.questionList)
         // console.log(this.questionList.answers)
         // 判断单选 多选
         if (this.questionList.ctype === '单选' || this.questionList.ctype === '判断') {
@@ -259,6 +262,7 @@
       },
       // 交卷
       submitPapers () {
+        this.showLoading = true
         var mywa = JSON.stringify(this.answer)
         // http://bay-api.by-edu.com/question/postquestions?userId=104ebf7e3d304d3a8d79e76f9c6f8d65&answer=’[1:{A:B,R:B},2:{A:C,R:C},3:{A:C,R:D},4:{A:BD,R:D},5:{A:ABCDE,R:D}]’&libraryId=12&time=1276
         this.$http.post(Beiyi.getUrl() + '/question/postquestions', {
@@ -271,9 +275,9 @@
           console.log(res.body.data)
           this.responseAnswer = res.body.data
           Store.save('responseAnswer', this.responseAnswer)
-          if (this.questionList.no < this.length) {
-            this.submitPaper = true
-          }
+//          if (this.questionList.no < this.length) {
+          this.submitPaper = true
+//          }
           // 交卷的时候，跳转到答题报告页面
           this.$router.push({path: '/study/tip/question/answerReport'})
         }).catch((res) => {
@@ -311,7 +315,7 @@
       .pro
         float right
         a
-          color: rgb(240,92,41)
+         color: rgb(240,92,41)
     .question-title, .question-list
       padding: 15px 16px
       font-size: 15px
