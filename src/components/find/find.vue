@@ -75,8 +75,8 @@
     },
     created () {
       // 先从缓存获取
-      Store.save('userId', '104ebf7e3d304d3a8d79e76f9c6f8d65')
-      Store.save('phone', '18785099458')
+//      Store.save('userId', '104ebf7e3d304d3a8d79e76f9c6f8d65')
+//      Store.save('phone', '18785099458')
       this.userId = Store.fetch('userId')
       this.phone = Store.fetch('phone')
       this.name = Store.fetch('name')
