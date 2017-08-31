@@ -16,7 +16,7 @@
       </div>
       <div class="redo-analysis">
         <span class="redo">重新做题</span>
-        <span class="seeanalysis">查看解析</span>
+        <router-link to="/study/tip/question/questionAnalysis" class="seeanalysis">查看解析</router-link>
       </div>
       <div class="space"></div>
     </div>
@@ -118,7 +118,7 @@
       height: 50px
       line-height 50px
       text-align center
-      font-size 20px
+      font-size 16px
       color: #fff
       border-right: 1px solid #fff
     .seeanalysis
@@ -127,6 +127,6 @@
       height: 50px
       line-height 50px
       text-align center
-      font-size 20px
+      font-size 16px
       color: #fff
 </style>

@@ -33,6 +33,7 @@
       <p>答案解析:</p>
       <p>{{questionList.analysis}}</p>
     </div>
+    <div class="space"></div>
     <!--上一题 题卡 交卷 下一题 -->
     <div class="functionZone">
       <span class="previous" @click="previous">上一题</span>
@@ -99,7 +100,7 @@
         // 根据id获得解析
         this.analysis = this.questionList.analysis
         this.isActive = -1
-        console.log(this.questionList)
+//        console.log(this.questionList)
       },
       // 上一题
       previous () {
@@ -110,7 +111,6 @@
           this.questionList = this.question[this.index]
           console.log(this.questionList.analysis)
           console.log(this.questionList.answers[this.index].questionId)
-          // 根据id获得解析
           this.analysis = this.questionList.analysis
           this.isActive = -1
         }
@@ -169,7 +169,6 @@
     font-size: 16px
     padding: 15px 16px
     p
-      padding-top: 14px
       line-height: 30px
   .functionZone
     position: fixed

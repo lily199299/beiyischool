@@ -36,16 +36,16 @@
         <span class="submitPapers" @click="submitPapers()">交卷</span>
         <span class="next" @click="next">下一题</span>
       </div>
-      <!--购买弹窗提示-->
-      <Modal v-model="buy" class-name="vertical-center-modal" title="购买课程" :closable="false">
+      <!--购买弹窗提示 :closable="false"-->
+      <Modal v-model="buy" class-name="vertical-center-modal" title="购买课程">
         <div style="font-size: 15px">
           亲爱的童鞋，试学结束了，可以购买课程，也可以试学其他课程哦～
         </div>
         <div slot="footer" style="display: flex;">
-          <button @click="studyOther" style="flex: 1;">
+          <button @click="studyOther" style="flex: 1;border: none;background: #fff;">
             <router-link to="/find" style="font-weight:bold;font-size: 15px">试学其他课程</router-link>
           </button>
-          <button @click="buyCourse" style="flex: 1;">
+          <button @click="buyCourse" style="flex: 1;border: none;background: #fff;">
             <router-link to="/study" style="color: rgb(242,90,41);font-weight:bold;font-size: 15px">去购买</router-link>
           </button>
         </div>
@@ -94,6 +94,7 @@
 //      setTimeout(function () {
 //        this.showLoading = true
 //      }, 2000)
+      this.courseId = Store.fetch('courseId')
       this.userId = Store.fetch('userId')
       // this.tipName = this.$route.query.libraryName
       console.log(Store.fetch('libName'))
@@ -285,7 +286,10 @@
         })
       },
       buyCourse () {
-        this.$router.push({path: '/study/buyCourse'})
+        // http://cb.by-edu.com/createOrder?userId=d7b1fbbb2b5a4eaea0b2c62be47867dd&courseId=1
+        // 'http://cb.by-edu.com/createOrder?userId='+ this.userId + '&courseId=' +this.courseId
+        window.location.href = 'http://cb.by-edu.com/createOrder?userId=' + this.userId + '&courseId=' + this.courseId
+//      this.$router.push({path: '/study/buyCourse'})
       },
       studyOther () {
         this.$router.push({path: '/study'})
@@ -295,6 +299,11 @@
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
+  .ivu-modal-mask
+    background: url("../../../src/common/img/maskbg.jpeg")
+    background-position-x: center
+    background-position-y: center
+    filter blur(2px)
   .vertical-center-modal
     display: flex
     align-items: center
@@ -306,7 +315,6 @@
       button
         font-size 16px
         flex: 1
-
   .question
     .question-type
       padding: 15px 16px

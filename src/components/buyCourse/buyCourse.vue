@@ -10,13 +10,11 @@
     <div class="courseIntro">
       <p class="description">课程简介</p>
       <div class="detail">
-        <p>课程名称：课程名称</p>
-        <p>开课时间：随时</p>
+        <p>订单名称：课程名称</p>
+        <p>订单编号：1234567890</p>
         <p>总共课时：20课时</p>
         <p>学习时长：1年</p>
-        <p>招收人数：200人</p>
-        <p>主讲老师：葛老师</p>
-        <p>课程费用：1290</p>
+        <p>订单金额：1290</p>
       </div>
     </div>
     <div class="fee">

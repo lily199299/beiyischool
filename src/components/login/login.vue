@@ -20,10 +20,8 @@
         <span class="getCode count" v-show="!show" ref="code">重新发送{{count}}</span>
       </label>
     </div>
+    <!--<div v-show="showTip" style="width: 100%;padding: 15px 16px;text-align: center;color: rgb(242,90,41)">{{message}}</div>-->
     <div class="bindPhone" @click="bindPhone">绑定手机</div>
-    <Modal v-model="showTip" class-name="vertical-center-modal" :closable="false">
-      <div style="width:100%;text-align: center">{{message}}</div>
-    </Modal>
   </div>
 </template>
 

@@ -4,7 +4,7 @@
     <ul class="courselist" v-if="hasQuestion">
       <li class="subject" v-for="item in libName">
         <router-link :to="{ path: '/study/tip/question', query: { libName: this.libName, libraryName: item.name, libraryId: item.id} }">
-          <p class="name">{{item.name}}</p>
+          <p class="coursename">{{item.name}}</p>
           <p class="jindu"><span class="num"><span>231</span>人做过</span> <span
             class="pro">0/{{ item.questionNum }}</span></p>
           <div class="divide"></div>
@@ -44,14 +44,14 @@
       Store.save('questionno', 0)
       // 从缓存读取patterns
       this.patterns = Store.fetch('courseLocal')
-      console.log(this.patterns)
+//      console.log(this.patterns)
       for (let i in this.patterns) {
         if (this.patterns[i].pattern === this.$route.query.patternType) {
           for (let j in this.patterns[i].libraries) {
             libName.push(this.patterns[i].libraries[j])
           }
         }
-        console.log(libName)
+//        console.log(libName)
         if (libName.length === 0) {
           this.hasQuestion = false
         } else {
@@ -69,7 +69,7 @@
       padding-top: 15px
       a
         display block
-      .name
+      .coursename
         padding: 0 16px 15px 16px
         font-size: 14px
         color: rgb(43, 38, 37)
