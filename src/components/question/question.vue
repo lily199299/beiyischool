@@ -28,13 +28,13 @@
       </div>
       <!--上一题 题卡 交卷 下一题 -->
       <div class="functionZone">
-        <span class="previous" @click="previous">上一题</span>
+        <span class="previous" @click="previous"><img class="tika" src="./pre.png" alt=""></span>
         <span class="answerSheet">
         <router-link
-          :to="{path: './question/answerSheet', query: { questionList: this.questionList}}">题卡</router-link>
+          :to="{path: './question/answerSheet', query: { questionList: this.questionList}}"><img class="tika" src="./tika.png" alt=""></router-link>
       </span>
-        <span class="submitPapers" @click="submitPapers()">交卷</span>
-        <span class="next" @click="next">下一题</span>
+        <span class="submitPapers" @click="submitPapers()"><img class="tika" src="./jiaojuan.png" alt=""></span>
+        <span class="next" @click="next"><img class="tika" src="./next.png" alt=""></span>
       </div>
       <!--购买弹窗提示 :closable="false"-->
       <Modal v-model="buy" class-name="vertical-center-modal" title="购买课程">
@@ -299,6 +299,15 @@
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
+  .tika
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
   .ivu-modal-mask
     background: url("../../../src/common/img/maskbg.jpeg")
     background-position-x: center
@@ -345,8 +354,9 @@
     height: 60px
     line-height 60px
     padding: 0 5%;
-    background-color: aliceblue
+    background-color: #fff
     .previous, .answerSheet, .submitPapers, .next
+      position: relative;
       display block
       flex: 1
       text-align: center

@@ -63,6 +63,6 @@
         border: 1px solid rgb(172, 169, 169)
       .bgColor
         background-color rgb(242, 90, 41)
-        color: #fff
-        border: none
+        color: #fff !important
+        border: none !important
 </style>

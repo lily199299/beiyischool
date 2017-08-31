@@ -8,33 +8,33 @@
       <p class="nickName">{{name}}</p>
       <div class="learnRecord">
         <div class="record">
-          <div class="wrong learn"><i class="icon-find"></i>我的错题</div>
-          <div class="history learn"><i class="icon-find"></i>学习记录</div>
+          <div class="wrong learn"><img class="iconstyle" src="./bei-cuoti.png" alt="">我的错题</div>
+          <div class="history learn"><img class="iconstyle" src="./bei-record.png" alt="">学习记录</div>
         </div>
       </div>
     </div>
     <div class="divide"></div>
     <div class="beiyi-micro">
-      <p><i class="icon-find"></i>贝易小班</p>
+      <p><img class="iconstyle" src="./bei-class.png" alt="">贝易小班</p>
     </div>
     <div class="divide"></div>
     <div class="system">
       <div class="notice border-1px">
-        <p><i class="icon-find"></i>通知</p>
+        <p><img class="iconstyle"  src="./bei-notice.png" alt="">通知</p>
       </div>
       <div class="myCourse border-1px">
-        <p><i class="icon-find"></i>我的课程</p>
+        <p><img class="iconstyle"  src="./bei-mycourse.png" alt="">我的课程</p>
       </div>
       <div class="money border-1px">
-        <p><i class="icon-find"></i>钱包</p>
+        <p><img class="iconstyle" src="./bei-money.png" alt="">钱包</p>
       </div>
       <div class="discount border-1px">
-        <p><i class="icon-find"></i>优惠券</p>
+        <p><img class="iconstyle" src="./bei-discount.png" alt="">优惠券</p>
       </div>
     </div>
     <div class="divide"></div>
     <div class="settings">
-      <p><i class="icon-find"></i>设置</p>
+      <p><img class="iconstyle" src="./bei-setting.png" alt="">设置</p>
     </div>
     <div class="divide"></div>
     <div class="space"></div>
@@ -60,6 +60,11 @@
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/common.styl"
+  .iconstyle
+    width: 15px
+    height: 15px
+    vertical-align: sub
+    margin-right: 10px
   .space
     height 70px
   .headImg
@@ -84,17 +89,15 @@
         display: flex
         .wrong
           border-right: 1px solid #dad5d5
+          font-size 15px
         .learn
           flex: 1
           text-align: center
-          i
-            display block
-            padding-bottom: 10px
+          font-size 15px
   .beiyi-micro,.settings
     padding: 16px
-    i
-      vertical-align: sub
-      padding-right: 15px
+    p
+      font-size: 15px
   .system
     padding: 0 16px 16px 16px
     .notice,.myCourse,.money,.discount
@@ -104,9 +107,7 @@
       padding: 5px 0
       p
         padding-bottom:10px
-      i
-        vertical-align: sub
-        padding-right: 15px
+        font-size: 15px
 
 
 </style>

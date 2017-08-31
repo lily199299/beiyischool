@@ -139,7 +139,7 @@
       .pro
         float right
         a
-          color: rgb(43, 38, 37)
+          color: rgb(242, 90, 41)
     .question-title, .question-list
       padding: 15px 16px
       font-size: 15px

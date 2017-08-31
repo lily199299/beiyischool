@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="panel-title">
-      <p class="panel-nav border-1px" @click="showAll" v-show="hideSelect">选择课程={{message}}</p>
+      <p class="panel-nav border-1px" @click="showAll" v-show="hideSelect">选择课程{{message}}<Icon class="down" type="chevron-down"></Icon></p>
       <p class="panel-nav border-1px" @click="showAll" v-show="showSelect">{{msg}}</p>
       <div v-show="allShow">
         <div class="zhengquan">
-          <p class="panel-nav border-1px" @click="showZhengquan">证券从业</p>
+          <p class="panel-nav border-1px" @click="showZhengquan">证券从业<Icon class="down" type="chevron-down"></Icon></p>
           <div class="panel-body" v-show="zhengquanShow">
             <ul class="first-level">
               <li v-for="item in zhengquan" @click="getText(item.id,item)">{{ item.name }}</li>
@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="jijin">
-          <p class="panel-nav border-1px" @click="showJijin">基金从业</p>
+          <p class="panel-nav border-1px" @click="showJijin">基金从业<Icon class="down" type="chevron-down"></Icon></p>
           <div class="panel-body" v-show="jijinShow">
             <ul class="first-level">
               <li v-for="item in jijin" @click="getText(item.id,item)">{{ item.name }}</li>
@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="yinhang">
-          <p class="panel-nav border-1px" @click="showYinhang">银行从业</p>
+          <p class="panel-nav border-1px" @click="showYinhang">银行从业<Icon class="down" type="chevron-down"></Icon></p>
           <div class="panel-body" v-show="yinhangShow">
             <ul class="first-level">
               <li v-for="item in yinhang" @click="getText(item.id,item)">{{ item.name }}</li>
@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="zhucekuaijishi">
-          <p class="panel-nav border-1px" @click="showZhucekuaijishi">注册会计师</p>
+          <p class="panel-nav border-1px" @click="showZhucekuaijishi">注册会计师<Icon class="down" type="chevron-down"></Icon></p>
           <div class="panel-body" v-show="zhucekuaijishiShow">
             <ul class="first-level">
               <li v-for="item in zhucekuaijishi" @click="getText(item.id,item)">{{ item.name }}</li>
@@ -37,7 +37,7 @@
           </div>
         </div>
         <div class="kuaiji">
-          <p class="panel-nav border-1px" @click="showKuaiji">会计从业</p>
+          <p class="panel-nav border-1px" @click="showKuaiji">会计从业<Icon class="down" type="chevron-down"></Icon></p>
           <div class="panel-body" v-show="kuaijiShow">
             <ul class="first-level">
               <li v-for="item in kuaiji" @click="getText(item.id,item)">{{ item.name }}</li>
@@ -237,6 +237,10 @@
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/common.styl"
+  .down
+    margin-left: 20px
+    vertical-align: middle
+    color: rgb(216,216,216)
   .panel-title
     width: 100%
     background-color: rgb(240, 240, 240)

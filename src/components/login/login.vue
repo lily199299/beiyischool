@@ -164,6 +164,8 @@
       border-radius: 7px
       text-indent: 30px
       font-size: 16px
+      outline: 0
+      -webkit-appearance: none
     .getCode
       position: absolute
       right: 5px
