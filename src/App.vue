@@ -1,14 +1,34 @@
 <template>
+  <!--<div id="app">-->
+    <!--<div class="tab">-->
+      <!--<div class="tab-item">-->
+        <!--<router-link to="/find"><i class="icon-find"></i>发现</router-link>-->
+      <!--</div>-->
+      <!--<div class="tab-item">-->
+        <!--<router-link to="/study"><i class="icon-study"></i>学习</router-link>-->
+      <!--</div>-->
+      <!--<div class="tab-item">-->
+        <!--<router-link to="/mine"><i class="icon-mine"></i>我的</router-link>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<router-view></router-view>-->
+  <!--</div>-->
   <div id="app">
     <div class="tab">
-      <div class="tab-item">
-        <router-link to="/find"><i class="icon-find"></i>发现</router-link>
+      <div class="tab-item" :id="1"  @click="selected($event)">
+        <img v-if="!find" slot="icon"  src="./common/img/find.png" alt="">
+        <img v-if="find" slot="icon" src="./common/img/find-active.png" alt="">
+        <router-link ref="routerLink" to="/find">发现</router-link>
       </div>
-      <div class="tab-item">
-        <router-link to="/study"><i class="icon-study"></i>学习</router-link>
+      <div class="tab-item" :id="2" @click="selected($event)">
+        <img v-if="!study" slot="icon"  src="./common/img/study.png" alt="">
+        <img v-if="study" slot="icon"  src="./common/img/study-active.png" alt="">
+        <router-link ref="routerLink" to="/study">学习</router-link>
       </div>
-      <div class="tab-item">
-        <router-link to="/mine"><i class="icon-mine"></i>我的</router-link>
+      <div class="tab-item" :id="3" @click="selected($event)">
+        <img v-if="!mine" slot="icon"  src="./common/img/mine.png" alt="">
+        <img v-if="mine" slot="icon"  src="./common/img/mine-active.png" alt="">
+        <router-link ref="routerLink" to="/mine">我的</router-link>
       </div>
     </div>
     <router-view></router-view>
@@ -23,7 +43,35 @@
       return {
         datas: {}, // 请求的所有数据
         courses: [],
-        course: {}
+        course: {},
+        find: true,
+        study: false,
+        mine: false
+      }
+    },
+    methods: {
+      selected (e) {
+        console.log(e)
+        console.log(e.currentTarget)
+//        debugger
+        // index变量存放当前点击的元素
+        var index = e.currentTarget.id   // 1 2 3
+//        console.log(typeof index)
+        if (parseInt(index) === 1) {
+          this.find = true
+          this.study = false
+          this.mine = false
+        }
+        if (parseInt(index) === 2) {
+          this.study = true
+          this.find = false
+          this.mine = false
+        }
+        if (parseInt(index) === 3) {
+          this.mine = true
+          this.study = false
+          this.find = false
+        }
       }
     },
     created () {
@@ -81,6 +129,10 @@
     .tab-item
       flex: 1
       text-align: center
+      img
+        width: 20px
+        height: 20px
+        margin: 5px 0
       & > a
         display: block
         font-size 14px

@@ -9,14 +9,23 @@
         <span>排名：{{responseAnswer.rankNo}}</span>
       </div>
       <div class="divide"></div>
+      <div style="padding: 10px 16px;overflow: hidden">
+        <div style="float: left;margin-right: 25px"><img width="30px" height="30px" src="./ps.png" alt=""></div>
+        <div style="float: left;">
+          <p>1.点击题号可以查看对应的答案与解析</p>
+          <p>2.橙色表示：您答错了</p>
+          <p>3.绿色表示：您答对了</p>
+        </div>
+      </div>
+      <div class="divide"></div>
       <div class="numList">
       <span class="questionNo" @click="locationQuestionNo(index)" v-for="(questionitem, index) in this.question">
         <span class="questionNum" :class="{'bgWrong': !questionitem.ar, 'bgRight': questionitem.ar}">{{questionitem.no}}</span>
       </span>
       </div>
       <div class="redo-analysis">
-        <span class="redo">重新做题</span>
-        <router-link to="/study/tip/question/questionAnalysis" class="seeanalysis">查看解析</router-link>
+        <span class="redo" @click="buy">去购买</span>
+        <router-link to="/study" class="seeanalysis">返回首页</router-link>
       </div>
       <div class="space"></div>
     </div>
@@ -30,10 +39,11 @@
 //    components: {loading},
     data () {
       return {
-//        showLoading: false
       }
     },
     created () {
+      this.courseId = Store.fetch('courseId')
+      this.userId = Store.fetch('userId')
 //      this.showLoading = true
       // 读取后台返回数据
       this.responseAnswer = Store.fetch('responseAnswer')
@@ -57,12 +67,31 @@
        // console.log(index)
         Store.save('questionno', index)
         this.$router.push({path: '/study/tip/question/questionAnalysis'})
+      },
+      buy () {
+        window.location.href = 'http://cb.by-edu.com/createOrder?userId=' + this.userId + '&courseId=' + this.courseId
       }
     }
   }
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
+  .ivu-modal-mask
+    background: url("../../../src/common/img/maskbg.jpeg")
+    background-position-x: center
+    background-position-y: center
+    filter blur(2px)
+  .vertical-center-modal
+    display: flex
+    align-items: center
+    justify-content: center
+    .ivu-modal
+      top: 0
+    .ivu-modal-body
+      display flex
+      button
+        font-size 16px
+        flex: 1
   .subjectName
     padding: 25px 16px
     font-size 18px
