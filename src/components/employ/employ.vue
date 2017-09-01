@@ -32,7 +32,7 @@
   .title
     padding: 15px 0
     font-weight: 500
-    font-size: 18px
+    font-size: 16px
     border-1px(rgb(216, 216, 216))
   .more
     float: right
@@ -44,7 +44,7 @@
       font-size: 14px
     .employ-city
       color: rgb(126,124,125)
-      font-size: 14px
+      font-size: 12px
       .city
         margin-right 15px
 

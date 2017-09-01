@@ -30,9 +30,8 @@
       <div class="functionZone">
         <span class="previous" @click="previous"><img class="tika" src="./pre.png" alt=""></span>
         <span class="answerSheet">
-        <router-link
-          :to="{path: './question/answerSheet', query: { questionList: this.questionList}}"><img class="tika" src="./tika.png" alt=""></router-link>
-      </span>
+          <router-link :to="{path: './question/answerSheet', query: { questionList: this.questionList}}"><img class="tika" src="./tika.png" alt=""></router-link>
+        </span>
         <span class="submitPapers" @click="submitPapers()"><img class="tika" src="./jiaojuan.png" alt=""></span>
         <span class="next" @click="next"><img class="tika" src="./next.png" alt=""></span>
       </div>

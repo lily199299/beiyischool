@@ -23,7 +23,10 @@
         <p><img class="iconstyle"  src="./bei-notice.png" alt="">通知</p>
       </div>
       <div class="myCourse border-1px">
-        <p><img class="iconstyle"  src="./bei-mycourse.png" alt="">我的课程</p>
+        <p>
+          <img class="iconstyle"  src="./bei-mycourse.png" alt="">
+          <router-link to="/mine/myCourse">我的课程</router-link>
+        </p>
       </div>
       <div class="money border-1px">
         <p><img class="iconstyle" src="./bei-money.png" alt="">钱包</p>

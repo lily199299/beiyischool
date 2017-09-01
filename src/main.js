@@ -22,6 +22,7 @@ import answerSheet from './components/answerSheet/answerSheet.vue'
 import answerReport from './components/answerReport/answerReport.vue'
 import questionAnalysis from './components/questionAnalysis/questionAnalysis.vue'
 import login from './components/login/login.vue'
+import myCourse from './components/myCourse/myCourse.vue'
 import './common/stylus/index.styl'
 import './common'
 
@@ -39,6 +40,7 @@ const routes = [
   {path: '/study', component: study},
   {path: '/mine', component: mine},
   {path: '/login', component: login},
+  {path: '/mine/myCourse', component: myCourse},
   {path: '/study/tip', component: tip},
   {path: '/study/kaoqian', component: kaoqian},
   {path: '/study/fangzhen', component: fangzhen},
