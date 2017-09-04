@@ -2,19 +2,19 @@
   <div>
     <!--<loading v-show="showLoading"></loading>-->
     <div>
-      <h1 class="subjectName"><span style="color: rgb(240,92,41);font-size: 50px">{{responseAnswer.score}}</span>分</h1>
+      <h1 class="subjectName"><span style="color: rgb(240,92,41);font-size: 35px;margin-right: 5px">{{responseAnswer.score}}</span>分</h1>
       <div class="ranking">
         <span>用时：{{responseAnswer.consumedTime}}</span>
         <span>正确率：{{responseAnswer.rightSum}}/{{question.length}}</span>
         <span>排名：{{responseAnswer.rankNo}}</span>
       </div>
       <div class="divide"></div>
-      <div style="padding: 10px 16px;overflow: hidden">
+      <div style="padding: 5px 16px;overflow: hidden">
         <div style="float: left;margin-right: 25px"><img width="30px" height="30px" src="./ps.png" alt=""></div>
-        <div style="float: left;">
-          <p>1.点击题号可以查看对应的答案与解析</p>
-          <p>2.橙色表示：您答错了</p>
-          <p>3.绿色表示：您答对了</p>
+        <div style="float: left;line-height: 20px;">
+          <p>点击题号可以查看对应的答案与解析</p>
+          <p style="color: rgb(242,90,41);"><span style="display:inline-block;margin-right: 5px;width: 10px;height: 10px;border-radius:50%;background-color: rgb(242,90,41)"></span>您答错了</p>
+          <p style="color: green;"><span style="display:inline-block;margin-right: 5px;width: 10px;height: 10px;border-radius:50%;background-color: green"></span>您答对了</p>
         </div>
       </div>
       <div class="divide"></div>
@@ -43,7 +43,7 @@
     },
     created () {
       this.courseId = Store.fetch('courseId')
-      this.userId = Store.fetch('userId')
+      this.user = Store.fetch('user')
 //      this.showLoading = true
       // 读取后台返回数据
       this.responseAnswer = Store.fetch('responseAnswer')
@@ -69,7 +69,7 @@
         this.$router.push({path: '/study/tip/question/questionAnalysis'})
       },
       buy () {
-        window.location.href = 'http://cb.by-edu.com/createOrder?userId=' + this.userId + '&courseId=' + this.courseId
+        window.location.href = 'http://cb.by-edu.com/createOrder?userId=' + this.user.userId + '&courseId=' + this.courseId
       }
     }
   }
@@ -93,7 +93,7 @@
         font-size 16px
         flex: 1
   .subjectName
-    padding: 25px 16px
+    padding: 15px 16px
     font-size 18px
     text-align center
 
@@ -104,7 +104,7 @@
       display inline-block
       flex: 1
       text-align: center
-      font-size 16px
+      font-size 14px
 
   .numList
     width: 100%
@@ -126,26 +126,26 @@
         border: 1px solid rgb(172, 169, 169)
       .bgWrong
         background-color rgb(242, 90, 41)
-        color: #fff
-        border: none
+        color: #fff !important
+        border: none !important
       .bgRight
         background-color green
-        color: #fff
-        border: none
+        color: #fff !important
+        border: none !important
 
   .redo-analysis
     position fixed
     display flex
     width 100%
-    height 50px
+    height 47px
     background-color rgb(242, 90, 41)
     bottom 0
     z-index 1000
     .redo
       display inline-block
       flex: 1
-      height: 50px
-      line-height 50px
+      height: 47px
+      line-height 47px
       text-align center
       font-size 16px
       color: #fff
@@ -153,8 +153,8 @@
     .seeanalysis
       display inline-block
       flex: 1
-      height: 50px
-      line-height 50px
+      height: 47px
+      line-height 47px
       text-align center
       font-size 16px
       color: #fff

@@ -12,20 +12,20 @@
 
     <!-- 导航 -->
     <div class="industry">
-      <div class="industry-item" :industry-id="3">
-        <router-link to="/study?industry_id=3"><img class="icon" src="./zhengquan.png" alt="">证券从业</router-link>
+      <div class="industry-item">
+        <router-link to="/study"><img class="icon" src="./zhengquan.png" alt="">证券从业</router-link>
       </div>
-      <div class="industry-item" :industry-id="1">
-        <router-link to="/study?industry_id=1"><img class="icon" src="./jijin.png" alt="">基金从业</router-link>
+      <div class="industry-item">
+        <router-link to="/study"><img class="icon" src="./jijin.png" alt="">基金从业</router-link>
       </div>
-      <div class="industry-item" :industry-id="2">
-        <router-link to="/study?industry_id=2"><img class="icon" src="./yinhang.png" alt="">银行从业</router-link>
+      <div class="industry-item">
+        <router-link to="/study"><img class="icon" src="./yinhang.png" alt="">银行从业</router-link>
       </div>
-      <div class="industry-item" :industry-id="5">
-        <router-link to="/study?industry_id=5"><img class="icon" src="./zhucekuaijishi.png" alt="">注册会计师</router-link>
+      <div class="industry-item">
+        <router-link to="/study"><img class="icon" src="./zhucekuaijishi.png" alt="">注册会计师</router-link>
       </div>
-      <div class="industry-item" :industry-id="4">
-        <router-link to="/study?industry_id=4"><img class="icon" src="./kuaiji.png" alt="">会计从业</router-link>
+      <div class="industry-item">
+        <router-link to="/study"><img class="icon" src="./kuaiji.png" alt="">会计从业</router-link>
       </div>
     </div>
     <div class="divide"></div>
@@ -47,6 +47,9 @@
     components: {Lasted, Employ, Compass},
     data () {
       return {
+//        datas: {}, // 请求的所有数据
+//        courses: [],
+//        course: {},
         swiperOption: {
           notNextTick: true,
           autoplay: 2000,
@@ -57,9 +60,6 @@
           autoHeight: true,
           pagination: '.swiper-pagination',
           paginationClickable: true,
-          /* prevButton: '.swiper-button-prev',
-           nextButton: '.swiper-button-next', */
-          /* scrollbar: '.swiper-scrollbar', */
           mousewheelControl: true,
           observeParents: true,
           onSlideChangeStart (swiper) {
@@ -78,55 +78,27 @@
       this.swiper.slideTo(4, 1000, true)
     },
     created () {
-      // 先从缓存获取
-//      Store.save('userId', 'd7b1fbbb2b5a4eaea0b2c62be47867dd')
-//      Store.save('phone', '18785099458')
-      this.userId = Store.fetch('userId')
-      this.phone = Store.fetch('phone')
-      this.name = Store.fetch('name')
-      this.imgUrl = Store.fetch('imgUrl')
-      // 判断userId是否为空
-//      debugger
-      if (Beiyi.getQueryString('userId') !== null) {
-        console.log('login')
-        this.userId = Beiyi.getQueryString('userId')
-        console.log(this.userId)
-        Store.save('userId', this.userId)
-        if (Beiyi.getQueryString('phone') === null && this.phone === null) {
-          console.log('login')
-          console.log(this.$route.path)
-          this.$router.push({path: '/login'})
-          return
-        }
-        if (Beiyi.getQueryString('phone') !== null) {
-          this.phone = Beiyi.getQueryString('phone')
-          Store.save('phone', this.phone)
-        }
-        if (Beiyi.getQueryString('name') !== null) {
-          this.name = Beiyi.getQueryString('name')
-          Store.save('name', this.name)
-        }
-        if (Beiyi.getQueryString('imgUrl') !== null) {
-          this.imgUrl = Beiyi.getQueryString('imgUrl')
-          Store.save('imgUrl', this.imgUrl)
-        }
-      }
-      this.userId = Store.fetch('userId')
-      this.phone = Store.fetch('phone')
-      this.name = Store.fetch('name')
-      this.imgUrl = Store.fetch('imgUrl')
-
-      if (this.userId === null) {
-        window.location.href = 'http://cb.by-edu.com/loginServlet'
-      }
-      if (this.phone === null) {
-        this.userId = null
-        Store.save('userId', this.userId)
-      }
+      this.user = Store.fetch('user')
+//      console.log('sssss' + this.user)
+//      // 请求课程接口
+//      this.$http.get(Beiyi.getUrl() + '/course/list?userId=' + this.user.userId).then((response) => {
+//        // console.log(response)
+//        response = response.body.data
+//        this.datas = response
+//        Store.save('datas', this.datas)
+//        for (var i in this.datas) {
+//          for (var j in this.datas[i]) {
+//            this.courses.push(this.datas[i][j])
+//          }
+//          Store.save('courses', this.courses)
+//          console.log(this.courses)
+//        }
+//        // 初始化一个默认值并缓存
+//        this.course = this.courses[4]
+//        Store.save('course', this.course)
+//      })
       // 获取广告列表
-      //  console.log(this.$route.path)
-      //  console.log(this.datas)
-      this.$http.get(Beiyi.getUrl() + '/find/getcanuseads?userId=' + this.userId).then((response) => {
+      this.$http.get(Beiyi.getUrl() + '/find/getcanuseads?userId=' + this.user.userId).then((response) => {
         response = response.body.data
         this.advs = response
         console.log(this.advs)

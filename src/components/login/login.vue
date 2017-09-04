@@ -20,6 +20,7 @@
         <span class="getCode count" v-show="!show" ref="code">重新发送{{count}}</span>
       </label>
     </div>
+    <!--验证码发送成功提示信息-->
     <!--<div v-show="showTip" style="width: 100%;padding: 15px 16px;text-align: center;color: rgb(242,90,41)">{{message}}</div>-->
     <div class="bindPhone" @click="bindPhone">绑定手机</div>
   </div>
@@ -42,20 +43,9 @@
       }
     },
     created () {
-      if (Beiyi.getQueryString('userId') !== null) {
-        console.log('login')
-        this.userId = Beiyi.getQueryString('userId')
-        console.log(this.userId)
-        Store.save('userId', this.userId)
-        if (Beiyi.getQueryString('name') !== null) {
-          this.name = Beiyi.getQueryString('name')
-          Store.save('name', this.name)
-        }
-        if (Beiyi.getQueryString('imgUrl') !== null) {
-          this.imgUrl = Beiyi.getQueryString('imgUrl')
-          Store.save('imgUrl', this.imgUrl)
-        }
-      }
+      this.user = Store.fetch('user')
+      this.name = this.user.name
+      this.imgUrl = this.user.imgUrl
     },
     methods: {
       getCode () {
@@ -67,43 +57,31 @@
           this.show = false
           this.timer = setInterval(() => {
             if (this.count > 0 && this.count <= TIME_COUNT) {
-//              this.$refs.code.innerText = '重新发送(' + this.count + ')'
               this.count--
             } else {
               this.show = true
               clearInterval(this.timer)
-//              this.$refs.code.innerText = '获取验证码'
               this.timer = null
             }
           }, 1000)
         }
-        console.log(this.phone + 'ddd' + this.code)
         // 获取验证码
         //  http://bay-api.by-edu.com/login/sendcode?userId=d7b1fbbb2b5a4eaea0b2c62be47867dd&phone=18785099458
-        this.$http.post(Beiyi.getUrl() + '/login/sendcode?userId=' + this.userId + '&phone=' + this.phone).then((res) => {
+        this.$http.post(Beiyi.getUrl() + '/login/sendcode?userId=' + this.user.userId + '&phone=' + this.phone).then((res) => {
           // alert(res.body.data)
           this.message = res.body.data
           Store.save('userInfo', this.message)
           console.log(this.message)
           this.showTip = true
-//          this.$Modal.success({
-//            title: '通知',
-//            desc: this.message,
-//            duration: 2
-//          })
         })
       },
       bindPhone () {
         // 获取验证码之后,提交绑定号码
         // http://bay-api.by-edu.com/login/submitphone?userId=d7b1fbbb2b5a4eaea0b2c62be47867dd&code=6543&phone=18785099458
-        this.$http.post(Beiyi.getUrl() + '/login/submitphone?userId=' + this.userId + '&code=' + this.code + '&phone=' + this.phone).then((res) => {
+        this.$http.post(Beiyi.getUrl() + '/login/submitphone?userId=' + this.user.userId + '&openId=' + this.user.openId + '&code=' + this.code + '&phone=' + this.phone).then((res) => {
           console.log(res.body.data)
           if (res.body.data.flag === true) {
-            Store.save('phone', res.body.data.cellPhone)
-            Store.save('imgUrl', res.body.data.imgUrl)
-            Store.save('name', res.body.data.name)
-            console.log(Store.save('name', res.body.data.name))
-            Store.save('openId', res.body.data.openId)
+            Store.save('user', res.body.data)
             this.$router.push({path: '/find'})
 //            this.$router.push({path: '/study'})
           } else {

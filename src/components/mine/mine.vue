@@ -15,12 +15,12 @@
     </div>
     <div class="divide"></div>
     <div class="beiyi-micro">
-      <p><img class="iconstyle" src="./bei-class.png" alt="">贝易小班</p>
+      <p><img class="iconstyle" src="./bei-class.png" alt=""><a href="#">贝易小班</a></p>
     </div>
     <div class="divide"></div>
     <div class="system">
       <div class="notice border-1px">
-        <p><img class="iconstyle"  src="./bei-notice.png" alt="">通知</p>
+        <p><img class="iconstyle"  src="./bei-notice.png" alt=""><a href="#">通知</a></p>
       </div>
       <div class="myCourse border-1px">
         <p>
@@ -29,15 +29,15 @@
         </p>
       </div>
       <div class="money border-1px">
-        <p><img class="iconstyle" src="./bei-money.png" alt="">钱包</p>
+        <p><img class="iconstyle" src="./bei-money.png" alt=""><a href="#">钱包</a></p>
       </div>
       <div class="discount border-1px">
-        <p><img class="iconstyle" src="./bei-discount.png" alt="">优惠券</p>
+        <p><img class="iconstyle" src="./bei-discount.png" alt=""><a href="#">优惠券</a></p>
       </div>
     </div>
     <div class="divide"></div>
     <div class="settings">
-      <p><img class="iconstyle" src="./bei-setting.png" alt="">设置</p>
+      <p><img class="iconstyle" src="./bei-setting.png" alt=""><a href="#">设置</a></p>
     </div>
     <div class="divide"></div>
     <div class="space"></div>
@@ -55,8 +55,9 @@
       }
     },
     created () {
-      this.name = Store.fetch('name')
-      this.imgUrl = Store.fetch('imgUrl')
+      this.user = Store.fetch('user')
+      this.name = this.user.name
+      this.imgUrl = this.user.imgUrl
     }
   }
 </script>
@@ -67,7 +68,7 @@
     width: 15px
     height: 15px
     vertical-align: sub
-    margin-right: 10px
+    margin-right: 16px
   .space
     height 70px
   .headImg
@@ -101,6 +102,11 @@
     padding: 16px
     p
       font-size: 15px
+      color: rgb(43,38,37)
+      a
+        display: inline-block
+        width: 87%
+        color: rgb(43,38,37)
   .system
     padding: 0 16px 16px 16px
     .notice,.myCourse,.money,.discount
@@ -111,6 +117,11 @@
       p
         padding-bottom:10px
         font-size: 15px
+        color: rgb(43,38,37)
+        a
+          display: inline-block
+          width: 87%
+          color: rgb(43,38,37)
 
 
 </style>

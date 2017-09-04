@@ -48,19 +48,27 @@
     </div>
     <div class="divide"></div>
     <div class="progress">
-      <div class="progress-score"><img src="./progress.png" alt="" height="100%"></div>
+      <div class="progress-score">
+        <p class="percent"><span style="font-size: 30px">80</span><span style="font-size: 15px">%</span></p>
+        <p class="studyProgress">学习进度</p>
+      </div>
       <div class="person-ratings border-1px">
         <div class="person">
           <p>已有<span class="colorSty">12000</span>人参与学习</p>
           <p>我的排名<span class="colorSty">12</span></p>
         </div>
         <div class="ratings">
-          <p v-if="coursePay">
-            <span class="colorSty">已解锁该课程</span>
-          </p>
-           <p v-if="!coursePay" style="border: 1px solid #ddd;">
+          <div v-if="coursePay">
+            <p>
+              <span class="colorSty">已解锁该课程</span>
+            </p>
+          </div>
+         <div v-if="!coursePay">
+           <p  style="border: 1px solid #ddd;">
              <span class="lock">未解锁该课程</span>
            </p>
+           <p style="border:none;color: red;padding-top: 10px" @click="immediateLock">立即解锁</p>
+         </div>
         </div>
       </div>
     </div>
@@ -101,13 +109,16 @@
 </template>
 <script type="text/ecmascript-6">
   import Store from '../../store.js'
+  import Beiyi from '../../common.js'
   const msg = ''
   const coureId = ''
   var libraries = []
-  var coursePay = false
   export default {
     data () {
       return {
+        datas: {}, // 请求的所有数据
+        courses: [],
+        course: {},
         jijin: {},
         yinhang: {},
         zhengquan: {},
@@ -124,20 +135,36 @@
         msg: '',
         coureId,
         libraries: [],
-        coursePay,
-        showBg: true
+        showBg: true,
+        coursePay: false
       }
     },
     created () {
       // 从缓存读取所有数据
-      this.datas = Store.fetch('datas')
-      this.jijin = this.datas.jijin
-      this.yinhang = this.datas.yinhang
-      this.zhengquan = this.datas.zhengquan
-      this.kuaiji = this.datas.kuaiji
-      this.zhucekuaijishi = this.datas.zhucekuaijishi
-      // 从缓存读取课程
-      this.courses = Store.fetch('courses')
+//      this.datas = Store.fetch('datas')
+      this.user = Store.fetch('user')
+      // 请求课程接口
+      this.$http.get(Beiyi.getUrl() + '/course/list?userId=' + this.user.userId).then((response) => {
+        // console.log(response)
+        response = response.body.data
+        this.datas = response
+        Store.save('datas', this.datas)
+        this.jijin = this.datas.jijin
+        this.yinhang = this.datas.yinhang
+        this.zhengquan = this.datas.zhengquan
+        this.kuaiji = this.datas.kuaiji
+        this.zhucekuaijishi = this.datas.zhucekuaijishi
+        for (var i in this.datas) {
+          for (var j in this.datas[i]) {
+            this.courses.push(this.datas[i][j])
+          }
+          Store.save('courses', this.courses)
+          console.log(this.courses)
+        }
+        // 初始化一个默认值并缓存
+        this.course = this.courses[4]
+        Store.save('course', this.course)
+      })
       // 读取选择的课程名称
       this.message = Store.fetch('selectedCourseName')
       // 初始化默认值
@@ -156,14 +183,6 @@
         },
         deep: true
       }
-      // 缓存课程id:coureId
-//      coureId: {
-//        handler: function (items) {
-//          Store.save('coureId', items)   // 观察／存入缓存
-//          // console.log(Store.fetch('course'))
-//        },
-//        deep: true
-//      }
     },
     methods: {
       getText (id, item) {
@@ -171,6 +190,7 @@
        // console.log(item.name)
        // console.log(item.id)
         Store.save('msg', item.name)
+        // 缓存课程courseId
         Store.save('courseId', item.id)
 //        this.msg = this.course.name
         this.msg = Store.fetch('msg')
@@ -182,12 +202,17 @@
             // 缓存patterns tip页面使用
             Store.save('courseLocal', this.course.patterns)
             Store.save('selectedCourseName', this.course.name)
-            this.coursePay = this.course.pay
+            Store.save('lock', this.course.pay)
+            this.coursePay = Store.fetch('lock')
+            console.log(this.coursePay)
           }
         }
         this.allShow = false
         this.hideSelect = false
         this.showSelect = true
+      },
+      immediateLock () {
+        window.location.href = 'http://cb.by-edu.com/createOrder?userId=' + this.user.userId + '&courseId=' + this.courseId
       },
       showAll () {
         if (this.allShow === false) {
@@ -248,7 +273,7 @@
       height: 50px
       line-height: 50px
       background-color #fff
-      font-size: 17px
+      font-size: 13px
       font-weight: 500
       text-align: center
       border-1px(rgb(229, 223, 223))
@@ -264,14 +289,15 @@
   .progress
     padding: 20px 16px
     .progress-score
-      height: 105px
-      img
-        display block
-        margin auto
-        height 100%
+      .percent
+        text-align center
+        color: rgb(242,90,41)
+      .studyProgress
+        text-align center
+        padding 15px 0
     .person-ratings
       display flex
-      padding: 20px 0
+      padding: 10px 0
       border-1px(#dad5d5)
       .person
         display inline-block

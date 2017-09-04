@@ -36,8 +36,9 @@
     <div class="space"></div>
     <!--上一题 题卡 交卷 下一题 -->
     <div class="functionZone">
-      <span class="previous" @click="previous">上一题</span>
-      <span class="next" @click="next">下一题</span>
+      <span class="previous" @click="previous"><img  class="tika" src="./pre.png" alt=""></span>
+      <router-link to="/study/tip/question/answerReport" class="seeanalysis" style="color: rgb(43,38,37);font-size: 15px;">题卡解析</router-link>
+      <span class="next" @click="next">><img class="tika" src="./next.png" alt=""></span>
     </div>
   </div>
 </template>
@@ -179,7 +180,6 @@
     height: 60px
     line-height 60px
     padding: 0 5%;
-    background-color: aliceblue
     .previous, .answerSheet, .submitPapers, .next
       display block
       flex: 1
