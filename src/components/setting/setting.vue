@@ -30,15 +30,15 @@
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
-    .ivu-modal
-      width: 300px !important
-      height: 200px !important
-      top: 0 !important
-      position absolute !important
-      bottom 0 !important
-      right:0 !important
-      left: 0 !important
-      margin auto !important
+    /*.ivu-modal*/
+      /*width: 300px !important*/
+      /*height: 200px !important*/
+      /*top: 0 !important*/
+      /*position absolute !important*/
+      /*bottom 0 !important*/
+      /*right:0 !important*/
+      /*left: 0 !important*/
+      /*margin auto !important
     .ivu-modal-footer
       padding: 0
       display flex
@@ -50,7 +50,7 @@
         font-size 14px
         flex: 1
       .ivu-btn-text
-         border-right 1px solid #ddd
+         border-right 1px solid #ddd*/
 .clearLocalStorage,.aboutUs
   display block
   height: 40px
