@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="panel-title">
-      <p class="panel-nav border-1px" @click="showAll" v-show="hideSelect">选择课程{{message}}<Icon class="down" type="chevron-down"></Icon></p>
+      <p class="panel-nav border-1px" @click="showAll" v-show="hideSelect">{{message}}<Icon class="down" type="chevron-down"></Icon></p>
       <p class="panel-nav border-1px" @click="showAll" v-show="showSelect">{{msg}}</p>
       <div v-show="allShow">
         <div class="zhengquan">
@@ -58,17 +58,17 @@
           <p>我的排名<span class="colorSty">12</span></p>
         </div>
         <div class="ratings">
+          <div v-if="!coursePay">
+            <p  style="border: 1px solid #ddd;">
+              <span class="lock">未解锁该课程</span>
+            </p>
+            <p style="border:none;color: red;padding-top: 10px" @click="immediateLock">立即解锁</p>
+          </div>
           <div v-if="coursePay">
             <p>
               <span class="colorSty">已解锁该课程</span>
             </p>
           </div>
-         <div v-if="!coursePay">
-           <p  style="border: 1px solid #ddd;">
-             <span class="lock">未解锁该课程</span>
-           </p>
-           <p style="border:none;color: red;padding-top: 10px" @click="immediateLock">立即解锁</p>
-         </div>
         </div>
       </div>
     </div>
@@ -136,6 +136,7 @@
         coureId,
         libraries: [],
         showBg: true,
+        message: '',
         coursePay: false
       }
     },
@@ -162,13 +163,29 @@
           console.log(this.courses)
         }
         // 初始化一个默认值并缓存
-        this.course = this.courses[4]
+        this.course = this.courses[6]
         Store.save('course', this.course)
+        this.coursePay = this.course.pay
+        Store.save('lock', this.coursePay)
+        // 读取选择的课程名称
+//        this.message = Store.fetch('courseName')
+        this.coureId = Store.fetch('courseId')
+        // 获取id对应的课程
+        for (let i in this.courses) {
+          if (this.coureId === this.courses[i].id) {
+            this.course = this.courses[i]
+            // 缓存patterns tip页面使用
+            Store.save('courseLocal', this.course.patterns)
+            Store.save('selectedCourseName', this.course.name)
+            this.coursePay = this.course.pay
+            Store.save('lock', this.coursePay)
+//            console.log(this.coursePay)
+          }
+        }
       })
-      // 读取选择的课程名称
       this.message = Store.fetch('selectedCourseName')
       // 初始化默认值
-      this.course = this.courses[4]
+      this.course = this.courses[6]
       // 获取libraries
       for (var i in this.courses) {
         libraries.push(this.courses[i])
@@ -187,7 +204,7 @@
     methods: {
       getText (id, item) {
         // 课程id 课程名
-       // console.log(item.name)
+        console.log(item.name)
        // console.log(item.id)
         Store.save('msg', item.name)
         // 缓存课程courseId
@@ -202,8 +219,9 @@
             // 缓存patterns tip页面使用
             Store.save('courseLocal', this.course.patterns)
             Store.save('selectedCourseName', this.course.name)
-            Store.save('lock', this.course.pay)
-            this.coursePay = Store.fetch('lock')
+            // 是否已经购买
+            this.coursePay = this.course.pay
+            Store.save('lock', this.coursePay)
             console.log(this.coursePay)
           }
         }
@@ -212,7 +230,9 @@
         this.showSelect = true
       },
       immediateLock () {
-        window.location.href = 'http://cb.by-edu.com/createOrder?userId=' + this.user.userId + '&courseId=' + this.courseId
+        this.coureId = Store.fetch('courseId')
+        console.log(this.coureId)
+        window.location.href = 'http://cb.by-edu.com/createOrder?userId=' + this.user.userId + '&courseId=' + Store.fetch('courseId')
       },
       showAll () {
         if (this.allShow === false) {
@@ -284,7 +304,7 @@
     .first-level
       line-height 46px
       li
-        font-size 15px
+        font-size 13px
 
   .progress
     padding: 20px 16px
@@ -307,7 +327,7 @@
         padding-right: 10px
         p
           padding-bottom: 6px
-          font-size: 13px
+          font-size: 15px
       .ratings
         display inline-block
         flex: 1
@@ -345,7 +365,7 @@
       a
         display block
       img
-        width: 50%
+        width: 45%
         display: block
         margin: auto
       span

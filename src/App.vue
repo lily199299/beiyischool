@@ -89,8 +89,12 @@
       Store.save('user', this.user)
 
       this.coureId = Store.fetch('courseId')
+      this.courseName = Store.fetch('courseName')
       if (this.coureId === null) {
         Store.save('courseId', 7)
+      }
+      if (this.courseName === null) {
+        Store.save('selectedCourseName', '个人理财')
       }
       if (Beiyi.getQueryString('openId') !== null) {
         this.user.openId = Beiyi.getQueryString('openId')

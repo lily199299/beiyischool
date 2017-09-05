@@ -11,17 +11,13 @@ import find from './components/find/find.vue'
 import study from './components/study/study.vue'
 import mine from './components/mine/mine.vue'
 import tip from './components/tip/tip.vue'
-import kaoqian from './components/kaoqian/kaoqian.vue'
-import fangzhen from './components/fangzhen/fangzhen.vue'
-import tupo from './components/tupo/tupo.vue'
-import cuoti from './components/cuoti/cuoti.vue'
-import zhuanjia from './components/zhuanjia/zhuanjia.vue'
 import question from './components/question/question.vue'
 import answerSheet from './components/answerSheet/answerSheet.vue'
 import answerReport from './components/answerReport/answerReport.vue'
 import questionAnalysis from './components/questionAnalysis/questionAnalysis.vue'
 import login from './components/login/login.vue'
 import myCourse from './components/myCourse/myCourse.vue'
+import setting from './components/setting/setting.vue'
 import './common/stylus/index.styl'
 import './common'
 
@@ -40,18 +36,9 @@ const routes = [
   {path: '/mine', component: mine},
   {path: '/login', component: login},
   {path: '/mine/myCourse', component: myCourse},
+  {path: '/mine/setting', component: setting},
   {path: '/study/tip', component: tip},
-  {path: '/study/kaoqian', component: kaoqian},
-  {path: '/study/fangzhen', component: fangzhen},
-  {path: '/study/tupo', component: tupo},
-  {path: '/study/cuoti', component: cuoti},
-  {path: '/study/zhuanjia', component: zhuanjia},
   {path: '/study/tip/question', component: question},
-  {path: '/study/kaoqian/question', component: question},
-  {path: '/study/fangzhen/question', component: question},
-  {path: '/study/tupo/question', component: question},
-  {path: '/study/cuoti/question', component: question},
-  {path: '/study/zhuanjia/question', component: question},
   {path: '/study/tip/question/answerSheet', component: answerSheet},
   {path: '/study/tip/question/answerReport', component: answerReport},
   {path: '/study/tip/question/questionAnalysis', component: questionAnalysis}

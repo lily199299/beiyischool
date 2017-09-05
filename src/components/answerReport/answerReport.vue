@@ -24,7 +24,8 @@
       </span>
       </div>
       <div class="redo-analysis">
-        <span class="redo" @click="buy">去购买</span>
+        <span class="redo" v-if="!isBuy" @click="buy">去购买</span>
+        <span class="redo" v-if="isBuy"@click="keepGo">继续做题</span>
         <router-link to="/study" class="seeanalysis">返回首页</router-link>
       </div>
       <div class="space"></div>
@@ -39,9 +40,11 @@
 //    components: {loading},
     data () {
       return {
+        isBuy: false
       }
     },
     created () {
+      this.isBuy = Store.fetch('lock')
       this.courseId = Store.fetch('courseId')
       this.user = Store.fetch('user')
 //      this.showLoading = true
@@ -69,7 +72,12 @@
         this.$router.push({path: '/study/tip/question/questionAnalysis'})
       },
       buy () {
+        this.courseId = Store.fetch('courseId')
         window.location.href = 'http://cb.by-edu.com/createOrder?userId=' + this.user.userId + '&courseId=' + this.courseId
+      },
+      // 继续做题
+      keepGo () {
+        this.$router.push({path: '/study/tip/question'})
       }
     }
   }
@@ -77,7 +85,7 @@
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   .ivu-modal-mask
-    background: url("../../../src/common/img/maskbg.jpeg")
+    /*background: url("../../../src/common/img/maskbg.jpeg")*/
     background-position-x: center
     background-position-y: center
     filter blur(2px)

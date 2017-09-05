@@ -1,15 +1,17 @@
 <template>
-  <div class="slide-container">
-    <swiper :options="swiperOption" ref="mySwiperA">
-      <!-- 幻灯内容 -->
-      <swiper-slide class="slide-box"  v-for="item in advs"><img :src="item.img" alt=""></swiper-slide>
-      <!-- 以下控件元素均为可选 -->
-      <div class="swiper-pagination" slot="pagination"></div>
-      <!--<div class="swiper-button-prev" slot="button-prev"></div>
-      <div class="swiper-button-next" slot="button-next"></div>-->
-      <!--<div class="swiper-scrollbar" slot="scrollbar"></div>-->
-    </swiper>
-
+  <div>
+    <div class="slide-container">
+      <swiper :options="swiperOption" ref="mySwiperA">
+        <!-- 幻灯内容 -->
+        <!--<swiper-slide class="slide-box" v-for="item in advs"><img :src="item.img" alt=""></swiper-slide>-->
+        <swiper-slide class="slide-box"><img src="../../common/img/banner-1.jpg" alt=""></swiper-slide>
+        <swiper-slide class="slide-box"><img src="../../common/img/banner-2.jpg" alt=""></swiper-slide>
+        <swiper-slide class="slide-box"><img src="../../common/img/banner-3.jpg" alt=""></swiper-slide>
+        <swiper-slide class="slide-box"><img src="../../common/img/banner-4.png" alt=""></swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
+    </div>
+    <!--<Lunbo></Lunbo>-->
     <!-- 导航 -->
     <div class="industry">
       <div class="industry-item">
@@ -34,6 +36,7 @@
     <Compass></Compass>
     <div class="space"></div>
   </div>
+
 </template>
 
 <script type="text/ecmascript-6">
@@ -42,9 +45,10 @@
   import Compass from '../../components/compass/compass'
   import Beiyi from '../../common.js'
   import Store from '../../store.js'
+  import Lunbo from '../../components/lunbotu/lunbotu.vue'
 
   export default {
-    components: {Lasted, Employ, Compass},
+    components: {Lasted, Employ, Compass, Lunbo},
     data () {
       return {
 //        datas: {}, // 请求的所有数据
@@ -79,28 +83,11 @@
     },
     created () {
       this.user = Store.fetch('user')
-//      console.log('sssss' + this.user)
-//      // 请求课程接口
-//      this.$http.get(Beiyi.getUrl() + '/course/list?userId=' + this.user.userId).then((response) => {
-//        // console.log(response)
-//        response = response.body.data
-//        this.datas = response
-//        Store.save('datas', this.datas)
-//        for (var i in this.datas) {
-//          for (var j in this.datas[i]) {
-//            this.courses.push(this.datas[i][j])
-//          }
-//          Store.save('courses', this.courses)
-//          console.log(this.courses)
-//        }
-//        // 初始化一个默认值并缓存
-//        this.course = this.courses[4]
-//        Store.save('course', this.course)
-//      })
       // 获取广告列表
       this.$http.get(Beiyi.getUrl() + '/find/getcanuseads?userId=' + this.user.userId).then((response) => {
         response = response.body.data
         this.advs = response
+        Store.save('advs', this.advs)
         console.log(this.advs)
       })
     }

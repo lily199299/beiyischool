@@ -37,7 +37,9 @@
     </div>
     <div class="divide"></div>
     <div class="settings">
-      <p><img class="iconstyle" src="./bei-setting.png" alt=""><a href="#">设置</a></p>
+      <p><img class="iconstyle" src="./bei-setting.png" alt="">
+        <router-link to="/mine/setting">设置</router-link>
+      </p>
     </div>
     <div class="divide"></div>
     <div class="space"></div>
