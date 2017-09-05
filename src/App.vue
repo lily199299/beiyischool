@@ -82,12 +82,12 @@
       // 判断openId是否为空
 //      this.user = Store.fetch('user')
 //      if (this.user === null) {
-//        this.user.openId = 'oMH9vwIGBCDM8HjMmzoyeIEDMkUa'
-//        Store.save('user', this.user)
-//      }
 //      this.user.openId = 'oMH9vwIGBCDM8HjMmzoyeIEDMkUa'
 //      Store.save('user', this.user)
-
+//      }
+      // 本地测试使用
+//      this.user.openId = 'oMH9vwIGBCDM8HjMmzoyeIEDMkUa'
+//      Store.save('user', this.user)
       this.coureId = Store.fetch('courseId')
       this.courseName = Store.fetch('courseName')
       if (this.coureId === null) {
@@ -102,17 +102,24 @@
       }
       console.log('------')
       this.user = Store.fetch('user')
+      if (this.user === null) {
+        this.user = {}
+        Store.save('user', this.user)
+        console.log('------' + this.user)
+      }
+      console.log('------' + this.user)
       // 获取user基本信息
+//      debugger
       this.$http.post(Beiyi.getUrl() + '/login/getUser', {userId: this.user.userId, openId: this.user.openId}).then((res) => {
         this.user = res.body.data
         console.log(this.user)
         Store.save('user', this.user)
-        if (this.user.userId === null || this.user.userId === '') {
+        if (!this.user.flag) {
+          if (this.user.phone === null || this.user.phone === '') {
+            this.$router.push({path: '/login'})
+            return
+          }
           window.location.href = 'http://cb.by-edu.com/loginServlet'
-          return
-        }
-        if (this.user.phone === null || this.user.phone === '') {
-          this.$router.push({path: '/login'})
           return
         }
       })
