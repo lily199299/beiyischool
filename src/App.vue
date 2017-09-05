@@ -55,8 +55,8 @@
     },
     methods: {
       selected (e) {
-        console.log(e)
-        console.log(e.currentTarget)
+//        console.log(e)
+//        console.log(e.currentTarget)
 //        debugger
         // index变量存放当前点击的元素
         var index = e.currentTarget.id   // 1 2 3
@@ -82,12 +82,12 @@
       // 判断openId是否为空
 //      this.user = Store.fetch('user')
 //      if (this.user === null) {
-//      this.user.openId = 'oMH9vwIGBCDM8HjMmzoyeIEDMkUa'
+//      this.user.openId = 'oMH9vwLinzRct6Zts2c9guOaS3Ac'
 //      Store.save('user', this.user)
 //      }
       // 本地测试使用
-//      this.user.openId = 'oMH9vwIGBCDM8HjMmzoyeIEDMkUa'
-//      Store.save('user', this.user)
+      this.user.openId = 'oMH9vwLinzRct6Zts2c9guOaS3Ac'
+      Store.save('user', this.user)
       this.coureId = Store.fetch('courseId')
       this.courseName = Store.fetch('courseName')
       if (this.coureId === null) {
@@ -114,9 +114,22 @@
         this.user = res.body.data
         console.log(this.user)
         Store.save('user', this.user)
+        if (this.user === null) {
+          window.location.href = 'http://cb.by-edu.com/loginServlet'
+        }
         if (!this.user.flag) {
-          if (this.user.phone === null || this.user.phone === '') {
+          if (this.user.message === 'phone') {
             this.$router.push({path: '/login'})
+            return
+          }
+          // user 为null
+          if (this.user.message === 'user') {
+            window.location.href = 'http://cb.by-edu.com/loginServlet'
+            return
+          }
+          // userId 为null
+          if (this.user.message === 'user') {
+            window.location.href = 'http://cb.by-edu.com/loginServlet'
             return
           }
           window.location.href = 'http://cb.by-edu.com/loginServlet'
