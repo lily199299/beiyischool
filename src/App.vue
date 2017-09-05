@@ -85,8 +85,8 @@
 //        this.user.openId = 'oMH9vwIGBCDM8HjMmzoyeIEDMkUa'
 //        Store.save('user', this.user)
 //      }
-      this.user.openId = 'oMH9vwIGBCDM8HjMmzoyeIEDMkUa'
-      Store.save('user', this.user)
+//      this.user.openId = 'oMH9vwIGBCDM8HjMmzoyeIEDMkUa'
+//      Store.save('user', this.user)
 
       this.coureId = Store.fetch('courseId')
       this.courseName = Store.fetch('courseName')
