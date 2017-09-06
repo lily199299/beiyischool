@@ -26,8 +26,14 @@
       </div>
     </div>
     <div class="answer-compare">
-      <div class="right-answer">正确答案：{{questionList.right}}</div>
-      <div class="my-answer">我的答案：{{questionList.a}}</div>
+      <div class="right-answer">
+        <p>正确答案</p>
+        <p>{{questionList.right}}</p>
+      </div>
+      <div class="my-answer">
+        <p>我的答案</p>
+        <p>{{questionList.a}}</p>
+      </div>
     </div>
     <div class="analysis">
       <p>答案解析:</p>
@@ -148,26 +154,39 @@
         display block
         padding: 15px 0
         .suboption
+          /*float left*/
           margin-right 10px
       .optionActive
         color: rgb(242, 90, 41)
   .answer-compare
     display flex
-    padding: 15px 16px
-    border-top 1px solid #ddd
-    border-bottom 1px solid #ddd
+    /*height: 71px*/
+    padding: 0 16px
+    border-top 1px solid rgb(216,216,216)
+    border-bottom 1px solid rgb(216,216,216)
     .right-answer
       flex: 1
       text-align center
-      color: green
-      font-size 16px
+      color: rgb(43,38,37)
+      font-size 15px
+      border-right 1px solid rgb(216,216,216)
+      p
+        padding 10px 0
+      p:nth-child(2)
+        color: rgb(1,161,3)
+        /*padding-top 10px*/
     .my-answer
       flex: 1
       text-align center
-      color: red
-      font-size 16px
+      color: rgb(43,38,37)
+      font-size 15px
+      p
+        padding 10px 0
+      p:nth-child(2)
+        color: rgb(1,161,3)
+        /*padding-top 10px*/
   .analysis
-    font-size: 16px
+    font-size: 15px
     padding: 15px 16px
     p
       line-height: 30px
@@ -180,6 +199,7 @@
     height: 60px
     line-height 60px
     padding: 0 5%;
+    border-top 1px solid rgb(216,216,216)
     .previous, .answerSheet, .submitPapers, .next
       display block
       flex: 1

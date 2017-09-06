@@ -21,7 +21,8 @@
     .title1
       padding: 15px 0
       font-weight: 500
-      font-size: 18px
+      font-size: 16px
+      color: rgb(43,38,37)
     .advertise
       display: flex
       width:100%

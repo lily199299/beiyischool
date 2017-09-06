@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="compass padding-box">
-      <h1 class="title border-1px">指南 <a href="#" class="more">更多</a></h1>
+      <h1 class="title border-1px">指南 <a href="#" class="more">更多<Icon type="chevron-right" style="padding-left: 9px"></Icon></a></h1>
     </div>
     <ul class="compass-body padding-box">
       <li class="compass-item">
@@ -38,7 +38,7 @@
         margin-left: 3%
         line-height: 2
         float: left
-        font-size: 14px
+        font-size: 15px
 
 
 

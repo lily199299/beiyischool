@@ -2,19 +2,19 @@
   <div>
     <!--<loading v-show="showLoading"></loading>-->
     <div>
-      <h1 class="subjectName"><span style="color: rgb(240,92,41);font-size: 35px;margin-right: 5px">{{responseAnswer.score}}</span>分</h1>
+      <h1 class="subjectName"><span style="color: rgb(240,92,41);font-size: 55px;margin-right: 5px">{{responseAnswer.score}}</span>分</h1>
       <div class="ranking">
-        <span>用时：{{responseAnswer.consumedTime}}</span>
-        <span>正确率：{{responseAnswer.rightSum}}/{{question.length}}</span>
-        <span>排名：{{responseAnswer.rankNo}}</span>
+        <p><span class="littleTip">答题用时</span>{{responseAnswer.consumedTime}}</p>
+        <p><span class="littleTip">正确率</span>{{responseAnswer.rightSum}}/{{question.length}}</p>
+        <p><span class="littleTip">排行榜</span>{{responseAnswer.rankNo}}</p>
       </div>
       <div class="divide"></div>
       <div style="padding: 5px 16px;overflow: hidden">
-        <div style="float: left;margin-right: 25px"><img width="30px" height="30px" src="./ps.png" alt=""></div>
+        <div style="float: left;margin-right: 25px;margin-top: 14px;"><img width="30px" height="30px" src="./ps.png" alt=""></div>
         <div style="float: left;line-height: 20px;">
           <p>点击题号可以查看对应的答案与解析</p>
           <p style="color: rgb(242,90,41);"><span style="display:inline-block;margin-right: 5px;width: 10px;height: 10px;border-radius:50%;background-color: rgb(242,90,41)"></span>您答错了</p>
-          <p style="color: green;"><span style="display:inline-block;margin-right: 5px;width: 10px;height: 10px;border-radius:50%;background-color: green"></span>您答对了</p>
+          <p style="color: rgb(1,161,3);"><span style="display:inline-block;margin-right: 5px;width: 10px;height: 10px;border-radius:50%;background-color: rgb(1,161,3)"></span>您答对了</p>
         </div>
       </div>
       <div class="divide"></div>
@@ -77,7 +77,7 @@
       },
       // 继续做题
       keepGo () {
-        this.$router.push({path: '/study/tip/question'})
+        this.$router.push({path: '/study'})
       }
     }
   }
@@ -101,19 +101,26 @@
         font-size 16px
         flex: 1
   .subjectName
-    padding: 15px 16px
-    font-size 18px
+    padding: 36px 35px
+    font-size 15px
+    color: rgb(43,38,37)
     text-align center
 
   .ranking
     display flex
-    padding: 15px 16px
-    span
+    padding: 0 16px 15px 16px
+    p
       display inline-block
       flex: 1
+      border-right: 1px solid rgb(216,216,216)
       text-align: center
-      font-size 14px
-
+      font-size 12px
+    p:last-child
+      border:none
+    .littleTip
+      color: rgb(172,169,169)
+      font-size 13px
+      margin-right 5px
   .numList
     width: 100%
     overflow: hidden
@@ -137,7 +144,7 @@
         color: #fff !important
         border: none !important
       .bgRight
-        background-color green
+        background-color rgb(1,161,3)
         color: #fff !important
         border: none !important
 
@@ -145,15 +152,15 @@
     position fixed
     display flex
     width 100%
-    height 47px
+    height 55px
     background-color rgb(242, 90, 41)
     bottom 0
     z-index 1000
     .redo
       display inline-block
       flex: 1
-      height: 47px
-      line-height 47px
+      height: 55px
+      line-height 55px
       text-align center
       font-size 16px
       color: #fff
@@ -161,8 +168,8 @@
     .seeanalysis
       display inline-block
       flex: 1
-      height: 47px
-      line-height 47px
+      height: 55px
+      line-height 55px
       text-align center
       font-size 16px
       color: #fff

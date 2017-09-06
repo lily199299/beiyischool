@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="employ padding-box">
-      <h1 class="title border-1px">招聘资讯 <a href="#" class="more">更多</a></h1>
+      <h1 class="title border-1px">招聘资讯 <a href="#" class="more">更多<Icon type="chevron-right" style="padding-left: 9px"></Icon></a></h1>
     </div>
     <div class="employ-detail padding-box">
       <ul>
@@ -33,18 +33,21 @@
     padding: 15px 0
     font-weight: 500
     font-size: 16px
+    color: rgb(43,38,37)
     border-1px(rgb(216, 216, 216))
   .more
     float: right
-    font-size 13px
+    font-size 14px
+    color: rgb(128,124,123)
   .employ-lists
     padding-bottom: 18px
     .employ-title
       padding-bottom 10px
-      font-size: 14px
+      font-size: 15px
+      color: rgb(43,38,37)
     .employ-city
-      color: rgb(126,124,125)
-      font-size: 12px
+      color: rgb(128,124,123)
+      font-size: 11px
       .city
         margin-right 15px
 

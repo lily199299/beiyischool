@@ -15,12 +15,18 @@
     </div>
     <div class="divide"></div>
     <div class="beiyi-micro">
-      <p><img class="iconstyle" src="./bei-class.png" alt=""><a href="#">贝易小班</a></p>
+      <p>
+        <img class="iconstyle" src="./bei-class.png" alt="">
+        <router-link to="/mine/setting">贝易小班</router-link>
+      </p>
     </div>
     <div class="divide"></div>
     <div class="system">
       <div class="notice border-1px">
-        <p><img class="iconstyle"  src="./bei-notice.png" alt=""><a href="#">通知</a></p>
+        <p>
+          <img class="iconstyle"  src="./bei-notice.png" alt="">
+          <router-link to="/mine/setting">通知</router-link>
+        </p>
       </div>
       <div class="myCourse border-1px">
         <p>
@@ -29,10 +35,16 @@
         </p>
       </div>
       <div class="money border-1px">
-        <p><img class="iconstyle" src="./bei-money.png" alt=""><a href="#">钱包</a></p>
+        <p>
+          <img class="iconstyle" src="./bei-money.png" alt="">
+          <router-link to="/mine/setting">钱包</router-link>
+        </p>
       </div>
       <div class="discount border-1px">
-        <p><img class="iconstyle" src="./bei-discount.png" alt=""><a href="#">优惠券</a></p>
+        <p>
+          <img class="iconstyle" src="./bei-discount.png" alt="">
+          <router-link to="/mine/setting">优惠券</router-link>
+        </p>
       </div>
     </div>
     <div class="divide"></div>
@@ -66,11 +78,13 @@
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/common.styl"
+  a
+    font-family: 'PingFang SC', 'STHeiti', 'Helvetica-Light', arial, sans-serif
   .iconstyle
-    width: 15px
-    height: 15px
+    width: 20px
+    height: 20px
     vertical-align: sub
-    margin-right: 16px
+    margin-right: 10px
   .space
     height 70px
   .headImg
@@ -87,6 +101,7 @@
         height: 100%
     .nickName
       padding: 15px 0 30px 0
+      font-size: 15px
       text-align: center
     .learnRecord
       .record
@@ -101,8 +116,10 @@
           text-align: center
           font-size 15px
   .beiyi-micro,.settings
-    padding: 16px
+    padding: 0 16px
     p
+      height 52px
+      line-height 52px
       font-size: 15px
       color: rgb(43,38,37)
       a
@@ -113,11 +130,10 @@
     padding: 0 16px 16px 16px
     .notice,.myCourse,.money,.discount
       border-1px(rgb(216, 216, 216))
-      height: 40px
-      line-height 40px
-      padding: 5px 0
+      height: 46px
+      line-height 46px
       p
-        padding-bottom:10px
+        /*padding-bottom:10px*/
         font-size: 15px
         color: rgb(43,38,37)
         a

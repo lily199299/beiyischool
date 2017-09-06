@@ -105,22 +105,30 @@
     img
       width: 100%
       height: 100%
-
   .industry
     display: flex
     width: 100%
     .industry-item
       flex: 1
       text-align center
-      font-size: 13px
+      font-size: 12px
       padding: 13px 0
+      color: rgb(128,124,123)
       a
-        color: rgb(43, 38, 37)
+        color: rgb(128,124,123)
       .icon
         display block
         padding-bottom: 10px
         margin: auto
         width: 35%
+  .swiper-pagination-bullet
+    width 13px
+    height 2px
+    border-radius 0
+  .swiper-pagination-bullet-active
+    background-color rgb(242,90,41)
+  .swiper-container-horizontal > .swiper-pagination-bullets
+    bottom 4px
 
 
 </style>

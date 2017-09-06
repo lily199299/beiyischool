@@ -146,21 +146,23 @@
     display: flex
     width: 100%
     background-color rgb(240, 240, 240)
+    border-top: 1px solid rgb(216,216,216)
     z-index: 1
     .tab-item
       flex: 1
       text-align: center
       img
-        width: 20px
-        height: 20px
-        margin: 5px 0
+        width: 24px
+        height: 24px
+        margin-top: 7px
+        margin-bottom 5px
       & > a
         display: block
         font-size 14px
         padding-bottom: 5px
         color: rgb(43,38,37)
         &.active
-          color: rgb(240, 90, 41)
+          color: rgb(242, 90, 41)
       i
         display: block
         padding: 5px 0

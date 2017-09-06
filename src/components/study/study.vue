@@ -1,19 +1,27 @@
 <template>
   <div>
     <div class="panel-title">
-      <p class="panel-nav border-1px" @click="showAll" v-show="hideSelect">{{message}}<Icon class="down" type="chevron-down"></Icon></p>
-      <p class="panel-nav border-1px" @click="showAll" v-show="showSelect">{{msg}}</p>
+      <p class="panel-nav border-1px" @click="showAll" v-show="hideSelect">{{message}}
+        <Icon v-if="down" class="down" type="chevron-down"></Icon>
+        <Icon v-if="!down" class="down" type="chevron-up"></Icon>
+      </p>
+      <p class="panel-nav border-1px" @click="showAll" v-show="showSelect">{{msg}}
+        <Icon v-if="down" class="down" type="chevron-down"></Icon>
+        <Icon v-if="!down" class="down" type="chevron-up"></Icon>
+      </p>
       <div v-show="allShow">
         <div class="zhengquan">
-          <p class="panel-nav border-1px" @click="showZhengquan">证券从业<Icon class="down" type="chevron-down"></Icon></p>
+          <p class="panel-nav border-1px" @click="showZhengquan">证券从业 <Icon v-if="down" class="down" type="chevron-down"></Icon>
+            <Icon v-if="!down" class="down" type="chevron-up"></Icon></p>
           <div class="panel-body" v-show="zhengquanShow">
             <ul class="first-level">
-              <li v-for="item in zhengquan" @click="getText(item.id,item)">{{ item.name }}</li>
+              <li :id="item.id" v-for="(item, index) in zhengquan" @click="getText(item.id,item)">{{ item.name }}</li>
             </ul>
           </div>
         </div>
         <div class="jijin">
-          <p class="panel-nav border-1px" @click="showJijin">基金从业<Icon class="down" type="chevron-down"></Icon></p>
+          <p class="panel-nav border-1px" @click="showJijin">基金从业 <Icon v-if="down" class="down" type="chevron-down"></Icon>
+            <Icon v-if="!down" class="down" type="chevron-up"></Icon></p>
           <div class="panel-body" v-show="jijinShow">
             <ul class="first-level">
               <li v-for="item in jijin" @click="getText(item.id,item)">{{ item.name }}</li>
@@ -21,7 +29,8 @@
           </div>
         </div>
         <div class="yinhang">
-          <p class="panel-nav border-1px" @click="showYinhang">银行从业<Icon class="down" type="chevron-down"></Icon></p>
+          <p class="panel-nav border-1px" @click="showYinhang">银行从业 <Icon v-if="down" class="down" type="chevron-down"></Icon>
+            <Icon v-if="!down" class="down" type="chevron-up"></Icon></p>
           <div class="panel-body" v-show="yinhangShow">
             <ul class="first-level">
               <li v-for="item in yinhang" @click="getText(item.id,item)">{{ item.name }}</li>
@@ -29,7 +38,8 @@
           </div>
         </div>
         <div class="zhucekuaijishi">
-          <p class="panel-nav border-1px" @click="showZhucekuaijishi">注册会计师<Icon class="down" type="chevron-down"></Icon></p>
+          <p class="panel-nav border-1px" @click="showZhucekuaijishi">注册会计师 <Icon v-if="down" class="down" type="chevron-down"></Icon>
+            <Icon v-if="!down" class="down" type="chevron-up"></Icon></p>
           <div class="panel-body" v-show="zhucekuaijishiShow">
             <ul class="first-level">
               <li v-for="item in zhucekuaijishi" @click="getText(item.id,item)">{{ item.name }}</li>
@@ -37,7 +47,8 @@
           </div>
         </div>
         <div class="kuaiji">
-          <p class="panel-nav border-1px" @click="showKuaiji">会计从业<Icon class="down" type="chevron-down"></Icon></p>
+          <p class="panel-nav border-1px" @click="showKuaiji">会计从业 <Icon v-if="down" class="down" type="chevron-down"></Icon>
+            <Icon v-if="!down" class="down" type="chevron-up"></Icon></p>
           <div class="panel-body" v-show="kuaijiShow">
             <ul class="first-level">
               <li v-for="item in kuaiji" @click="getText(item.id,item)">{{ item.name }}</li>
@@ -46,26 +57,34 @@
         </div>
       </div>
     </div>
+    <div class="showMask" v-if="showMask"></div>
     <div class="divide"></div>
     <div class="progress">
-      <div class="progress-score">
-        <p class="percent"><span style="font-size: 30px">80</span><span style="font-size: 15px">%</span></p>
-        <p class="studyProgress">学习进度</p>
-      </div>
+      <!--<div class="progress-score">-->
+        <!--<p class="percent"><span style="font-size: 30px">80</span><span style="font-size: 15px">%</span></p>-->
+        <!--<p class="studyProgress">学习进度</p>-->
+      <!--</div>-->
+      <!--<div class="progress-score">-->
+        <!--<i-circle :percent="percent" :stroke-color="color">-->
+          <!--<Icon v-if="percent == 100" type="ios-checkmark-empty" size="60" style="color:#5cb85c"></Icon>-->
+          <!--<span v-else style="font-size:24px">0%</span>-->
+          <!--&lt;!&ndash;<span v-else style="font-size:24px">{{ percent }}%</span>&ndash;&gt;-->
+        <!--</i-circle>-->
+      <!--</div>-->
       <div class="person-ratings border-1px">
         <div class="person">
-          <p>已有<span class="colorSty">12000</span>人参与学习</p>
+          <p>已有<span class="colorSty">368</span>人参与学习</p>
           <p>我的排名<span class="colorSty">12</span></p>
         </div>
         <div class="ratings">
           <div v-if="!coursePay">
-            <p  style="border: 1px solid #ddd;">
-              <span class="lock">未解锁该课程</span>
+            <p class="lock">
+              <span class="lockSty">未解锁该课程</span>
             </p>
-            <p style="border:none;color: red;padding-top: 10px" @click="immediateLock">立即解锁</p>
+            <p style="width:104px;border:none;color: red;padding-top: 10px;text-align: center" @click="immediateLock">立即解锁</p>
           </div>
           <div v-if="coursePay">
-            <p>
+            <p class="unlock">
               <span class="colorSty">已解锁该课程</span>
             </p>
           </div>
@@ -132,12 +151,16 @@
         zhucekuaijishiShow: false,
         hideSelect: true,
         showSelect: false,
+        showMask: false,
         msg: '',
         coureId,
         libraries: [],
         showBg: true,
         message: '',
-        coursePay: false
+        coursePay: false,
+        isA: true,
+        isB: false,
+        down: true
       }
     },
     created () {
@@ -160,7 +183,7 @@
             this.courses.push(this.datas[i][j])
           }
           Store.save('courses', this.courses)
-          console.log(this.courses)
+//          console.log(this.courses)
         }
         // 初始化一个默认值并缓存
         this.course = this.courses[6]
@@ -186,23 +209,10 @@
       this.message = Store.fetch('selectedCourseName')
       // 初始化默认值
       this.course = this.courses[6]
-      // 获取libraries
-      for (var i in this.courses) {
-        libraries.push(this.courses[i])
-      }
-      console.log(libraries)
-      libraries = []
-    },
-    watch: {
-      libraries: {
-        handler: function (items) {
-          Store.save('libraries', items)   // 观察／存入缓存
-        },
-        deep: true
-      }
     },
     methods: {
       getText (id, item) {
+        this.down = false
         // 课程id 课程名
         console.log(item.name)
        // console.log(item.id)
@@ -222,12 +232,13 @@
             // 是否已经购买
             this.coursePay = this.course.pay
             Store.save('lock', this.coursePay)
-            console.log(this.coursePay)
+//            console.log(this.coursePay)
           }
         }
         this.allShow = false
         this.hideSelect = false
         this.showSelect = true
+        this.showMask = false
       },
       immediateLock () {
         this.coureId = Store.fetch('courseId')
@@ -237,36 +248,48 @@
       showAll () {
         if (this.allShow === false) {
           this.allShow = true
+          this.showMask = true
+          this.down = false
         } else {
           this.allShow = false
+          this.showMask = false
+          this.down = true
         }
       },
       showJijin () {
         if (this.jijinShow === false) {
           this.jijinShow = true
+          this.down = false
         } else {
           this.jijinShow = false
+          this.down = true
         }
       },
       showYinhang () {
         if (this.yinhangShow === false) {
           this.yinhangShow = true
+          this.down = false
         } else {
           this.yinhangShow = false
+          this.down = true
         }
       },
       showZhengquan () {
         if (this.zhengquanShow === false) {
           this.zhengquanShow = true
+          this.down = false
         } else {
           this.zhengquanShow = false
+          this.down = true
         }
       },
       showKuaiji () {
         if (this.kuaijiShow === false) {
           this.kuaijiShow = true
+          this.down = false
         } else {
           this.kuaijiShow = false
+          this.down = true
         }
       },
       showZhucekuaijishi () {
@@ -282,8 +305,12 @@
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/common.styl"
+  .markerA
+    color: rgb(43,38,37)
+  .markerB
+    color: rgb(242,90,41)
   .down
-    margin-left: 20px
+    margin-left: 7px
     vertical-align: middle
     color: rgb(216,216,216)
   .panel-title
@@ -292,8 +319,9 @@
     .panel-nav
       height: 50px
       line-height: 50px
+      color: rgb(43,38,37)
       background-color #fff
-      font-size: 13px
+      font-size: 16px
       font-weight: 500
       text-align: center
       border-1px(rgb(229, 223, 223))
@@ -304,11 +332,24 @@
     .first-level
       line-height 46px
       li
-        font-size 13px
+        font-size 15px
+      li:hover
+        color: rgb(242,90,41)
 
   .progress
     padding: 20px 16px
     .progress-score
+      padding: 20px 16px
+      /*height 120px*/
+      /*position relative*/
+      /*overflow hidden*/
+      /*.ivu-chart-circle*/
+        /*position: absolute*/
+        /*left: 0*/
+        /*right: 0*/
+        /*top: 0*/
+        /*bottom 0*/
+        /*margin:auto*/
       .percent
         text-align center
         color: rgb(242,90,41)
@@ -319,36 +360,39 @@
       display flex
       padding: 10px 0
       border-1px(#dad5d5)
+      padding-bottom: 32px
       .person
         display inline-block
         flex: 1
         border-right: 1px solid #dad5d5
         text-align: right
-        padding-right: 10px
+        color: rgb(172,169,169)
+        padding-right: 13px
         p
           padding-bottom: 6px
-          font-size: 15px
+          font-size: 12px
       .ratings
         display inline-block
         flex: 1
-        padding-left: 10px
-        p:nth-child(1)
-          width: 65%
-          line-height: 20px
-          border: 1px solid #f05a29
+        padding-left: 13px
+        .unlock
+          width: 104px
+          height: 26px
+          border: 1px solid rgb(242,90,41)
           text-align: center
           border-radius: 25px
           .colorSty
             display: block
             padding: 5px 0
             font-size 13px
-        p:nth-child(2)
-          width: 65%
-          line-height: 20px
+            color: rgb(242,90,41)
+        .lock
+          width: 104px
+          height: 26px
           border: 1px solid rgb(216, 216, 216)
           text-align: center
           border-radius: 25px
-          .lock
+          .lockSty
             display: block
             padding: 5px 0
             font-size 13px
@@ -373,4 +417,10 @@
         padding-top 9px
         font-size 13px
         color: rgb(43,38,37)
+  .showMask
+    width:100%
+    height: 100%
+    position fixed
+    background-color rgba(0,0,0,.3)
+    z-index: 100
 </style>

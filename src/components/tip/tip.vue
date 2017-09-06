@@ -30,7 +30,8 @@
     data () {
       return {
         libName,
-        hasQuestion: true
+        hasQuestion: true,
+        libraryId: null
       }
     },
     created () {
@@ -51,7 +52,7 @@
             libName.push(this.patterns[i].libraries[j])
           }
         }
-//        console.log(libName)
+        console.log(libName)
         if (libName.length === 0) {
           this.hasQuestion = false
         } else {
@@ -71,12 +72,12 @@
         display block
       .coursename
         padding: 0 16px 15px 16px
-        font-size: 14px
+        font-size: 16px
         color: rgb(43, 38, 37)
       .jindu
-        color: #7e7c7d
-        font-size: 13px
+        color: rgb(128,124,123)
+        font-size: 12px
         padding 0 16px 15px 16px
         .num
-          margin-right 36px
+          margin-right 21px
 </style>

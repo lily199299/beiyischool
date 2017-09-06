@@ -4,11 +4,18 @@
     <div class="divide"></div>
     <a class="aboutUs">关于我们</a>
     <div class="divide"></div>
-    <!--<div class="quit">退出登录</div>-->
-
-    <!--弹窗-->
-    <Modal v-model="showTan" :closable="false" :mask-closable="false">
-      <p style="text-align: center;height: 40px;line-height: 40px;font-size: 14px;color: rgb(43,38,37)">确定清理本地缓存数据</p>
+    <Modal v-model="showTan" class-name="vertical-center-modal" :closable="false" :mask-closable="false">
+      <div style="font-size: 15px;text-align: center">
+        确定清理本地缓存数据么
+      </div>
+      <div slot="footer" style="display: flex;">
+        <button style="flex: 1;border: none;background: #fff;">
+          <router-link to="/mine" style="font-weight:bold;font-size: 15px">取消</router-link>
+        </button>
+        <button @click="sure" style="flex: 1;border: none;background: #fff;">
+          <router-link to="/find" style="font-weight:bold;font-size: 15px">确定</router-link>
+        </button>
+      </div>
     </Modal>
   </div>
 </template>
@@ -23,14 +30,17 @@
     methods: {
       clearData () {
         this.showTan = true
+      },
+      sure () {
         localStorage.clear()
+        window.location.href = '/study'
       }
     }
   }
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
-    /*.ivu-modal*/
+  /*.ivu-modal*/
       /*width: 300px !important*/
       /*height: 200px !important*/
       /*top: 0 !important*/

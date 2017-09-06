@@ -1,10 +1,11 @@
 <template>
   <div>
+    <!--{{$route.query.libraryId}}-->
     <!--题目类型-->
     <loading v-show="showLoading"></loading>
     <div v-show="!showLoading">
       <div class="question">
-        <!--  {{$route.query.libraryName}}-->
+          <!--{{$route.query.libraryName}}-->
         <h1 class="question-type" v-show="!buy">{{questionList.ctype}} <span class="pro"><a>{{questionList.no}}</a>/<a v-text="length"></a></span></h1>
         <div class="divide"></div>
         <div>
@@ -17,6 +18,7 @@
                   <span class="suboption" ref="subOption">{{item.subOption}}</span><span
                   class="content">{{item.content}}</span>
                 </p>
+                <!--多选-->
                 <p class="option" v-if="!questionType" :class="{ optionActive: item.checked }">
                   <span class="suboption" ref="subOption">{{item.subOption}}</span><span
                   class="content">{{item.content}}</span>
@@ -26,6 +28,7 @@
           </div>
         </div>
       </div>
+      <div class="space"></div>
       <!--上一题 题卡 交卷 下一题 -->
       <div class="functionZone" v-show="!buy">
         <span class="previous" @click="previous"><img v-if="firstQuestion" class="tika" src="./pre.png" alt=""></span>
@@ -116,8 +119,9 @@
           } else {
             this.buy = false
           }
-          Store.save('question', this.question)   // 观察／存入缓存
+          Store.save('question', this.question)
           this.length = this.question.length
+          // 缓存libraryId
           Store.save('libraryId', this.$route.query.libraryId)
           // 默认值当前index为0，也就是第一题
           this.questionList = this.question[this.index]
@@ -199,19 +203,15 @@
           }
         }
         var checkBoxStr = this.question[this.index].a.toString()
-        console.log(typeof checkBoxStr)
-        console.log(typeof this.question[this.index].a)
+//        console.log(typeof checkBoxStr)
+//        console.log(typeof this.question[this.index].a)
         if (this.questionList.ctype === '多选') {
           for (let i = 0; i < this.question[this.index].answers.length; i++) {
             if (parseInt(answerindex) === parseInt(i)) {
               if (this.question[this.index].answers[i].checked === true) {
                 checkBoxStr += this.$refs.subOption[answerindex].innerText
-               // console.log('add' + checkBoxStr)
               } else {
-              //  console.log('delbefole' + checkBoxStr)
                 checkBoxStr = checkBoxStr.replace(this.$refs.subOption[answerindex].innerText, '')
-              //  console.log('deleend' + checkBoxStr)
-              //  console.log('aaaa' + this.$refs.subOption[answerindex].innerText)
               }
             }
           }
@@ -233,8 +233,8 @@
             this.answer.push(multipleAnswer)
           }
         }
-        console.log(this.questionList.answers)
-        console.log('single' + this.question[this.index].a.length)
+//        console.log(this.questionList.answers)
+//        console.log('single' + this.question[this.index].a.length)
         if (this.question[this.index].a.length === 0) {
           this.question[this.index].status = false
         } else {
@@ -287,7 +287,7 @@
           this.responseAnswer = res.body.data
           Store.save('responseAnswer', this.responseAnswer)
 //          if (this.questionList.no < this.length) {
-          this.submitPaper = true
+//            this.submitPaper = true
 //          }
           // 交卷的时候，跳转到答题报告页面
           this.$router.push({path: '/study/tip/question/answerReport'})
@@ -309,8 +309,8 @@
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   .tika
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -345,14 +345,26 @@
     .question-title, .question-list
       padding: 15px 16px
       font-size: 15px
-      line-height: 25px
+      line-height: 22px
+      color: rgb(43,38,37)
       .option
         display block
         padding: 15px 0
         .suboption
+          display inline-block
+          width 29px
+          height: 29px
+          text-align center
+          line-height 29px
+          border: 1px solid rgb(172,169,169)
+          border-radius: 50%
           margin-right 10px
       .optionActive
         color: rgb(242, 90, 41)
+        span:nth-child(1)
+          background-color rgb(242,90,41)
+          color: #fff
+          border none
 
   .functionZone
     position: fixed
@@ -372,5 +384,4 @@
       height: 60px
       line-height: 60px
       font-size: 16px
-
 </style>
