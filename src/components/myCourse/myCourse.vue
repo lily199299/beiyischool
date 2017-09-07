@@ -15,7 +15,7 @@
         </div>
         <ul class="isLearning-body">
           <li class="isLearning-item" v-for="(item, index) in courseLists">
-            <router-link :to="{ path: '/study', query: {coureId: this.coureId,patternTypes: this.patternTypes}}">
+            <router-link :to="{ path: '/study', query: {coureId: this.coureId, patternTypes: this.patternTypes}}">
               <div class="isLearning-img"><img :src="item.img" alt="" width="100px" height="75px"></div>
               <div class="isLearning-title">{{item.name}}</div>
               <div class="isLearning-title" style="color: rgb(242,90,41);">已学30%</div>

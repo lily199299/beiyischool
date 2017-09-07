@@ -4,7 +4,7 @@
     <div>
       <h1 class="subjectName"><span style="color: rgb(240,92,41);font-size: 55px;margin-right: 5px">{{responseAnswer.score}}</span>分</h1>
       <div class="ranking">
-        <p><span class="littleTip">答题用时</span>{{responseAnswer.consumedTime}}</p>
+        <p><span class="littleTip">答题用时</span>{{responseAnswer.consumedTime}}秒</p>
         <p><span class="littleTip">正确率</span>{{responseAnswer.rightSum}}/{{question.length}}</p>
         <p><span class="littleTip">排行榜</span>{{responseAnswer.rankNo}}</p>
       </div>

@@ -91,10 +91,16 @@
         checkedBox: '',   // 多选
         showLoading: false,
         firstQuestion: false,
-        lastQuestion: false
+        lastQuestion: false,
+        startTime: 0,
+        endTime: 0
       }
     },
     created () {
+      var myDate = new Date()
+      // 开始时间
+      this.startTime = myDate.getTime()
+      console.log(this.startTime)
       this.courseId = Store.fetch('courseId')
       this.user = Store.fetch('user')
       // this.tipName = this.$route.query.libraryName
@@ -256,7 +262,7 @@
           // 第2题、第3题。。。
           this.questionList = this.question[this.index]
           this.isActive = -1
-          console.log(this.questionList)
+//          console.log(this.questionList)
         }
       },
       // 上一题
@@ -273,12 +279,21 @@
       },
       // 交卷
       submitPapers () {
+        var myDate = new Date()
+        // 结束时间
+        this.endTime = myDate.getTime()
+        console.log(this.endTime)
+        var totalTime = (this.endTime - this.startTime) / 1000 // getTime()函数得到的是毫秒
+        if (totalTime > 60) {
+          totalTime = totalTime / 60
+        }
+        console.log(totalTime)
         this.showLoading = true
         var mywa = JSON.stringify(this.answer)
         // http://bay-api.by-edu.com/question/postquestions?userId=104ebf7e3d304d3a8d79e76f9c6f8d65&answer=’[1:{A:B,R:B},2:{A:C,R:C},3:{A:C,R:D},4:{A:BD,R:D},5:{A:ABCDE,R:D}]’&libraryId=12&time=1276
         this.$http.post(Beiyi.getUrl() + '/question/postquestions', {
           userId: this.user.userId,
-          time: 1276,
+          time: totalTime,
           answer: mywa,
           libraryId: this.$route.query.libraryId}
         ).then((res) => {
