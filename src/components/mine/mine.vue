@@ -17,7 +17,7 @@
     <div class="beiyi-micro">
       <p>
         <img class="iconstyle" src="./bei-class.png" alt="">
-        <router-link to="/mine/setting">贝易小班</router-link>
+        <router-link to="">贝易小班</router-link>
       </p>
     </div>
     <div class="divide"></div>
@@ -25,7 +25,7 @@
       <div class="notice border-1px">
         <p>
           <img class="iconstyle"  src="./bei-notice.png" alt="">
-          <router-link to="/mine/setting">通知</router-link>
+          <router-link to="">通知</router-link>
         </p>
       </div>
       <div class="myCourse border-1px">
@@ -37,13 +37,13 @@
       <div class="money border-1px">
         <p>
           <img class="iconstyle" src="./bei-money.png" alt="">
-          <router-link to="/mine/setting">钱包</router-link>
+          <router-link to="">钱包</router-link>
         </p>
       </div>
       <div class="discount border-1px">
         <p>
           <img class="iconstyle" src="./bei-discount.png" alt="">
-          <router-link to="/mine/setting">优惠券</router-link>
+          <router-link to="">优惠券</router-link>
         </p>
       </div>
     </div>

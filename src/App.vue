@@ -50,28 +50,31 @@
         find: true,
         study: false,
         mine: false,
-        user: {}
+        user: {},
+        index: ''
       }
     },
     methods: {
       selected (e) {
 //        console.log(e)
-//        console.log(e.currentTarget)
+        console.log(e.currentTarget)
 //        debugger
         // index变量存放当前点击的元素
-        var index = e.currentTarget.id   // 1 2 3
+        this.index = e.currentTarget.id   // 1 2 3
+        Store.save('index', this.index)
 //        console.log(typeof index)
-        if (parseInt(index) === 1) {
+//        console.log(window.location.hash)
+        if (parseInt(this.index) === 1) {
           this.find = true
           this.study = false
           this.mine = false
         }
-        if (parseInt(index) === 2) {
+        if (parseInt(this.index) === 2) {
           this.study = true
           this.find = false
           this.mine = false
         }
-        if (parseInt(index) === 3) {
+        if (parseInt(this.index) === 3) {
           this.mine = true
           this.study = false
           this.find = false
@@ -86,28 +89,32 @@
 //      Store.save('user', this.user)
 //      }
       // 本地测试使用
-//      this.user.openId = 'oMH9vwLinzRct6Zts2c9guOaS3Ac'
-//      Store.save('user', this.user)
+      this.user.openId = 'oMH9vwLinzRct6Zts2c9guOaS3Ac'
+      Store.save('user', this.user)
       this.coureId = Store.fetch('courseId')
       this.courseName = Store.fetch('courseName')
-      if (this.coureId === null) {
+      if (this.coureId !== null) {
+        this.coureId = Store.fetch('courseId')
+      } else {
         Store.save('courseId', 7)
       }
-      if (this.courseName === null) {
-        Store.save('selectedCourseName', '个人理财')
+      if (this.courseName !== null) {
+        this.courseName = Store.fetch('courseName')
+      } else {
+        Store.save('courseName', '个人理财')
       }
       if (Beiyi.getQueryString('openId') !== null) {
         this.user.openId = Beiyi.getQueryString('openId')
         Store.save('user', this.user)
       }
-      console.log('------')
+//      console.log('------')
       this.user = Store.fetch('user')
       if (this.user === null) {
         this.user = {}
         Store.save('user', this.user)
-        console.log('------' + this.user)
+//        console.log('------' + this.user)
       }
-      console.log('------' + this.user)
+//      console.log('------' + this.user)
       // 获取user基本信息
 //      debugger
       this.$http.post(Beiyi.getUrl() + '/login/getUser', {userId: this.user.userId, openId: this.user.openId}).then((res) => {

@@ -199,14 +199,14 @@
             this.course = this.courses[i]
             // 缓存patterns tip页面使用
             Store.save('courseLocal', this.course.patterns)
-            Store.save('selectedCourseName', this.course.name)
+            Store.save('courseName', this.course.name)
             this.coursePay = this.course.pay
             Store.save('lock', this.coursePay)
 //            console.log(this.coursePay)
           }
         }
       })
-      this.message = Store.fetch('selectedCourseName')
+      this.message = Store.fetch('courseName')
       // 初始化默认值
       this.course = this.courses[6]
     },
@@ -228,7 +228,7 @@
             this.course = this.courses[i]
             // 缓存patterns tip页面使用
             Store.save('courseLocal', this.course.patterns)
-            Store.save('selectedCourseName', this.course.name)
+            Store.save('courseName', this.course.name)
             // 是否已经购买
             this.coursePay = this.course.pay
             Store.save('lock', this.coursePay)

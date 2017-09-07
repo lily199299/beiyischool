@@ -88,7 +88,7 @@
         response = response.body.data
         this.advs = response
         Store.save('advs', this.advs)
-        console.log(this.advs)
+//        console.log(this.advs)
       })
     }
   }

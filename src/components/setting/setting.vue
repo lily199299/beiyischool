@@ -21,11 +21,16 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import Store from '../../store.js'
+  import Beiyi from '../../common.js'
   export default {
     data () {
       return {
         showTan: false
       }
+    },
+    created () {
+      this.user = Store.fetch('user')
     },
     methods: {
       clearData () {
@@ -33,7 +38,7 @@
       },
       sure () {
         localStorage.clear()
-        window.location.href = '/study'
+        window.location.href = 'http://learn.by-edu.com/'
       }
     }
   }

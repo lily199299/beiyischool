@@ -13,7 +13,7 @@
     </ul>
     <div v-if="!hasQuestion">
       <div style="margin-top: 100px;">
-        <img src="./nothing.png" alt="" style="display: block;margin: auto">
+        <img src="../../common/img/nothing.png" alt="" style="display: block;margin: auto">
         <p style="margin-top: 20px;text-align: center;font-size: 16px;">暂无题目</p>
       </div>
     </div>
@@ -31,10 +31,13 @@
       return {
         libName,
         hasQuestion: true,
-        libraryId: null
+        libraryId: null,
+        patternTypes: ''   // 试题类型tip/moni...
       }
     },
     created () {
+      this.patternTypes = this.$route.query.patternType
+      Store.save('patternTypes', this.patternTypes)
       if (libName.length === 0) {
         this.hasQuestion = false
       } else {
@@ -47,12 +50,12 @@
       this.patterns = Store.fetch('courseLocal')
 //      console.log(this.patterns)
       for (let i in this.patterns) {
-        if (this.patterns[i].pattern === this.$route.query.patternType) {
+        if (this.patterns[i].pattern === this.patternTypes) {
           for (let j in this.patterns[i].libraries) {
             libName.push(this.patterns[i].libraries[j])
           }
         }
-        console.log(libName)
+//        console.log(libName)
         if (libName.length === 0) {
           this.hasQuestion = false
         } else {
