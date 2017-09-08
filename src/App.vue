@@ -15,7 +15,7 @@
   <!--</div>-->
   <div id="app">
     <div class="tab">
-      <div class="tab-item" :id="1"  @click="selected($event)">
+      <div class="tab-item" :id="1"  @click="selected($event)" ref="abc">
         <router-link ref="routerLink" to="/find">
           <img v-if="!find" src="./common/img/find.png" alt="">
           <img v-if="find" src="./common/img/find-active.png" alt="">
@@ -89,8 +89,8 @@
 //      Store.save('user', this.user)
 //      }
       // 本地测试使用
-//      this.user.openId = 'oMH9vwLinzRct6Zts2c9guOaS3Ac'
-//      Store.save('user', this.user)
+      this.user.openId = 'oMH9vwLinzRct6Zts2c9guOaS3Ac'
+      Store.save('user', this.user)
       this.coureId = Store.fetch('courseId')
       this.courseName = Store.fetch('courseName')
       if (this.coureId !== null) {

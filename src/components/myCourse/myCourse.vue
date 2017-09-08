@@ -14,7 +14,7 @@
           <h1 class="title border-1px"><span style="padding-left: 16px;font-weight: 500;">在学课程</span></h1>
         </div>
         <ul class="isLearning-body">
-          <li class="isLearning-item" v-for="(item, index) in courseLists" @click="backCourse">
+          <li class="isLearning-item" v-for="(item, index) in courseLists" @click="backCourse(index)">
             <router-link :to="{ path: '/study', query: {coureId: this.coureId, patternTypes: this.patternTypes}}">
               <div class="isLearning-img"><img :src="item.img" alt="" width="100px" height="75px"></div>
               <div class="isLearning-title">{{item.name}}</div>
@@ -50,13 +50,17 @@
         this.showLoading = false
         console.log(res.body.data)
         this.courseLists = res.body.data
+        Store.save('courseLists', this.courseLists)
         if (this.courseLists.length > 0) {
           this.hasCourse = true
         }
       })
     },
     methods: {
-      backCourse () {
+      backCourse (index) {
+        console.log(index)
+        Store.save('courseName', this.courseLists[index].name)
+        Store.save('courseId', this.courseLists[index].id)
         this.$router.push({path: '/study'})
       }
     }

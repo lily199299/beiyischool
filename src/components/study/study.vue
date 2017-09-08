@@ -60,10 +60,10 @@
     <div class="showMask" v-if="showMask"></div>
     <div class="divide"></div>
     <div class="progress">
-      <!--<div class="progress-score">-->
-        <!--<p class="percent"><span style="font-size: 30px">80</span><span style="font-size: 15px">%</span></p>-->
-        <!--<p class="studyProgress">学习进度</p>-->
-      <!--</div>-->
+      <div class="progress-score" v-if="coursePay">
+        <p class="percent"><span style="font-size: 30px">80</span><span style="font-size: 15px">%</span></p>
+        <p class="studyProgress">学习进度</p>
+      </div>
       <!--<div class="progress-score">-->
         <!--<i-circle :percent="percent" :stroke-color="color">-->
           <!--<Icon v-if="percent == 100" type="ios-checkmark-empty" size="60" style="color:#5cb85c"></Icon>-->
@@ -172,6 +172,7 @@
         // console.log(response)
         response = response.body.data
         this.datas = response
+//        console.log(this.datas)
         Store.save('datas', this.datas)
         this.jijin = this.datas.jijin
         this.yinhang = this.datas.yinhang
@@ -183,8 +184,10 @@
             this.courses.push(this.datas[i][j])
           }
           Store.save('courses', this.courses)
-//          console.log(this.courses)
+          console.log(this.courses)
         }
+        this.message = Store.fetch('courseName')
+        this.courseId = Store.fetch('courseId')
         // 初始化一个默认值并缓存
         this.course = this.courses[6]
         Store.save('course', this.course)
