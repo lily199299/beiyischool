@@ -35,7 +35,8 @@
 
 <script type="text/ecmascript-6">
   import Store from '../../store.js'
-//  import loading from '../../components/loading/loading.vue'
+  import Beiyi from '../../common.js'
+  //  import loading from '../../components/loading/loading.vue'
   export default {
 //    components: {loading},
     data () {
@@ -44,6 +45,7 @@
       }
     },
     created () {
+      Beiyi.forbidBack()
       this.isBuy = Store.fetch('lock')
       this.courseId = Store.fetch('courseId')
       this.user = Store.fetch('user')

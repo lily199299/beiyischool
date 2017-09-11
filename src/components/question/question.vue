@@ -55,15 +55,13 @@
       </div>
     </Modal>
     <!--交卷弹窗提示-->
-    <Modal v-model="submitPaper" class-name="vertical-center-modal" title="交卷" :closable="false" :mask-closable="false">
-      <div style="font-size: 13px">
-        这套题目还没有答完哦~
+    <Modal v-model="submitPaper" class-name="vertical-center-modal"  :closable="false" :mask-closable="false">
+      <div style="width: 100%;font-size: 13px;text-align: center">
+        您确定交卷么
       </div>
-      <div slot="footer">
-        <router-link to="#" style="color: red;">继续答题</router-link>
-        <button @click="studyOther">
-          <router-link to="/find">确定交卷</router-link>
-        </button>
+      <div slot="footer" style="display: flex">
+        <span style="flex: 1;text-align:center;background-color: #fff;border: 0;" @click="closeBtn">继续答题</span>
+        <span style="flex: 1;text-align:center;background-color: #fff;border: 0;" @click="sureSubmit">确定交卷</span>
       </div>
     </Modal>
   </div>
@@ -279,6 +277,9 @@
       },
       // 交卷
       submitPapers () {
+        this.submitPaper = true
+      },
+      sureSubmit () {
         var myDate = new Date()
         // 结束时间
         this.endTime = myDate.getTime()
@@ -301,14 +302,15 @@
           console.log(res.body.data)
           this.responseAnswer = res.body.data
           Store.save('responseAnswer', this.responseAnswer)
-//          if (this.questionList.no < this.length) {
-//            this.submitPaper = true
-//          }
+          if (Beiyi.forbidBack()) {
+            this.submitPaper = true
+          }
           // 交卷的时候，跳转到答题报告页面
           this.$router.push({path: '/study/tip/question/answerReport'})
-        }).catch((res) => {
-          // console.error(res.body.data)
         })
+      },
+      closeBtn () {
+        this.submitPaper = false
       },
       buyCourse () {
         // http://cb.by-edu.com/createOrder?userId=d7b1fbbb2b5a4eaea0b2c62be47867dd&courseId=1

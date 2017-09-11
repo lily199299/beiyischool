@@ -16,6 +16,14 @@ export default {
     var result = url.substr(1).match(reg)
     // 返回参数值
     return result ? decodeURIComponent(result[2]) : null
+  },
+  // 重写浏览器返回事件
+  // 禁止返回部分
+  forbidBack () {
+    history.pushState(null, null, document.URL)
+    window.addEventListener('popstate', function () {
+      history.pushState(null, null, document.URL)
+    })
   }
 }
 

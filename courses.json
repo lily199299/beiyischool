@@ -1,0 +1,356 @@
+[
+  {
+    "id": 4,
+    "name": "证券市场基本法律法规",
+    "patterns": [],
+    "pay": false
+  },
+  {
+    "id": 5,
+    "name": "金融市场基础知识",
+    "patterns": [],
+    "pay": false
+  },
+  {
+    "id": 1,
+    "name": "基金法律法规",
+    "patterns": [],
+    "pay": false
+  },
+  {
+    "id": 2,
+    "name": "基金金融基础知识",
+    "patterns": [],
+    "pay": false
+  },
+  {
+    "id": 3,
+    "name": "私募股权投资基金",
+    "patterns": [
+      {
+        "libraries": [
+          {
+            "id": 58,
+            "name": "第1章私募股权投资基金的概念单选",
+            "questionNum": 79
+          },
+          {
+            "id": 59,
+            "name": "第2章私募股权投资基金的参与主体单选",
+            "questionNum": 20
+          },
+          {
+            "id": 60,
+            "name": "第3章私募股权投资基金的分类单选",
+            "questionNum": 76
+          },
+          {
+            "id": 62,
+            "name": "第6章私募股权投资基金的投资后管理单选",
+            "questionNum": 39
+          }
+        ],
+        "pattern": "tip"
+      },
+      {
+        "libraries": [],
+        "pattern": "kaoqian"
+      },
+      {
+        "libraries": [],
+        "pattern": "fangzhen"
+      },
+      {
+        "libraries": [],
+        "pattern": "tupo"
+      },
+      {
+        "libraries": [],
+        "pattern": "cuoti"
+      },
+      {
+        "libraries": [],
+        "pattern": "linshi"
+      },
+      {
+        "libraries": [],
+        "pattern": "zhuanjia"
+      }
+    ],
+    "pay": false
+  },
+  {
+    "id": 6,
+    "name": "银行从业基本法律法规",
+    "patterns": [
+      {
+        "libraries": [
+          {
+            "id": 40,
+            "name": "第一章经济基础单选",
+            "questionNum": 10
+          },
+          {
+            "id": 41,
+            "name": "第一章经济基础多选",
+            "questionNum": 11
+          },
+          {
+            "id": 42,
+            "name": "第一章经济基础判断",
+            "questionNum": 9
+          }
+        ],
+        "pattern": "tip"
+      },
+      {
+        "libraries": [],
+        "pattern": "kaoqian"
+      },
+      {
+        "libraries": [],
+        "pattern": "fangzhen"
+      },
+      {
+        "libraries": [],
+        "pattern": "tupo"
+      },
+      {
+        "libraries": [],
+        "pattern": "cuoti"
+      },
+      {
+        "libraries": [],
+        "pattern": "linshi"
+      },
+      {
+        "libraries": [],
+        "pattern": "zhuanjia"
+      }
+    ],
+    "pay": false
+  },
+  {
+    "id": 7,
+    "name": "个人理财",
+    "patterns": [
+      {
+        "libraries": [
+          {
+            "id": 2,
+            "name": "第1章个人理财概述单选",
+            "questionNum": 25
+          },
+          {
+            "id": 3,
+            "name": "第1章个人理财概述多选",
+            "questionNum": 18
+          },
+          {
+            "id": 1,
+            "name": "第1章个人理财概述判断",
+            "questionNum": 24
+          },
+          {
+            "id": 4,
+            "name": "第2章个人理财业务相关法律法规判断",
+            "questionNum": 110
+          },
+          {
+            "id": 5,
+            "name": "第2章个人理财业务相关法律法规单选",
+            "questionNum": 96
+          },
+          {
+            "id": 6,
+            "name": "第2章个人理财业务相关法律法规多选",
+            "questionNum": 86
+          },
+          {
+            "id": 7,
+            "name": "第3章理财投资市场概述判断",
+            "questionNum": 48
+          },
+          {
+            "id": 8,
+            "name": "第3章理财投资市场概述单选",
+            "questionNum": 80
+          },
+          {
+            "id": 9,
+            "name": "第3章理财投资市场概述多选",
+            "questionNum": 54
+          },
+          {
+            "id": 10,
+            "name": "第4章理财产品概述判断",
+            "questionNum": 49
+          },
+          {
+            "id": 11,
+            "name": "第4章理财产品概述单选",
+            "questionNum": 69
+          },
+          {
+            "id": 12,
+            "name": "第4章理财产品概述多选",
+            "questionNum": 43
+          },
+          {
+            "id": 13,
+            "name": "第5章客户分类与需求分析判断",
+            "questionNum": 8
+          },
+          {
+            "id": 14,
+            "name": "第5章客户分类与需求分析单选",
+            "questionNum": 25
+          },
+          {
+            "id": 15,
+            "name": "第5章客户分类与需求分析多选",
+            "questionNum": 10
+          },
+          {
+            "id": 18,
+            "name": "第6章理财规划计算工具与方法多选",
+            "questionNum": 6
+          },
+          {
+            "id": 17,
+            "name": "第6章理财规划计算工具与方法单选",
+            "questionNum": 22
+          },
+          {
+            "id": 16,
+            "name": "第6章理财规划计算工具与方法判断",
+            "questionNum": 13
+          },
+          {
+            "id": 21,
+            "name": "第7章理财师的工作流程与方法多选",
+            "questionNum": 13
+          },
+          {
+            "id": 20,
+            "name": "第7章理财师的工作流程与方法单选",
+            "questionNum": 11
+          },
+          {
+            "id": 19,
+            "name": "第7章理财师的工作流程与方法判断",
+            "questionNum": 13
+          },
+          {
+            "id": 24,
+            "name": "第8章理财师金融服务技巧多选",
+            "questionNum": 12
+          },
+          {
+            "id": 23,
+            "name": "第8章理财师金融服务技巧单选",
+            "questionNum": 6
+          },
+          {
+            "id": 22,
+            "name": "第8章理财师金融服务技巧判断",
+            "questionNum": 7
+          }
+        ],
+        "pattern": "tip"
+      },
+      {
+        "libraries": [
+          {
+            "id": 28,
+            "name": "1_《个人理财》强化模拟题_多选题",
+            "questionNum": 40
+          },
+          {
+            "id": 27,
+            "name": "1_《个人理财》强化模拟题_单选题",
+            "questionNum": 90
+          },
+          {
+            "id": 26,
+            "name": "1_《个人理财》强化模拟题_判断题",
+            "questionNum": 15
+          },
+          {
+            "id": 30,
+            "name": "2_《个人理财》强化模拟题_多选题",
+            "questionNum": 40
+          },
+          {
+            "id": 29,
+            "name": "2_《个人理财》强化模拟题_判断题",
+            "questionNum": 15
+          },
+          {
+            "id": 25,
+            "name": "2_《个人理财》强化模拟题_单选题",
+            "questionNum": 90
+          },
+          {
+            "id": 33,
+            "name": "3_《个人理财》强化模拟题_多选题",
+            "questionNum": 39
+          },
+          {
+            "id": 32,
+            "name": "3_《个人理财》强化模拟题_单选题",
+            "questionNum": 90
+          },
+          {
+            "id": 31,
+            "name": "3_《个人理财》强化模拟题_判断题",
+            "questionNum": 15
+          },
+          {
+            "id": 34,
+            "name": "4_《个人理财》强化模拟题_判断题",
+            "questionNum": 15
+          },
+          {
+            "id": 35,
+            "name": "4_《个人理财》强化模拟题_单选题",
+            "questionNum": 89
+          },
+          {
+            "id": 36,
+            "name": "4_《个人理财》强化模拟题_多选题",
+            "questionNum": 40
+          }
+        ],
+        "pattern": "kaoqian"
+      },
+      {
+        "libraries": [],
+        "pattern": "fangzhen"
+      },
+      {
+        "libraries": [],
+        "pattern": "tupo"
+      },
+      {
+        "libraries": [],
+        "pattern": "cuoti"
+      },
+      {
+        "libraries": [],
+        "pattern": "linshi"
+      },
+      {
+        "libraries": [],
+        "pattern": "zhuanjia"
+      }
+    ],
+    "pay": false
+  },
+  {
+    "id": 8,
+    "name": "公司信贷",
+    "patterns": [],
+    "pay": false
+  }
+]
