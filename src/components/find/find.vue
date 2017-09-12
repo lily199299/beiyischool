@@ -11,6 +11,11 @@
         <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
     </div>
+    <!--<Carousel autoplay v-model="value2">-->
+      <!--<CarouselItem v-for="item in advs">-->
+        <!--<div class="demo-carousel"><img :src="item.img" alt="" style="width: 100%"></div>-->
+      <!--</CarouselItem>-->
+    <!--</Carousel>-->
     <!--<Lunbo></Lunbo>-->
     <!-- 导航 -->
     <div class="industry">
@@ -51,9 +56,6 @@
     components: {Lasted, Employ, Compass, Lunbo},
     data () {
       return {
-//        datas: {}, // 请求的所有数据
-//        courses: [],
-//        course: {},
         swiperOption: {
           notNextTick: true,
           autoplay: 2000,
@@ -96,6 +98,8 @@
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/base"
+  .demo-carousel
+    width 100%
   .space
     height: 70px
 

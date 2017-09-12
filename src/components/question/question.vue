@@ -95,6 +95,7 @@
       }
     },
     created () {
+      console.log(document.referrer)
       var myDate = new Date()
       // 开始时间
       this.startTime = myDate.getTime()
@@ -115,6 +116,24 @@
         // http://bay-api.by-edu.com/question/list/104ebf7e3d304d3a8d79e76f9c6f8d65/1
         this.$http.get(Beiyi.getUrl() + '/question/list/' + this.user.userId + '/' + this.$route.query.libraryId).then((res) => {
           this.question = res.body.data
+//          pushHistory()
+//          var bool = false
+//          setTimeout(function () {
+//            bool = true
+//          }, 1500)
+//          window.addEventListener('popstate', function (e) {
+//            if (bool) {
+//              console.log('我监听到了浏览器的返回按钮事件啦') // 根据自己的需求实现自己的功能
+//            }
+//            pushHistory()
+//          }, false)
+//          function pushHistory () {
+//            var state = {
+//              title: 'title',
+//              url: '#'
+//            }
+//            window.history.pushState(state, 'title', '#')
+//          }
           this.showLoading = false
           // 如果试学结束了，不再让用户答题，提示购买
           if (this.question.length === 0) {
@@ -302,9 +321,9 @@
           console.log(res.body.data)
           this.responseAnswer = res.body.data
           Store.save('responseAnswer', this.responseAnswer)
-          if (Beiyi.forbidBack()) {
-            this.submitPaper = true
-          }
+//          if (Beiyi.forbidBack()) {
+//            this.submitPaper = true
+//          }
           // 交卷的时候，跳转到答题报告页面
           this.$router.push({path: '/study/tip/question/answerReport'})
         })

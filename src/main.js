@@ -17,7 +17,9 @@ import answerReport from './components/answerReport/answerReport.vue'
 import questionAnalysis from './components/questionAnalysis/questionAnalysis.vue'
 import login from './components/login/login.vue'
 import myCourse from './components/myCourse/myCourse.vue'
+import studyRecord from './components/studyRecord/studyRecord.vue'
 import setting from './components/setting/setting.vue'
+import aboutUs from './components/aboutUs/aboutUs.vue'
 import './common/stylus/index.styl'
 import './common'
 
@@ -37,6 +39,8 @@ const routes = [
   {path: '/login', component: login},
   {path: '/mine/myCourse', component: myCourse},
   {path: '/mine/setting', component: setting},
+  {path: '/mine/setting/aboutUs', component: aboutUs},
+  {path: '/mine/studyRecord', component: studyRecord},
   {path: '/study/tip', component: tip},
   {path: '/study/tip/question', component: question},
   {path: '/study/tip/question/answerSheet', component: answerSheet},

@@ -8,8 +8,12 @@
       <p class="nickName">{{name}}</p>
       <div class="learnRecord">
         <div class="record">
-          <div class="wrong learn"><img class="iconstyle" src="./bei-cuoti.png" alt="">我的错题</div>
-          <div class="history learn"><img class="iconstyle" src="./bei-record.png" alt="">学习记录</div>
+          <div class="wrong learn"><img src="./bei-cuoti.png" alt="">
+            <router-link to="">我的错题</router-link>
+          </div>
+          <div class="history learn"><img src="./bei-record.png" alt="">
+            <router-link to="/mine/studyRecord">学习记录</router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -115,6 +119,11 @@
           flex: 1
           text-align: center
           font-size 15px
+          img
+            width:20px
+            vertical-align: middle
+          a
+            color: rgb(43,38,37)
   .beiyi-micro,.settings
     padding: 0 16px
     p

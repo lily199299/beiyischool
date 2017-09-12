@@ -2,7 +2,7 @@
   <div>
     <a class="clearLocalStorage" @click="clearData">清理缓存</a>
     <div class="divide"></div>
-    <a class="aboutUs">关于我们</a>
+    <router-link class="aboutUs" to="/mine/setting/aboutUs">关于我们</router-link>
     <div class="divide"></div>
     <Modal v-model="showTan" class-name="vertical-center-modal" :closable="false" :mask-closable="false">
       <div style="font-size: 15px;text-align: center">
