@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="employ padding-box">
-      <h1 class="title border-1px">招聘资讯 <a href="#" class="more">更多<Icon type="chevron-right" style="padding-left: 9px"></Icon></a></h1>
+      <h1 class="title border-1px">招聘资讯
+        <router-link to="/find/employMore" class="more">更多
+          <Icon type="chevron-right" style="padding-left: 9px"></Icon>
+        </router-link >
+      </h1>
     </div>
     <div class="employ-detail padding-box">
       <ul>

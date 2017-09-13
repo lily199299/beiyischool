@@ -22,6 +22,7 @@ import setting from './components/setting/setting.vue'
 import aboutUs from './components/aboutUs/aboutUs.vue'
 import './common/stylus/index.styl'
 import './common'
+import employMore from './components/employMore/employMore.vue'
 
 Vue.config.productionTip = false
 // 轮播图
@@ -37,6 +38,7 @@ const routes = [
   {path: '/study', component: study},
   {path: '/mine', component: mine},
   {path: '/login', component: login},
+  {path: '/find/employMore', component: employMore},
   {path: '/mine/myCourse', component: myCourse},
   {path: '/mine/setting', component: setting},
   {path: '/mine/setting/aboutUs', component: aboutUs},
