@@ -89,8 +89,8 @@
 //      Store.save('user', this.user)
 //      }
       // 本地测试使用
-//      this.user.openId = 'oMH9vwLinzRct6Zts2c9guOaS3Ac'
-//      Store.save('user', this.user)
+      this.user.openId = 'oMH9vwLinzRct6Zts2c9guOaS3Ac'
+      Store.save('user', this.user)
       this.coureId = Store.fetch('courseId')
       this.courseName = Store.fetch('courseName')
       if (this.coureId !== null) {

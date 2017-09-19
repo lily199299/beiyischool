@@ -1,12 +1,13 @@
 <template>
   <div>
-    <div style="background-color: rgb(242,90,41);height: 40px;">
-      <p style="padding: 0px 16px;">
-        <span style="position:relative;display: block;width: 100%;height: 30px;padding-top: 5px">
-          <Icon style="position:absolute;left: 7px;font-size: 20px;line-height: 30px" type="ios-search-strong"></Icon>
-          <input type="text" placeholder="搜索招聘资讯，如：中国银行"
-                 style="text-indent: 27px;display: block;float:left;height: 30px;width: calc(100% - 30px);border-radius: 5px;border: 1px solid #fff;">
-          <i @click="openSidebar" style="float: right;padding-top: 5px"><img src="./selectcity.png" alt="" width="20px"></i>
+    <div style="background-color: rgb(240,240,240);">
+      <p style="padding: 15px 16px;">
+        <span style="position:relative;display: block;width: 100%;height: 30px;">
+          <img style="width: 12px;position:absolute;left: 7px;top: 9px;font-size: 20px;line-height: 30px" src="./search.png" alt="">
+          <!--<Icon style="position:absolute;left: 7px;font-size: 20px;line-height: 30px" type="ios-search-strong"></Icon>-->
+          <input type="text" placeholder="搜索招聘资讯，如：北京 中国银行"
+                 style="-webkit-appearance: none;outline: none;color: #aca9a9;font-size:12px;text-indent: 27px;display: block;float:left;height: 30px;width: calc(100% - 30px);border-radius: 25px;border: 1px solid #fff;">
+          <i @click="openSidebar" style="float: right;padding-top: 5px"><img src="./select.png" alt="" width="20px"></i>
         </span>
       </p>
     </div>
@@ -25,24 +26,22 @@
     <ul class="bulletin-board">
       <li>
         <a href="#">
-          <div class="left-img"><img src="../../common/img/compass-1.png" alt="" width="45px" height="40px"></div>
           <div class="right-title">
-            <p style="line-height: 20px;padding-bottom: 5px">2017招商银行总行项目开发岗位社会招聘发岗位社会招聘</p>
+            <p style="line-height: 20px;padding-bottom: 10px">2017招商银行总行项目开发岗位社会招聘发岗位社会招聘</p>
             <p class="zone"><span class="employCity">北京</span><span class="publish-time">2017-9-13</span></p>
           </div>
         </a>
       </li>
       <li>
         <a href="#">
-          <div class="left-img"><img src="../../common/img/compass-2.png" alt="" width="45px" height="40px"></div>
           <div class="right-title">
-            <p style="line-height: 20px;padding-bottom: 5px">2017招商银行总行项目开发岗位社会招聘发岗位社会招聘</p>
+            <p style="line-height: 20px;padding-bottom: 10px">2017招商银行总行项目开发岗位社会招聘发岗位社会招聘</p>
             <p class="zone"><span class="employCity">北京</span><span class="publish-time">2017-9-13</span></p>
           </div>
         </a>
       </li>
     </ul>
-    <div></div>
+    <div class="fixbottom"></div>
   </div>
 </template>
 
@@ -69,8 +68,13 @@
   .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
     opacity: 0
   }
+  .fixbottom
+    position fixed
+    bottom 0
+    width: 100%
+    height 50px
   .fixtop
-    padding: 15px 16px
+    padding: 0 16px 15px 16px
     li
       border-1px(rgb(216, 216, 216))
       padding: 5px 0
@@ -98,23 +102,10 @@
         color: rgb(43, 38, 37)
         overflow hidden
         padding: 8px 0
-        .left-img
-          width: 65px
-          height 54px
-          margin-right 10px
-          img
-            width: 65px
-            height: 100%
-            float: left
-          float left
         .right-title
-          width: calc(100% - 75px)
-          height 54px
-          float: left
           .employCity
-            float left
             color: rgb(128, 124, 123)
+            margin-right 18px
           .publish-time
-            float right
             color: rgb(128, 124, 123)
 </style>
