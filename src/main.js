@@ -20,6 +20,7 @@ import myCourse from './components/myCourse/myCourse.vue'
 import studyRecord from './components/studyRecord/studyRecord.vue'
 import setting from './components/setting/setting.vue'
 import aboutUs from './components/aboutUs/aboutUs.vue'
+import coupon from './components/coupon/coupon.vue'
 import './common/stylus/index.styl'
 import './common'
 import employMore from './components/employMore/employMore.vue'
@@ -42,6 +43,7 @@ const routes = [
   {path: '/mine/myCourse', component: myCourse},
   {path: '/mine/setting', component: setting},
   {path: '/mine/setting/aboutUs', component: aboutUs},
+  {path: '/mine/coupon', component: coupon},
   {path: '/mine/studyRecord', component: studyRecord},
   {path: '/study/tip', component: tip},
   {path: '/study/tip/question', component: question},

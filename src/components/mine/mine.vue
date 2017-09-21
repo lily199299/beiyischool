@@ -47,7 +47,7 @@
       <div class="discount border-1px">
         <p>
           <img class="iconstyle" src="./bei-discount.png" alt="">
-          <router-link to="">优惠券</router-link>
+          <router-link to="/mine/coupon">优惠券</router-link>
         </p>
       </div>
     </div>

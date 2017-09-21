@@ -40,6 +40,17 @@
     <employ></employ>
     <Compass></Compass>
     <div class="space"></div>
+    <!--展示新人优惠券-->
+    <div class="coupon" v-show="coupon">
+      <img v-show="couponImg" class="couponImg" @click="getCoupon" src="./coupon1.png" alt="">
+      <div class="getSuccess" v-show="success">
+        <img src="./success.png" alt="">
+        <div class="tip"><p>优惠券已领取</p>
+          <p>可在我的优惠券里查看</p>
+        </div>
+      </div>
+      <img v-show="closeBtn" class="closeBtn" @click="closeCoupon" src="./closeBtn.png" alt="">
+    </div>
   </div>
 
 </template>
@@ -72,7 +83,27 @@
             // console.log(swiper)
           }
         },
-        advs: {}
+        advs: {},
+        coupon: true,
+        couponImg: true,
+        closeBtn: true,
+        success: false,
+        timer: null
+      }
+    },
+    methods: {
+      // 新人第一次登陆进来 领取优惠券
+      getCoupon () {
+        this.couponImg = false
+        this.closeBtn = false
+        this.success = true
+        this.timer = setTimeout(() => {
+          this.success = false
+          this.coupon = false
+        }, 1000)
+      },
+      closeCoupon () {
+        this.coupon = false
       }
     },
     computed: {
@@ -98,6 +129,57 @@
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/base"
+  .coupon
+    width: 100%
+    height: 100%
+    position fixed
+    top: 0
+    background-color rgba(0,0,0,.6)
+    z-index:110
+    .couponImg
+      width:90%
+      position absolute
+      top:-130px
+      bottom: 0
+      right: 0
+      left: 0
+      margin:auto
+    .closeBtn
+      width: 35px
+      height: 35px
+      position absolute
+      bottom: 80px
+      right: 0
+      left: 0
+      margin:auto
+    .getSuccess
+      position absolute
+      bottom: 0
+      top: 0
+      right: 0
+      left: 0
+      margin:auto
+      width: 240px
+      height: 140px
+      background-color #fff
+      border-radius 10px
+      img
+        display block
+        width: 45px
+        position absolute
+        top: 25px
+        left: 0
+        right: 0
+        bottom:80px
+        margin-left: 102px
+      .tip
+        position absolute
+        top:80px
+        width: 100%
+        text-align center
+        height: 50px
+        line-height 25px
+        font-size 15px
   .demo-carousel
     width 100%
   .space
@@ -133,6 +215,5 @@
     background-color rgb(242,90,41)
   .swiper-container-horizontal > .swiper-pagination-bullets
     bottom 4px
-
 
 </style>

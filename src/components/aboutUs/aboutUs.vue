@@ -4,7 +4,7 @@
       <div style="width: 100%;height: 100px;position: relative;overflow: hidden;">
         <img style="display:block;float:left;width:100px;height:100px;position: absolute;top: 0;right: 0;bottom: 0;left: 0;margin: auto"src="./beiyilogo.png" alt="">
       </div>
-      <p style="text-align: center;font-size: 20px;margin-top:10px;font-weight: bold;">贝易网校</p>
+      <p style="text-align: center;font-size: 20px;margin-top:10px;">贝易网校</p>
       <p style="text-align: center;font-size: 15px;margin-top: 15px">v1.0.0</p>
     </div>
     <!--微信公号 联系电话 电子邮箱-->

@@ -12,9 +12,35 @@
       </p>
     </div>
     <!--展开的侧边栏-->
-    <!--<transition name="fade" :duration="1000">-->
-      <!--<div v-show="open" style="width: 100px;height: 100px;background-color: rebeccapurple">cebian</div>-->
-    <!--</transition>-->
+    <transition name="fade" :duration="1000">
+      <div v-show="open" @click="selectClose" style="position:fixed;top:0;width: 100%;height: 100%;z-index:100;background-color: rgb(255,255,255)">
+        <div class="employStyle">
+          <p class="styles">招聘类型</p>
+          <!--<span class="nolimit">不限</span>-->
+          <ul class="listy">
+            <li style="color: #fff;background-color: rgb(242,90,41)">不限</li>
+            <li>校招</li>
+            <li>实习</li>
+            <li>社招</li>
+            <li>宣讲会</li>
+          </ul>
+          <p class="styles">招聘地区</p>
+          <!--<span class="nolimit">不限</span>-->
+          <ul class="listy">
+            <li  style="color: #fff;background-color: rgb(242,90,41)">不限</li>
+            <li>北京</li>
+            <li>天津</li>
+            <li>河北</li>
+            <li>山西</li>
+            <li>安徽</li>
+            <li>内蒙古</li>
+            <li>福建</li>
+            <li>浙江</li>
+            <li>重庆</li>
+          </ul>
+        </div>
+      </div>
+    </transition>
     <ul class="fixtop">
       <li class="border-1px"><a href="#" class="fixtitle"><img src="./fixtop.png" alt="">2018工商银行校园招聘1200人公告【汇总】</a>
       </li>
@@ -46,15 +72,26 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import Beiyi from '../../common.js'
+  import Store from '../../store.js'
   export default {
     data () {
       return {
         open: false
       }
     },
+    created () {
+      // http://bay-api.by-edu.com/find/getJobsCity
+      this.$http.get(Beiyi.getUrl + '/find/getJobsCity').then((response) => {
+        response = response.body.data
+      })
+    },
     methods: {
       openSidebar () {
         this.open = true
+      },
+      selectClose () {
+        this.open = false
       }
     }
   }
@@ -68,6 +105,36 @@
   .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
     opacity: 0
   }
+  .employStyle
+    margin-top 50px
+    font-size 15px
+    padding: 0 20px
+    .styles
+      margin-top:49px
+      margin-bottom 13px
+    .nolimit
+      display block
+      width: 60px
+      height: 32px
+      line-height 32px
+      text-align center
+      background-color rgb(240,240,240)
+      border-radius 15px
+      padding-bottom 15px
+    .listy
+      overflow hidden
+      width 100%
+      li
+        width: 60px
+        height: 32px
+        border-radius 15px
+        line-height 32px
+        margin-right 5px
+        margin-top 7px
+        margin-bottom 10px
+        float left
+        text-align center
+        background-color rgb(240,240,240)
   .fixbottom
     position fixed
     bottom 0
