@@ -45,7 +45,7 @@
       }
     },
     created () {
-      Beiyi.forbidBack()
+//      Beiyi.forbidBack()
       this.isBuy = Store.fetch('lock')
       this.courseId = Store.fetch('courseId')
       this.user = Store.fetch('user')

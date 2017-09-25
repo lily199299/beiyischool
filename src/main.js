@@ -24,6 +24,7 @@ import coupon from './components/coupon/coupon.vue'
 import './common/stylus/index.styl'
 import './common'
 import employMore from './components/employMore/employMore.vue'
+import setWechatTitle from './setWechatTitle.js'
 
 Vue.config.productionTip = false
 // 轮播图
@@ -55,6 +56,15 @@ const router = new VueRouter({
   linkActiveClass: 'active',
   routes: routes
 })
+// router.map({
+//   find: {name: 'find', title: '发现', path: '/find', component: find},
+//   study: {name: 'study', title: '学习', component: study},
+//   mine: {name: 'mine', title: '我的', component: mine}
+// })
+// router.afterEach((transition) => {
+//   let title = transition.to.title + '-Custom-Suffix'
+//   setWechatTitle(title)
+// })
 /* eslint-disable no-new */
 new Vue({
   el: '#myapp',

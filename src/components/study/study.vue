@@ -73,8 +73,8 @@
       <!--</div>-->
       <div class="person-ratings border-1px">
         <div class="person">
-          <p>已有<span class="colorSty">368</span>人参与学习</p>
-          <p>我的排名<span class="colorSty">12</span></p>
+          <p>已有<span class="colorSty">{{course.useNum}}</span>人参与学习</p>
+          <p>我的排名<span class="colorSty">{{course.rank}}</span></p>
         </div>
         <div class="ratings">
           <div v-if="!coursePay">
@@ -172,6 +172,7 @@
         // console.log(response)
         response = response.body.data
         this.datas = response
+        console.log(this.datas)
 //        console.log(this.datas)
         Store.save('datas', this.datas)
         this.jijin = this.datas.jijin
@@ -190,6 +191,7 @@
         this.courseId = Store.fetch('courseId')
         // 初始化一个默认值并缓存
         this.course = this.courses[6]
+        console.log(this.course)
         Store.save('course', this.course)
         this.coursePay = this.course.pay
         Store.save('lock', this.coursePay)
@@ -211,7 +213,8 @@
       })
       this.message = Store.fetch('courseName')
       // 初始化默认值
-      this.course = this.courses[6]
+//      this.course = this.courses[6]
+//      console.log(this.course)
     },
     methods: {
       getText (id, item) {

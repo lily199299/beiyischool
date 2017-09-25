@@ -5,7 +5,7 @@
         <span style="position:relative;display: block;width: 100%;height: 30px;">
           <img style="width: 12px;position:absolute;left: 7px;top: 9px;font-size: 20px;line-height: 30px" src="./search.png" alt="">
           <!--<Icon style="position:absolute;left: 7px;font-size: 20px;line-height: 30px" type="ios-search-strong"></Icon>-->
-          <input type="text" placeholder="搜索招聘资讯，如：北京 中国银行"
+          <input @click="getFocus" placeholder="搜索招聘资讯，如：北京 中国银行" ref="search" id="search" v-model="search"
                  style="-webkit-appearance: none;outline: none;color: #aca9a9;font-size:12px;text-indent: 27px;display: block;float:left;height: 30px;width: calc(100% - 30px);border-radius: 25px;border: 1px solid #fff;">
           <i @click="openSidebar" style="float: right;padding-top: 5px"><img src="./select.png" alt="" width="20px"></i>
         </span>
@@ -16,7 +16,6 @@
       <div v-show="open" @click="selectClose" style="position:fixed;top:0;width: 100%;height: 100%;z-index:100;background-color: rgb(255,255,255)">
         <div class="employStyle">
           <p class="styles">招聘类型</p>
-          <!--<span class="nolimit">不限</span>-->
           <ul class="listy">
             <li style="color: #fff;background-color: rgb(242,90,41)">不限</li>
             <li>校招</li>
@@ -25,18 +24,9 @@
             <li>宣讲会</li>
           </ul>
           <p class="styles">招聘地区</p>
-          <!--<span class="nolimit">不限</span>-->
           <ul class="listy">
             <li  style="color: #fff;background-color: rgb(242,90,41)">不限</li>
-            <li>北京</li>
-            <li>天津</li>
-            <li>河北</li>
-            <li>山西</li>
-            <li>安徽</li>
-            <li>内蒙古</li>
-            <li>福建</li>
-            <li>浙江</li>
-            <li>重庆</li>
+            <li v-for="(item, index) in getCity" @click="selectCity(item, index)">{{item}}</li>
           </ul>
         </div>
       </div>
@@ -77,21 +67,41 @@
   export default {
     data () {
       return {
-        open: false
+        open: false,
+        search: '',
+        getCity: [],
+        city: '',
+        index: 0,
+        limit: 5
       }
     },
     created () {
+      this.user = Store.fetch('user')
       // http://bay-api.by-edu.com/find/getJobsCity
-      this.$http.get(Beiyi.getUrl + '/find/getJobsCity').then((response) => {
-        response = response.body.data
+      this.$http.get(Beiyi.getUrl() + '/find/getJobsCity').then((response) => {
+        this.getCity = response.body.data
+        console.log(this.getCity)
       })
     },
     methods: {
+      getFocus () {
+        this.search = this.$refs.search.value
+        console.log(this.search)
+      },
       openSidebar () {
         this.open = true
       },
       selectClose () {
         this.open = false
+      },
+      selectCity (city, index) {
+        console.log(city + index)
+        this.city = city
+        // http://bay-api.by-edu.com/find/getjobs?userId=d7b1fbbb2b5a4eaea0b2c62be47867dd&city=贵州&index=0&limit=2
+        this.$http.get(Beiyi.getUrl() + '/find/getjobs?userId=' + this.user.userId + '&city=' + this.city + '&index=' + this.index + '&limit=' + this.limit).then((res) => {
+          console.log(res)
+          // 请求加载下一页数据
+        })
       }
     }
   }
