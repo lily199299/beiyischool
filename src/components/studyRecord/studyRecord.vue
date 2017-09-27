@@ -6,7 +6,7 @@
     </a>
     <a href="#" class="records border-1px">
       <h3 class="record-course">第一章个人理财概述单选</h3>
-      <p class="grade"><span>分数：90分</span><span>用时：20分钟</span><span>排名：第3名</span></p>
+      <p class="grade"><span>分数：90分</span><span>用时：{{responseAnswer.consumedTime}}秒</span><span>排名：第3名</span></p>
     </a>
     <a href="#" class="records border-1px">
       <h3 class="record-course">第一章个人理财概述单选</h3>
@@ -21,8 +21,9 @@
   export default {
     created () {
       this.user = Store.fetch('user')
+      this.responseAnswer = Store.fetch('responseAnswer')
       // 获取我所做过的试卷的答题情况列表
-      // 请求地址：http://bay-api.by-edu.com/course/ listmine?userId=d7b1fbbb2b5a4eaea0b2c62be47867dd
+      // 请求地址：http://bay-api.by-edu.com/course/listmine?userId=d7b1fbbb2b5a4eaea0b2c62be47867dd
       this.$http.get(Beiyi.getUrl() + '/course/listmine?userId=' + this.user.userId).then((res) => {
         console.log(res.body.data)
       })

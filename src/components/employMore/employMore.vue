@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="zIndex">
     <div style="background-color: rgb(240,240,240);">
       <p style="padding: 15px 16px;">
         <span style="position:relative;display: block;width: 100%;height: 30px;">
@@ -98,8 +98,10 @@
         console.log(city + index)
         this.city = city
         // http://bay-api.by-edu.com/find/getjobs?userId=d7b1fbbb2b5a4eaea0b2c62be47867dd&city=贵州&index=0&limit=2
-        this.$http.get(Beiyi.getUrl() + '/find/getjobs?userId=' + this.user.userId + '&city=' + this.city + '&index=' + this.index + '&limit=' + this.limit).then((res) => {
+        // http://bay-api.by-edu.com/find/getjobs?city=贵州&index=0&limit=2
+        this.$http.get(Beiyi.getUrl() + '/find/getjobs?city=' + this.city + '&index=' + this.index + '&limit=' + this.limit).then((res) => {
           console.log(res)
+          this.index = index + 1
           // 请求加载下一页数据
         })
       }

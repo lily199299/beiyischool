@@ -5,7 +5,7 @@
       <li class="subject" v-for="item in libName">
         <router-link :to="{ path: '/study/tip/question', query: { libName: this.libName, libraryName: item.name, libraryId: item.id} }">
           <p class="coursename">{{item.name}}</p>
-          <p class="jindu"><span class="num"><span>123</span>人做过</span> <span
+          <p class="jindu"><span class="num"><span>{{item.libuseNum}}</span>人做过</span> <span
             class="pro">{{ item.finNum }}/{{ item.questionNum }}</span></p>
           <div class="divide"></div>
         </router-link>

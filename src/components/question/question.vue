@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div>+
     <!--{{$route.query.libraryId}}-->
     <!--题目类型-->
     <loading v-show="showLoading"></loading>
@@ -9,14 +9,15 @@
         <h1 class="question-type" v-show="!buy">{{questionList.ctype}} <span class="pro"><a>{{questionList.no}}</a>/<a v-text="length"></a></span></h1>
         <div class="divide"></div>
         <div>
+          <!-- 题目名称 -->
           <p class="question-title" v-show="!buy">({{questionList.no}}){{questionList.content}}</p>
           <div class="question-list">
             <ul>
               <li v-for="(item, index) in questionList.answers" @click="answerQuestion(index)">
                 <!--单选、判断-->
                 <p class="option" v-if="questionType" :class="{ optionActive: item.checked }">
-                  <span class="suboption" ref="subOption">{{item.subOption}}</span><span
-                  class="content">{{item.content}}</span>
+                  <span class="suboption" ref="subOption">{{item.subOption}}</span>
+                  <span class="content">{{item.content}}</span>
                 </p>
                 <!--多选-->
                 <p class="option" v-if="!questionType" :class="{ optionActive: item.checked }">
