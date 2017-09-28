@@ -9,7 +9,7 @@
       <div class="learnRecord">
         <div class="record">
           <div class="wrong learn"><img src="./bei-cuoti.png" alt="">
-            <router-link to="">我的错题</router-link>
+            <router-link to="/mine/wrongCollection">我的错题</router-link>
           </div>
           <div class="history learn"><img src="./bei-record.png" alt="">
             <router-link to="/mine/studyRecord">学习记录</router-link>

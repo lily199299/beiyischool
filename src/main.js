@@ -18,6 +18,7 @@ import questionAnalysis from './components/questionAnalysis/questionAnalysis.vue
 import login from './components/login/login.vue'
 import myCourse from './components/myCourse/myCourse.vue'
 import studyRecord from './components/studyRecord/studyRecord.vue'
+import wrongCollection from './components/wrongCollection/wrongCollection.vue'
 import setting from './components/setting/setting.vue'
 import aboutUs from './components/aboutUs/aboutUs.vue'
 import coupon from './components/coupon/coupon.vue'
@@ -46,6 +47,7 @@ const routes = [
   {path: '/mine/setting/aboutUs', component: aboutUs},
   {path: '/mine/coupon', component: coupon},
   {path: '/mine/studyRecord', component: studyRecord},
+  {path: '/mine/wrongCollection', component: wrongCollection},
   {path: '/study/tip', component: tip},
   {path: '/study/tip/question', component: question},
   {path: '/study/tip/question/answerSheet', component: answerSheet},

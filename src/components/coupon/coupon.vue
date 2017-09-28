@@ -1,5 +1,7 @@
 <template>
 <div>
+  <!--您暂时没有优惠券-->
+  <!--有优惠券-->
   <div class="beiyi-coupon">
     <ul>
       <li><img src="./coupon50.png" alt=""></li>
