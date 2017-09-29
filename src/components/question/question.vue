@@ -1,5 +1,5 @@
 <template>
-  <div>+
+  <div>
     <!--{{$route.query.libraryId}}-->
     <!--题目类型-->
     <loading v-show="showLoading"></loading>

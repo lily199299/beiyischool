@@ -61,7 +61,7 @@
     <div class="divide"></div>
     <div class="progress">
       <div class="progress-score" v-if="coursePay">
-        <p class="percent"><span style="font-size: 30px">80</span><span style="font-size: 15px">%</span></p>
+        <p class="percent"><span style="font-size: 30px">{{course.process}}</span><span style="font-size: 15px">%</span></p>
         <p class="studyProgress">学习进度</p>
       </div>
       <!--<div class="progress-score">-->
@@ -169,7 +169,7 @@
       this.user = Store.fetch('user')
       // 请求课程接口
       this.$http.get(Beiyi.getUrl() + '/course/list?userId=' + this.user.userId).then((response) => {
-        // console.log(response)
+//         console.log(response)
         response = response.body.data
         this.datas = response
         console.log(this.datas)
