@@ -1,70 +1,90 @@
 <template>
   <div>
     <!--{{$route.query.libraryId}}-->
-    <!--题目类型-->
-    <loading v-show="showLoading"></loading>
-    <div v-show="!showLoading">
-      <div class="question">
-          <!--{{$route.query.libraryName}}-->
-        <h1 class="question-type" v-show="!buy">{{questionList.ctype}} <span class="pro"><a>{{questionList.no}}</a>/<a v-text="length"></a></span></h1>
-        <div class="divide"></div>
-        <div>
-          <!-- 题目名称 -->
-          <p class="question-title" v-show="!buy">({{questionList.no}}){{questionList.content}}</p>
-          <div class="question-list">
-            <ul>
-              <li v-for="(item, index) in questionList.answers" @click="answerQuestion(index)">
-                <!--单选、判断-->
-                <p class="option" v-if="questionType" :class="{ optionActive: item.checked }">
-                  <span class="suboption" ref="subOption">{{item.subOption}}</span>
-                  <span class="content">{{item.content}}</span>
-                </p>
-                <!--多选-->
-                <p class="option" v-if="!questionType" :class="{ optionActive: item.checked }">
-                  <span class="suboption" ref="subOption">{{item.subOption}}</span><span
-                  class="content">{{item.content}}</span>
-                </p>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="space"></div>
-      <!--上一题 题卡 交卷 下一题 -->
-      <div class="functionZone" v-show="!buy">
-        <span class="previous" @click="previous"><img v-if="firstQuestion" class="tika" src="./pre.png" alt=""></span>
-        <span class="answerSheet">
-          <router-link :to="{path: './question/answerSheet', query: { questionList: this.questionList}}"><img class="tika" src="./tika.png" alt=""></router-link>
-        </span>
-        <span class="submitPapers" @click="submitPapers()"><img class="tika" src="./jiaojuan.png" alt=""></span>
-        <span class="next" @click="next" v-if="!lastQuestion"><img class="tika" src="./next.png" alt=""></span>
-        <!--<span class="next" @click="next" v-if="lastQuestion" style="color: rgb(242,90,41);">最后一题</span>-->
+
+    <div v-if="!hasQuestion">
+      <div style="margin-top: 100px;">
+        <img src="../../common/img/nothing.png" alt="" style="display: block;margin: auto">
+        <p style="margin-top: 20px;text-align: center;font-size: 16px;">暂无题目</p>
       </div>
     </div>
-    <!--购买弹窗提示 :closable="false"-->
-    <Modal v-model="buy" class-name="vertical-center-modal" title="购买课程" :closable="false" :mask-closable="false">
-      <div style="font-size: 15px">
-        亲爱的童鞋，试学结束了，可以购买课程，也可以试学其他课程哦～
+
+    <div v-if="hasQuestion">
+      <loading v-show="showLoading"></loading>
+      <div v-show="!showLoading">
+        <div class="question">
+          <!--{{$route.query.libraryName}}-->
+          <h1 class="question-type" v-show="!buy">{{questionList.ctype}} <span class="pro"><a>{{questionList.no}}</a>/<a
+            v-text="length"></a></span></h1>
+          <div class="divide"></div>
+          <div>
+            <!-- 题目名称 -->
+            <p class="question-title" v-show="!buy">({{questionList.no}}){{questionList.content}}</p>
+            <div class="question-list">
+              <ul>
+                <li v-for="(item, index) in questionList.answers" @click="answerQuestion(index)">
+                  <!--单选、判断-->
+                  <p class="option" v-if="questionType" :class="{ optionActive: item.checked }">
+                    <span class="suboption" ref="subOption">{{item.subOption}}</span>
+                    <span class="content">{{item.content}}</span>
+                  </p>
+                  <!--多选-->
+                  <p class="option" v-if="!questionType" :class="{ optionActive: item.checked }">
+                    <span class="suboption" ref="subOption">{{item.subOption}}</span><span
+                    class="content">{{item.content}}</span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="space"></div>
+        <!--上一题 题卡 交卷 下一题 -->
+        <div class="functionZone" v-show="!buy">
+          <span class="previous" @click="previous"><img v-if="firstQuestion" class="tika" src="./pre.png" alt=""></span>
+          <span class="answerSheet">
+          <router-link :to="{path: './cuoti/cuotisheet', query: { questionList: this.questionList}}"><img
+            class="tika" src="./tika.png" alt=""></router-link>
+        </span>
+          <span class="submitPapers" @click="submitPapers()"><img class="tika" src="./jiaojuan.png" alt=""></span>
+          <span class="next" @click="next" v-if="!lastQuestion"><img class="tika" src="./next.png" alt=""></span>
+          <!--<span class="next" @click="next" v-if="lastQuestion" style="color: rgb(242,90,41);">最后一题</span>-->
+        </div>
       </div>
-      <div slot="footer" style="display: flex;">
-        <button @click="studyOther" style="flex: 1;border: none;background: #fff;">
-          <router-link to="/find" style="font-weight:bold;font-size: 15px">试学其他课程</router-link>
-        </button>
-        <button @click="buyCourse" style="flex: 1;border: none;background: #fff;">
-          <router-link to="/study" style="color: rgb(242,90,41);font-weight:bold;font-size: 15px">去购买</router-link>
-        </button>
-      </div>
-    </Modal>
-    <!--交卷弹窗提示-->
-    <Modal v-model="submitPaper" class-name="vertical-center-modal"  :closable="false" :mask-closable="false">
-      <div style="width: 100%;font-size: 13px;text-align: center">
-        您确定交卷么
-      </div>
-      <div slot="footer" style="display: flex">
-        <span style="flex: 1;text-align:center;background-color: #fff;border: 0;" @click="closeBtn">继续答题</span>
-        <span style="flex: 1;text-align:center;background-color: #fff;border: 0;" @click="sureSubmit">确定交卷</span>
-      </div>
-    </Modal>
+      <!--购买弹窗提示 :closable="false"-->
+      <Modal v-model="buy" class-name="vertical-center-modal" title="购买课程" :closable="false" :mask-closable="false">
+        <div style="font-size: 15px">
+          亲爱的童鞋，试学结束了，可以购买课程，也可以试学其他课程哦～
+        </div>
+        <div slot="footer" style="display: flex;">
+          <button @click="studyOther" style="flex: 1;border: none;background: #fff;">
+            <router-link to="/find" style="font-weight:bold;font-size: 15px">试学其他课程</router-link>
+          </button>
+          <button @click="buyCourse" style="flex: 1;border: none;background: #fff;">
+            <router-link to="/study" style="color: rgb(242,90,41);font-weight:bold;font-size: 15px">去购买</router-link>
+          </button>
+        </div>
+      </Modal>
+      <!--交卷弹窗提示-->
+      <Modal v-model="submitPaper" class-name="vertical-center-modal" :closable="false" :mask-closable="false">
+        <div style="width: 100%;font-size: 13px;text-align: center">
+          您确定交卷么
+        </div>
+        <div slot="footer" style="display: flex">
+          <span style="flex: 1;text-align:center;background-color: #fff;border: 0;" @click="closeBtn">继续答题</span>
+          <span style="flex: 1;text-align:center;background-color: #fff;border: 0;" @click="sureSubmit">确定交卷</span>
+        </div>
+      </Modal>
+
+      <Modal v-model="showTip" class-name="vertical-center-modal"  :closable="false" :mask-closable="false">
+        <div style="width: 100%;font-size: 13px;text-align: center">暂无题目</div>
+        <div slot="footer" style="text-align: center;">
+          <span style="flex: 1;text-align:center;background-color: #fff;border: 0;" @click="yesknow">知道了</span>
+        </div>
+      </Modal>
+    </div>
+    <!--题目类型-->
+
   </div>
 </template>
 
@@ -72,10 +92,12 @@
   import Store from '../../store.js'
   import Beiyi from '../../common.js'
   import loading from '../../components/loading/loading.vue'
+  var length = 0
   export default {
     components: {loading},
     data () {
       return {
+        showTip: false,
         answer: [],
         length,
         responseAnswer: {},
@@ -92,60 +114,45 @@
         firstQuestion: false,
         lastQuestion: false,
         startTime: 0,
-        endTime: 0
+        endTime: 0,
+        hasQuestion: true
       }
     },
     created () {
-      console.log(document.referrer)
       var myDate = new Date()
       // 开始时间
       this.startTime = myDate.getTime()
-      console.log(this.startTime)
+//      console.log(this.startTime)
       this.courseId = Store.fetch('courseId')
-      console.log(this.courseId)
+//      console.log(this.courseId)
       this.user = Store.fetch('user')
-      // this.tipName = this.$route.query.libraryName
-      console.log(Store.fetch('libName'))
-      if (Store.fetch('tipName') === null) {
-        Store.save('tipName', this.$route.query.libraryName)
-      }
-     // Store.save('tipName', this.$route.query.libraryName)
-      this.question = Store.fetch('question')
+      this.tipName = this.$route.query.libraryName
+//      console.log(Store.fetch('libName'))
+//      if (Store.fetch('tipName') === null) {
+//        Store.save('tipName', this.$route.query.libraryName)
+//      }
+//      Store.save('tipName', this.$route.query.libraryName)
       this.index = Store.fetch('questionno')
       this.showLoading = true
-      if (this.question === null) {
-        // 请求地址：http://bay-api.by-edu.com/question/list/{userId}/{libraryId}
-        // http://bay-api.by-edu.com/question/list/104ebf7e3d304d3a8d79e76f9c6f8d65/1
-        this.$http.get(Beiyi.getUrl() + '/question/list/' + this.user.userId + '/' + this.$route.query.libraryId).then((res) => {
-          console.log('======')
-          console.log(res.body)
-          this.question = res.body.data
-          this.showLoading = false
-          // 如果试学结束了，不再让用户答题，提示购买
-          if (this.question.length === 0) {
-            this.buy = true
-            return
-          } else {
-            this.buy = false
-          }
-          Store.save('question', this.question)
-          this.length = this.question.length
-          // 缓存libraryId
-          Store.save('libraryId', this.$route.query.libraryId)
-          // 默认值当前index为0，也就是第一题
-          this.questionList = this.question[this.index]
-          // console.log(this.questionList.answers)
-          // 判断单选 多选
-          if (this.questionList.ctype === '单选' || this.questionList.ctype === '判断') {
-            this.questionType = true
-          }
-          if (this.questionList.ctype === '多选') {
-            this.questionType = false
-          }
-        })
-      } else {
+      // 请求地址：http://bay-api.by-edu.com/question/list/{userId}/{libraryId}
+      // http://bay-api.by-edu.com/question/list/104ebf7e3d304d3a8d79e76f9c6f8d65/1
+      this.$http.get(Beiyi.getUrl() + '/question/list/wrongbycourse?userId=' + this.user.userId + '&courseId=' + this.courseId).then((res) => {
+//        console.log('======')
+        console.log(res.body)
+        this.question = res.body.data
+        Store.save('question', this.question)
         this.showLoading = false
         this.length = this.question.length
+        if (this.length === 0) {
+          this.showTip = true
+          this.hasQuestion = false
+        } else {
+          this.showTip = false
+          this.hasQuestion = true
+        }
+        console.log(this.length)
+        // 缓存libraryId
+//        Store.save('libraryId', this.$route.query.libraryId)
         // 默认值当前index为0，也就是第一题
         this.questionList = this.question[this.index]
         // console.log(this.questionList.answers)
@@ -156,22 +163,17 @@
         if (this.questionList.ctype === '多选') {
           this.questionType = false
         }
-      }
-    },
-    watch: {
-      answer: {
-        handler: function (items) {
-          Store.save('answer', items)   // 观察／存入缓存
-        },
-        deep: true
-      }
+      })
     },
     methods: {
+      yesknow () {
+        this.showTip = false
+      },
       // 选项答题
       answerQuestion (answerindex) {
 //        alert(this.questionList.answers.length)
 //        debugger
-        for (var l in this.questionList.answers) {
+        for (let l in this.questionList.answers) {
           if (this.questionList.ctype === '单选' || this.questionList.ctype === '判断') {
             this.question[this.index].answers[l].checked = false
           }
@@ -297,12 +299,7 @@
         this.showLoading = true
         var mywa = JSON.stringify(this.answer)
         // http://bay-api.by-edu.com/question/postquestions?userId=104ebf7e3d304d3a8d79e76f9c6f8d65&answer=’[1:{A:B,R:B},2:{A:C,R:C},3:{A:C,R:D},4:{A:BD,R:D},5:{A:ABCDE,R:D}]’&libraryId=12&time=1276
-        this.$http.post(Beiyi.getUrl() + '/question/postquestions', {
-          userId: this.user.userId,
-          time: totalTime,
-          answer: mywa,
-          libraryId: this.$route.query.libraryId}
-        ).then((res) => {
+        this.$http.post(Beiyi.getUrl() + '/question/postquestions', {userId: this.user.userId, time: totalTime, answer: mywa, libraryId: this.$route.query.libraryId}).then((res) => {
           // 接收后台返回数据并缓存
           console.log(res.body.data)
           this.responseAnswer = res.body.data
@@ -339,11 +336,13 @@
     right: 0;
     left: 0;
     margin: auto;
+
   .ivu-modal-mask
     /*background: url("../../../src/common/img/maskbg.jpeg")*/
     background-position-x: center
     background-position-y: center
     filter blur(2px)
+
   .vertical-center-modal
     display: flex
     align-items: center
@@ -355,20 +354,21 @@
       button
         font-size 16px
         flex: 1
+
   .question
     .question-type
       padding: 15px 16px
       font-size: 16px
-      color: rgb(240,92,41)
+      color: rgb(240, 92, 41)
       .pro
         float right
         a
-         color: rgb(240,92,41)
+          color: rgb(240, 92, 41)
     .question-title, .question-list
       padding: 15px 16px
       font-size: 15px
       line-height: 22px
-      color: rgb(43,38,37)
+      color: rgb(43, 38, 37)
       .option
         display block
         padding: 15px 0
@@ -378,13 +378,13 @@
           height: 29px
           text-align center
           line-height 29px
-          border: 1px solid rgb(172,169,169)
+          border: 1px solid rgb(172, 169, 169)
           border-radius: 50%
           margin-right 10px
       .optionActive
         color: rgb(242, 90, 41)
         span:nth-child(1)
-          background-color rgb(242,90,41)
+          background-color rgb(242, 90, 41)
           color: #fff
           border none
 

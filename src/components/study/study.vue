@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!--{{$route.query.id}}-->
     <div class="panel-title">
       <p class="panel-nav border-1px" @click="showAll" v-show="hideSelect">{{message}}
         <Icon v-if="down" class="down" type="chevron-down"></Icon>
@@ -15,7 +16,7 @@
             <Icon v-if="!down" class="down" type="chevron-up"></Icon></p>
           <div class="panel-body" v-show="zhengquanShow">
             <ul class="first-level">
-              <li :id="item.id" v-for="(item, index) in zhengquan" @click="getText(item.id,item)">{{ item.name }}</li>
+              <li :id="item.id" v-for="(item, index) in zhengquan" @click="getText(item.id,item)" :class="{ selectActive: this.checkdefault }">{{ item.name }}</li>
             </ul>
           </div>
         </div>
@@ -57,7 +58,7 @@
         </div>
       </div>
     </div>
-    <div class="showMask" v-if="showMask"></div>
+    <div class="showMask" v-if="showMask" @click="hideMask"></div>
     <div class="divide"></div>
     <div class="progress">
       <div class="progress-score" v-if="coursePay">
@@ -93,32 +94,32 @@
     </div>
     <ul class="course-tip">
       <li class="tip">
-      <router-link :to="{ path: '/study/tip' , query: {coureId: this.coureId, patternType: 'tip'}}">
+      <router-link :to="{ path: '/study/tip' , query: {courseId: this.courseId, patternType: 'tip'}}">
         <img src="../../common/img/zhangjie.png" alt=""><span>章节练习</span>
       </router-link>
     </li>
       <li class="tip">
-        <router-link :to="{ path: '/study/tip', query: {coureId: this.coureId, patternType: 'kaoqian'}}">
+        <router-link :to="{ path: '/study/tip', query: {courseId: this.courseId, patternType: 'kaoqian'}}">
           <img src="../../common/img/moni.png" alt=""><span>考前模拟</span>
         </router-link>
       </li>
       <li class="tip">
-        <router-link :to="{ path: '/study/tip', query: {coureId: this.coureId, patternType: 'fangzhen'}}">
+        <router-link :to="{ path: '/study/tip', query: {courseId: this.courseId, patternType: 'fangzhen'}}">
           <img src="../../common/img/fangzhen.png" alt=""><span>仿真测试</span>
         </router-link>
       </li>
       <li class="tip">
-        <router-link :to="{ path: '/study/tip', query: {coureId: this.coureId, patternType: 'tupo'}}">
+        <router-link :to="{ path: '/study/tip', query: {courseId: this.courseId, patternType: 'tupo'}}">
           <img src="../../common/img/zhongdian.png" alt=""><span>重难点突破</span>
         </router-link>
       </li>
       <li class="tip">
-        <router-link :to="{ path: '/study/tip', query: {coureId: this.coureId, patternType: 'cuoti'}}">
+        <router-link :to="{ path: '/study/cuoti', query: {courseId: this.courseId, patternType: 'cuoti',libraryId: this.libraryId}}">
           <img src="../../common/img/cuoti.png" alt=""><span>错题集</span>
         </router-link>
       </li>
       <li class="tip">
-        <router-link :to="{ path: '/study/tip', query: {coureId: this.coureId, patternType: 'zhuanjia'}}">
+        <router-link :to="{ path: '/study/tip', query: {courseId: this.courseId, patternType: 'zhuanjia'}}">
           <img src="../../common/img/pingce.png" alt=""><span>专家评测</span>
         </router-link>
       </li>
@@ -129,8 +130,8 @@
 <script type="text/ecmascript-6">
   import Store from '../../store.js'
   import Beiyi from '../../common.js'
-  const msg = ''
-  const coureId = ''
+  var msg = ''
+  var courseId = ''
   var libraries = []
   export default {
     data () {
@@ -153,23 +154,28 @@
         showSelect: false,
         showMask: false,
         msg: '',
-        coureId,
+        courseId,
         libraries: [],
         showBg: true,
         message: '',
         coursePay: false,
         isA: true,
         isB: false,
-        down: true
+        down: true,
+        checkdefault: false,
+        libraryId: 0
       }
     },
     created () {
+      this.hotcourse = Store.fetch('hotcourse')
+      this.courses = this.hotcourse
+//      var id = this.$route.query.id
+
       // 从缓存读取所有数据
 //      this.datas = Store.fetch('datas')
       this.user = Store.fetch('user')
       // 请求课程接口
       this.$http.get(Beiyi.getUrl() + '/course/list?userId=' + this.user.userId).then((response) => {
-//         console.log(response)
         response = response.body.data
         this.datas = response
         console.log(this.datas)
@@ -187,6 +193,13 @@
           Store.save('courses', this.courses)
           console.log(this.courses)
         }
+//        this.hotcourse = Store.fetch('hotcourse')
+//        this.courses = this.hotcourse
+//        for (let i in this.courses) {
+//          if (this.$route.query.id === this.courses[i].id) {
+//            this.message = this.courses[i].name
+//          }
+//        }
         this.message = Store.fetch('courseName')
         this.courseId = Store.fetch('courseId')
         // 初始化一个默认值并缓存
@@ -197,10 +210,11 @@
         Store.save('lock', this.coursePay)
         // 读取选择的课程名称
 //        this.message = Store.fetch('courseName')
-        this.coureId = Store.fetch('courseId')
+        this.courseId = Store.fetch('courseId')
+        console.log(this.courseId)
         // 获取id对应的课程
         for (let i in this.courses) {
-          if (this.coureId === this.courses[i].id) {
+          if (this.courseId === this.courses[i].id) {
             this.course = this.courses[i]
             // 缓存patterns tip页面使用
             Store.save('courseLocal', this.course.patterns)
@@ -215,22 +229,24 @@
       // 初始化默认值
 //      this.course = this.courses[6]
 //      console.log(this.course)
+//      this.hotcourse = Store.fetch('hotcourse')
+//      this.courses = this.hotcourse
     },
     methods: {
       getText (id, item) {
         this.down = false
         // 课程id 课程名
-        console.log(item.name)
+//        console.log(item.name)
        // console.log(item.id)
         Store.save('msg', item.name)
         // 缓存课程courseId
         Store.save('courseId', item.id)
 //        this.msg = this.course.name
         this.msg = Store.fetch('msg')
-        this.coureId = Store.fetch('courseId')
+        this.courseId = Store.fetch('courseId')
         // 获取id对应的课程
-        for (var i in this.courses) {
-          if (this.coureId === this.courses[i].id) {
+        for (let i in this.courses) {
+          if (this.courseId === this.courses[i].id) {
             this.course = this.courses[i]
             // 缓存patterns tip页面使用
             Store.save('courseLocal', this.course.patterns)
@@ -246,9 +262,13 @@
         this.showSelect = true
         this.showMask = false
       },
+      hideMask () {
+        this.allShow = false
+        this.showMask = false
+      },
       immediateLock () {
-        this.coureId = Store.fetch('courseId')
-        console.log(this.coureId)
+        this.courseId = Store.fetch('courseId')
+        console.log(this.courseId)
         window.location.href = 'http://cb.by-edu.com/createOrder?userId=' + this.user.userId + '&courseId=' + Store.fetch('courseId')
       },
       showAll () {
@@ -311,6 +331,9 @@
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/common.styl"
+  .selectActive
+    background-color: #ffffff
+    color: rgb(242,90,41)
   .markerA
     color: rgb(43,38,37)
   .markerB

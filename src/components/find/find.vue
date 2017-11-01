@@ -84,7 +84,7 @@
           }
         },
         advs: {},
-        coupon: true,
+        coupon: false,
         couponImg: true,
         closeBtn: true,
         success: false,

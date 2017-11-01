@@ -11,6 +11,8 @@ import find from './components/find/find.vue'
 import study from './components/study/study.vue'
 import mine from './components/mine/mine.vue'
 import tip from './components/tip/tip.vue'
+import cuoti from './components/cuoti/cuoti.vue'
+import cuotisheet from './components/answerSheet/cuotisheet.vue'
 import question from './components/question/question.vue'
 import answerSheet from './components/answerSheet/answerSheet.vue'
 import answerReport from './components/answerReport/answerReport.vue'
@@ -49,6 +51,8 @@ const routes = [
   {path: '/mine/studyRecord', component: studyRecord},
   {path: '/mine/wrongCollection', component: wrongCollection},
   {path: '/study/tip', component: tip},
+  {path: '/study/cuoti', component: cuoti},
+  {path: '/study/cuoti/cuotisheet', component: cuotisheet},
   {path: '/study/tip/question', component: question},
   {path: '/study/tip/question/answerSheet', component: answerSheet},
   {path: '/study/tip/question/answerReport', component: answerReport},

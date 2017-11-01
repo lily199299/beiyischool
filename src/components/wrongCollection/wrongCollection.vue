@@ -8,19 +8,19 @@
   import Beiyi from '../../common.js'
   import Store from '../../store.js'
   import loading from '../../components/loading/loading.vue'
-
   export default {
     data () {
       return {
-        user: {},
-        time: 3
+        user: {}
       }
     },
     // http://bay-api.by-edu.com/question/getmyerror?userId=29c69d4349ca4ea885595c5e6706d59b&time=3
+    // http://bay-api.by-edu.com/question/list/wrongbycourse?userId=d7b1fbbb2b5a4eaea0b2c62be47867dd&courseId=7
     created () {
+      this.courseId = Store.fetch('courseId')
       this.user = Store.fetch('user')
-      this.$http.get(Beiyi.getUrl() + '/question/getmyerror?userId=' + this.user.userId + '&time=' + this.time).then((res) => {
-        console.log(res.body.data)
+      this.$http.get(Beiyi.getUrl() + '/question/list/wrongbycourse?userId=' + this.user.userId + '&courseId=' + this.courseId).then((res) => {
+        console.log(res)
       })
     }
   }

@@ -1,7 +1,7 @@
 /* 存放URL */
 const beiyi = 'http://bay-api.by-edu.com'
 // const beiyi = 'http://manage.by-edu.com'
-// const beiyi = 'http://192.168.0.150:8080'
+// const beiyi = 'http://192.168.0.174:8080'
 export default {
   getUrl () {
     return beiyi

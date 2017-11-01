@@ -1,44 +1,44 @@
 <template>
-  <!--<div id="app">-->
-    <!--<div class="tab">-->
-      <!--<div class="tab-item">-->
-        <!--<router-link to="/find"><i class="icon-find"></i>发现</router-link>-->
-      <!--</div>-->
-      <!--<div class="tab-item">-->
-        <!--<router-link to="/study"><i class="icon-study"></i>学习</router-link>-->
-      <!--</div>-->
-      <!--<div class="tab-item">-->
-        <!--<router-link to="/mine"><i class="icon-mine"></i>我的</router-link>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<router-view></router-view>-->
-  <!--</div>-->
   <div id="app">
     <div class="tab">
-      <div class="tab-item" :id="1"  @click="selected($event)" ref="abc">
-        <router-link ref="routerLink" to="/find">
-          <img v-if="!find" src="./common/img/find.png" alt="">
-          <img v-if="find" src="./common/img/find-active.png" alt="">
-          <p>发现</p>
-        </router-link>
+      <div class="tab-item">
+        <router-link to="/find"><i class="icon-find"></i>发现</router-link>
       </div>
-      <div class="tab-item" :id="2" @click="selected($event)">
-        <router-link ref="routerLink" to="/study">
-          <img v-if="!study" src="./common/img/study.png" alt="">
-          <img v-if="study" src="./common/img/study-active.png" alt="">
-          <p>学习</p>
-        </router-link>
+      <div class="tab-item">
+        <router-link to="/study"><i class="icon-study"></i>学习</router-link>
       </div>
-      <div class="tab-item" :id="3" @click="selected($event)">
-        <router-link ref="routerLink" to="/mine">
-          <img v-if="!mine" src="./common/img/mine.png" alt="">
-          <img v-if="mine"  src="./common/img/mine-active.png" alt="">
-          <p>我的</p>
-        </router-link>
+      <div class="tab-item">
+        <router-link to="/mine"><i class="icon-mine"></i>我的</router-link>
       </div>
     </div>
     <router-view></router-view>
   </div>
+  <!--<div id="app">-->
+    <!--<div class="tab">-->
+      <!--<div class="tab-item" :id="1"  @click="selected($event)" ref="abc">-->
+        <!--<router-link ref="routerLink" to="/find">-->
+          <!--<img v-if="!find" src="./common/img/find.png" alt="">-->
+          <!--<img v-if="find" src="./common/img/find-active.png" alt="">-->
+          <!--<p>发现</p>-->
+        <!--</router-link>-->
+      <!--</div>-->
+      <!--<div class="tab-item" :id="2" @click="selected($event)">-->
+        <!--<router-link ref="routerLink" to="/study">-->
+          <!--<img v-if="!study" src="./common/img/study.png" alt="">-->
+          <!--<img v-if="study" src="./common/img/study-active.png" alt="">-->
+          <!--<p>学习</p>-->
+        <!--</router-link>-->
+      <!--</div>-->
+      <!--<div class="tab-item" :id="3" @click="selected($event)">-->
+        <!--<router-link ref="routerLink" to="/mine">-->
+          <!--<img v-if="!mine" src="./common/img/mine.png" alt="">-->
+          <!--<img v-if="mine"  src="./common/img/mine-active.png" alt="">-->
+          <!--<p>我的</p>-->
+        <!--</router-link>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<router-view></router-view>-->
+  <!--</div>-->
 </template>
 
 <script type="text/ecmascript-6">
@@ -89,8 +89,8 @@
 //      Store.save('user', this.user)
 //      }
       // 本地测试使用
-//      this.user.openId = 'oMH9vwLinzRct6Zts2c9guOaS3Ac'
-//      Store.save('user', this.user)
+      this.user.openId = 'oMH9vwLinzRct6Zts2c9guOaS3Ac'
+      Store.save('user', this.user)
       this.coureId = Store.fetch('courseId')
       this.courseName = Store.fetch('courseName')
       if (this.coureId !== null) {
