@@ -67,6 +67,7 @@
     components: {Lasted, Employ, Compass, Lunbo},
     data () {
       return {
+        showTip: false,
         swiperOption: {
           notNextTick: true,
           autoplay: 2000,
@@ -92,6 +93,12 @@
       }
     },
     methods: {
+      tips () {
+        this.showTip = true
+      },
+      yesknow () {
+        this.showTip = false
+      },
       // 新人第一次登陆进来 领取优惠券
       getCoupon () {
         this.couponImg = false
