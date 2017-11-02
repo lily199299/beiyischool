@@ -20,7 +20,7 @@
     <!-- 导航 -->
     <div class="industry">
       <div class="industry-item">
-        <router-link to="/study"><img class="icon" src="./zhengquan.png" alt="">证券从业</router-link>
+        <router-link :to="{path: './study', query:{id: 5}}"><img class="icon" src="./zhengquan.png" alt="">证券从业</router-link>
       </div>
       <div class="industry-item">
         <router-link to="/study"><img class="icon" src="./jijin.png" alt="">基金从业</router-link>

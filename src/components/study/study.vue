@@ -167,6 +167,8 @@
       }
     },
     created () {
+      var id = this.$route.query.id
+      console.log(id)
       this.hotcourse = Store.fetch('hotcourse')
       this.courses = this.hotcourse
 //      var id = this.$route.query.id
@@ -186,6 +188,9 @@
         this.zhengquan = this.datas.zhengquan
         this.kuaiji = this.datas.kuaiji
         this.zhucekuaijishi = this.datas.zhucekuaijishi
+        console.log('++++++++++++++++++++++++++++++=')
+        console.log(this.kuaiji)
+        console.log(this.zhucekuaijishi)
         for (var i in this.datas) {
           for (var j in this.datas[i]) {
             this.courses.push(this.datas[i][j])
