@@ -8,7 +8,7 @@
       <p class="nickName">{{name}}</p>
     </div>
     <div class="userPhone">
-      <p style="font-size: 16px">绑定手机，领取新人学习大礼包</p>
+      <!--<p style="font-size: 16px">绑定手机，领取新人学习大礼包</p>-->
       <label for="phone" style="display: block;position:relative;">
         <Icon type="iphone" class="iphone"></Icon>
         <input placeholder="输入11位大陆手机号码" id="phone" ref="phone" v-model="phone" class="phone">
